@@ -172,12 +172,21 @@ nav button.active { color: var(--gold); background: rgba(245,200,66,0.1); }
 <nav>
   <div class="nav-inner">
     <button class="active" onclick="showPage('groups')">Gruppspel</button>
+
     <button onclick="showPage('r16')">16-delsfinaler</button>
+
     <button onclick="showPage('qf')">Åttondelsfinaler</button>
-    <button onclick="showPage('sf')">Kvartsfinaler</button>
-    <button onclick="showPage('final')">Semifinaler</button>
+
+  <button onclick="showPage('sf')">Kvartsfinaler</button>
+
+<button onclick="showPage('semi')">Semifinaler</button>
+
+<button onclick="showPage('final')">Final & Bronsmatch</button>
+
     <button onclick="showPage('tournament')">Turneringstips</button>
+
     <button onclick="showPage('tiebreakers')">Utslagsfrågor</button>
+
     <button onclick="showPage('leaderboard')">Poängtabell</button>
   </div>
 </nav>
@@ -193,18 +202,23 @@ nav button.active { color: var(--gold); background: rgba(245,200,66,0.1); }
     <div class="page-sub">16 matcher · Multiplikator ×1,5 · Bonusfrågor per match</div>
     <div class="knockout-grid" id="r16-grid"></div>
   </div>
-  <div class="page" id="page-qf">
-    <div class="page-title">Kvartsfinaler</div>
+ <div class="page" id="page-qf">
+  <div class="page-title">Åttondelsfinaler</div>
     <div class="page-sub">8 matcher · Multiplikator ×2 · Bonusfrågor per match</div>
     <div class="knockout-grid" id="qf-grid"></div>
   </div>
-  <div class="page" id="page-sf">
-    <div class="page-title">Semifinaler</div>
+<div class="page" id="page-sf">
+  <div class="page-title">Kvartsfinaler</div>
     <div class="page-sub">4 matcher · Multiplikator ×2 · Bonusfrågor per match</div>
     <div class="knockout-grid" id="sf-grid"></div>
   </div>
-  <div class="page" id="page-final">
-    <div class="page-title">Final &amp; Bronsmatch</div>
+  <div class="page" id="page-semi">
+  <div class="page-title">Semifinaler</div>
+  <div class="page-sub">2 matcher · Multiplikator ×2 · Bonusfrågor per match</div>
+  <div class="knockout-grid" id="semi-grid"></div>
+</div>
+<div class="page" id="page-final">
+  <div class="page-title">Semifinaler, Bronsmatch & Final</div>
     <div class="page-sub">2 matcher · Multiplikator ×2 · Bonusfrågor per match</div>
     <div class="knockout-grid" id="final-grid"></div>
   </div>
@@ -580,23 +594,35 @@ const KNOCKOUT = {
   },
 
   sf: {
-    label:'Kvartsfinal',
-    mult:2,
-    matches:[
-      'W89 – W90',
-      'W93 – W94',
-      'W91 – W92',
-      'W95 – W96'
-    ]
-  },
+  label:'Kvartsfinal',
+  mult:2,
+  matches:[
+    'W89 – W90',
+    'W93 – W94',
+    'W91 – W92',
+    'W95 – W96'
+  ]
+},
+
+semi: {
+  label:'Semifinal',
+  mult:2,
+  matches:[
+    'W97 – W98',
+    'W99 – W100'
+  ]
+},
+
 final: {
   label:'Final / Bronsmatch',
   mult:2,
   matches:[
-    'L97 – L98',
-    'W97 – W98'
+    'L101 – L102',
+    'W101 – W102'
   ]
 }
+
+};
 
 const TOURNAMENT_TIPS = [
   { key:'winner',          label:'VM-vinnare',                   pts:'10p'          },
@@ -908,7 +934,7 @@ function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
-  const pages = ['groups','r16','qf','sf','final','tournament','tiebreakers','leaderboard'];
+ const pages = ['groups','r16','qf','sf','semi','final','tournament','tiebreakers','leaderboard'];
   document.querySelectorAll('nav button')[pages.indexOf(id)]?.classList.add('active');
   window.scrollTo(0, 0);
 }
@@ -936,7 +962,8 @@ function showToast(msg, isError) {
 renderGroups();
 renderKnockout('r16', 'r16-grid');
 renderKnockout('qf',  'qf-grid');
-renderKnockout('sf',  'sf-grid');
+renderKnockout('sf', 'sf-grid');
+renderKnockout('semi', 'semi-grid');
 renderKnockout('final', 'final-grid');
 renderTournament();
 renderTiebreakers();
