@@ -187,6 +187,18 @@ button{
   padding:0;
   margin-top:10px;
 }  
+.password-wrapper{
+  position:relative;
+}
+
+.password-toggle{
+  position:absolute;
+  right:14px;
+  top:14px;
+  color:#5da9ff;
+  cursor:pointer;
+  font-size:14px;
+}
 </style>
 </head>
 <body>
@@ -513,43 +525,7 @@ window.resetPassword = async function(){
 // LOGIN MODAL
 // =======================
 
-{
 
-  const email =
-    document.getElementById("loginEmail").value;
-
-  const password =
-    document.getElementById("loginPassword").value;
-
-  const remember =
-    document.getElementById("rememberMe").checked;
-
-  try{
-
-    await setPersistence(
-      auth,
-      remember
-        ? browserLocalPersistence
-        : browserSessionPersistence
-    );
-
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    closeLoginModal();
-
-    alert("Inloggad!");
-
-  }catch(error){
-
-    alert(error.message);
-
-  }
-
-}
 // =======================
 // REGISTRERA ANVÄNDARE
 // =======================
