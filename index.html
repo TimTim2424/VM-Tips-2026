@@ -39,7 +39,11 @@ nav button.active { color: var(--gold); background: rgba(245,200,66,0.1); }
 .page-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 26px; color: var(--gold); margin-bottom: 4px; }
 .page-sub { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
 
-.groups-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; }
+.groups-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+} 
 .group-card { background: var(--bg3); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; }
 .group-header { background: var(--green); padding: 9px 16px; display: flex; align-items: center; gap: 10px; }
 .group-letter { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px; color: var(--gold); }
@@ -181,8 +185,8 @@ nav button.active { color: var(--gold); background: rgba(245,200,66,0.1); }
 <div class="container">
   <div class="page active" id="page-groups">
     <div class="page-title">Gruppspel</div>
-    <div class="page-sub">Tippa alla 96 gruppspelsmatcher · Rätt 1X2 = 1p · Rätt målskillnad = 2p · Exakt rätt = 3p</div>
-    <div class="groups-grid" id="groups-grid"></div>
+    <div class="page-sub">Tippa alla 104 gruppspelsmatcher · Rätt 1X2 = 1p · Rätt målskillnad = 2p · Exakt rätt = 3p</div>
+    <div id="groups-grid"></div>
   </div>
   <div class="page" id="page-r16">
     <div class="page-title">Åttondelar</div>
@@ -434,7 +438,7 @@ function firebaseError(e) {
 
 <script>
 // ============================================================
-// MATCHDATA – alla 16 grupper
+// MATCHDATA – alla 12 grupper
 // ============================================================
 const GROUPS = [
   { letter:'A', matches:[
@@ -568,18 +572,66 @@ const GROUPS = [
 ];
 
 const KNOCKOUT = {
-  r16:   { label:'1/8-final',   count:16, mult:1.5 },
-  qf:    { label:'Kvartsfinal', count:8,  mult:2   },
-  sf:    { label:'Semifinal',   count:4,  mult:2   },
-  final: { label:'Final',       count:2,  mult:2   },
-};
+  r16: {
+    label:'16-delsfinal',
+    mult:1.5,
+    matches:[
+      '2A – 2B',
+      '1C – 2F',
+      '1E – 3A/B/C/D/F',
+      '1F – 2C',
+      '2E – 2I',
+      '1I – 3C/D/F/G/H',
+      '1A – 3C/E/F/H/I',
+      '1L – 3E/H/I/J/K',
+      '1G – 3A/E/H/I/J',
+      '1D – 3B/E/F/I/J',
+      '1H – 2J',
+      '2K – 2L',
+      '1B – 3E/F/G/I/J',
+      '2D – 2G',
+      '1J – 2H',
+      '1K – 3D/E/I/J/L'
+    ]
+  },
 
-const BONUS_QUESTIONS = [
-  { key:'yellow',  q:'Gula kort',          opts:['0–1','2–3','4–5','6+'] },
-  { key:'red',     q:'Rött kort?',          opts:['Nej','Ja'] },
-  { key:'corners', q:'Hörnor',              opts:['0–5','6–9','10–13','14+'] },
-  { key:'goals25', q:'Mål under/över 2,5', opts:['Under 2,5','Över 2,5'] },
-];
+  qf: {
+    label:'Åttondelsfinal',
+    mult:2,
+    matches:[
+      'W73 – W75',
+      'W74 – W77',
+      'W76 – W78',
+      'W79 – W80',
+      'W83 – W84',
+      'W81 – W82',
+      'W86 – W88',
+      'W85 – W87'
+    ]
+  },
+
+  sf: {
+    label:'Kvartsfinal',
+    mult:2,
+    matches:[
+      'W89 – W90',
+      'W93 – W94',
+      'W91 – W92',
+      'W95 – W96'
+    ]
+  },
+
+  final: {
+    label:'Semifinal / Final',
+    mult:2,
+    matches:[
+      'W97 – W98',
+      'W99 – W100',
+      'L101 – L102',
+      'W101 – W102'
+    ]
+  }
+};
 
 const TOURNAMENT_TIPS = [
   { key:'winner',          label:'VM-vinnare',                   pts:'10p'          },
@@ -614,69 +666,208 @@ let tiebreakers = {};
 // ============================================================
 // RENDER
 // ============================================================
+
+const BONUS_QUESTIONS = [
+  {
+    key:'pens',
+    q:'Avgörs matchen på straffar?',
+    opts:['Ja','Nej']
+  },
+  {
+    key:'clean',
+    q:'Håller något lag nollan?',
+    opts:['Ja','Nej']
+  }
+];
+
 function renderGroups() {
-  const grid = document.getElementById('groups-grid');
-  grid.innerHTML = '';
+
+  const container = document.getElementById('groups-grid');
+
+  const allMatches = [];
+
   GROUPS.forEach(group => {
-    const card = document.createElement('div');
-    card.className = 'group-card';
-    card.innerHTML = `<div class="group-header"><span class="group-letter">${group.letter}</span><span class="group-sub">GRUPP ${group.letter}</span></div>`;
-    group.matches.forEach((m, i) => {
-      const key = `G${group.letter}_${i}`;
-      const row = document.createElement('div');
-      row.className = 'match-row';
-      row.innerHTML = `
-        <div class="match-info">
-          <div class="match-teams">${m.h} – ${m.a}</div>
-          <div class="match-meta">${m.date} · ${m.time} · ${m.stadium} · 📺 ${m.tv}</div>
-        </div>
-        <div class="score-inputs">
-          <input type="number" min="0" max="20" placeholder="–" data-key="${key}" data-side="home" oninput="onMatch(this,'${key}','home')">
-          <span class="score-sep">:</span>
-          <input type="number" min="0" max="20" placeholder="–" data-key="${key}" data-side="away" oninput="onMatch(this,'${key}','away')">
-        </div>`;
-      card.appendChild(row);
+    group.matches.forEach(match => {
+      allMatches.push({
+        ...match,
+        group: group.letter
+      });
     });
-    grid.appendChild(card);
   });
+
+  allMatches.sort((a, b) => {
+    const da = new Date(`2026 ${a.date} ${a.time}`);
+    const db = new Date(`2026 ${b.date} ${b.time}`);
+    return da - db;
+  });
+
+  container.innerHTML = `
+    <div class="groups-grid">
+      ${allMatches.map((m, i) => {
+
+        const key = `group_${i}`;
+
+        return `
+          <div class="group-card">
+
+            <div class="group-header">
+              <div class="group-letter">${m.group}</div>
+              <div class="group-sub">
+                ${m.date} · ${m.time} · ${m.stadium}
+              </div>
+            </div>
+
+            <div class="match-row">
+
+              <div class="match-info">
+                <div class="match-teams">
+                  ${m.h} – ${m.a}
+                </div>
+
+                <div class="match-meta">
+                  ${m.tv}
+                </div>
+              </div>
+
+              <div class="score-inputs">
+
+                <input
+                  type="number"
+                  min="0"
+                  max="20"
+                  placeholder="0"
+                  data-key="${key}"
+                  data-side="home"
+                  oninput="onMatch(this,'${key}','home')"
+                >
+
+                <span class="score-sep">:</span>
+
+                <input
+                  type="number"
+                  min="0"
+                  max="20"
+                  placeholder="0"
+                  data-key="${key}"
+                  data-side="away"
+                  oninput="onMatch(this,'${key}','away')"
+                >
+
+              </div>
+
+            </div>
+
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
 }
 
 function renderKnockout(roundKey, containerId) {
+
   const info = KNOCKOUT[roundKey];
   const grid = document.getElementById(containerId);
+
   grid.innerHTML = '';
-  for (let i = 0; i < info.count; i++) {
+
+  info.matches.forEach((teams, i) => {
+
     const key = `${roundKey}_${i}`;
+
+    const split = teams.split('–');
+
+    const homeTeam = split[0].trim();
+    const awayTeam = split[1].trim();
+
     const card = document.createElement('div');
+
     card.className = 'ko-card';
+
     card.innerHTML = `
       <div class="ko-header">
-        <span class="ko-label">${info.label} ${i+1}</span>
+        <span class="ko-label">${info.label} ${i + 1}</span>
         <span class="ko-mult">×${info.mult} multiplikator</span>
       </div>
+
       <div class="ko-teams">
-        <div class="ko-team-name">Lag TBD</div>
-        <div class="score-inputs big">
-          <input type="number" min="0" max="20" placeholder="–" data-key="${key}" data-side="home" oninput="onMatch(this,'${key}','home')">
-          <span class="score-sep">:</span>
-          <input type="number" min="0" max="20" placeholder="–" data-key="${key}" data-side="away" oninput="onMatch(this,'${key}','away')">
+
+        <div class="ko-team-name">
+          ${homeTeam}
         </div>
-        <div class="ko-team-name right">Lag TBD</div>
+
+        <div class="score-inputs big">
+
+          <input
+            type="number"
+            min="0"
+            max="20"
+            placeholder="0"
+            data-key="${key}"
+            data-side="home"
+            oninput="onMatch(this,'${key}','home')"
+          >
+
+          <span class="score-sep">:</span>
+
+          <input
+            type="number"
+            min="0"
+            max="20"
+            placeholder="0"
+            data-key="${key}"
+            data-side="away"
+            oninput="onMatch(this,'${key}','away')"
+          >
+
+        </div>
+
+        <div class="ko-team-name right">
+          ${awayTeam}
+        </div>
+
       </div>
+
       <div class="bonus-section">
-        <div class="bonus-title">BONUSFRÅGOR · 0,5p styck</div>
+
+        <div class="bonus-title">
+          BONUSFRÅGOR · 0,5p styck
+        </div>
+
         ${BONUS_QUESTIONS.map(bq => `
           <div class="bonus-row">
-            <span class="bonus-q">${bq.q}</span>
-            <div class="bonus-opts">
-              ${bq.opts.map(o => `<button class="opt-btn" data-match="${key}" data-bkey="${bq.key}" data-val="${o}" onclick="onBonus(this)">${o}</button>`).join('')}
-            </div>
-          </div>`).join('')}
-      </div>`;
-    grid.appendChild(card);
-  }
-}
 
+            <span class="bonus-q">
+              ${bq.q}
+            </span>
+
+            <div class="bonus-opts">
+
+              ${bq.opts.map(o => `
+                <button
+                  class="opt-btn"
+                  data-match="${key}"
+                  data-bkey="${bq.key}"
+                  data-val="${o}"
+                  onclick="onBonus(this)"
+                >
+                  ${o}
+                </button>
+              `).join('')}
+
+            </div>
+
+          </div>
+        `).join('')}
+
+      </div>
+    `;
+
+    grid.appendChild(card);
+
+  });
+
+}
 function renderTournament() {
   document.getElementById('tournament-grid').innerHTML = TOURNAMENT_TIPS.map(t => `
     <div class="tourn-card">
@@ -739,9 +930,9 @@ function updateStats(user) {
   const filled = Object.values(predictions).filter(m => m.home !== '' && m.away !== '').length;
   const el = document.getElementById('footer-stats');
   if (user) {
-    el.innerHTML = `Inloggad som <span>${user.displayName || user.email}</span> · ${filled}/128 matcher ifyllda`;
+    el.innerHTML = `Inloggad som <span>${user.displayName || user.email}</span> · ${filled}/104 matcher ifyllda`;
   } else {
-    el.textContent = `${filled}/128 matcher ifyllda – logga in för att spara`;
+    el.textContent = `${filled}/104 matcher ifyllda – logga in för att spara`;
   }
 }
 
