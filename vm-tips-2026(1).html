@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VM-Tips 2026</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #0D1B0F;
+    color: #F0EDE4;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #F5C842;
+}
+
+.section {
+    margin-bottom: 40px;
+    background: #1E3322;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.match {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 8px;
+    background: #243D28;
+    border-radius: 8px;
+}
+
+.team {
+    width: 40%;
+}
+
+.score {
+    display: flex;
+    gap: 5px;
+}
+
+input[type="number"] {
+    width: 45px;
+    padding: 6px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid #F5C842;
+    background: #152318;
+    color: #F5C842;
+}
+
+.group-title {
+    color: #F5C842;
+    margin-bottom: 15px;
+}
+
+.small {
+    color: #A8C4A0;
+    font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>VM-Tips 2026</h1>
+<p class="small">Datamodell för 104 matcher i Fotbolls-VM 2026</p>
+
+<div id="app"></div>
+
+<script>
+
+// ============================================================
+// TEAMS
+// ============================================================
+
+const TEAMS = [
+  { id: 'USA', name: 'USA', group: 'A' },
+  { id: 'MEX', name: 'Mexiko', group: 'A' },
+  { id: 'CAN', name: 'Kanada', group: 'A' },
+  { id: 'URU', name: 'Uruguay', group: 'A' },
+
+  { id: 'ESP', name: 'Spanien', group: 'B' },
+  { id: 'CRO', name: 'Kroatien', group: 'B' },
+  { id: 'MAR', name: 'Marocko', group: 'B' },
+  { id: 'BEL', name: 'Belgien', group: 'B' },
+
+  { id: 'BRA', name: 'Brasilien', group: 'C' },
+  { id: 'COL', name: 'Colombia', group: 'C' },
+  { id: 'SUI', name: 'Schweiz', group: 'C' },
+  { id: 'CMR', name: 'Kamerun', group: 'C' }
+];
+
+// ============================================================
+// GROUPS
+// ============================================================
+
+const GROUPS = ['A','B','C'];
+
+// ============================================================
+// GENERATE GROUP MATCHES
+// ============================================================
+
+function generateGroupMatches() {
+
+  const matches = [];
+
+  GROUPS.forEach(groupLetter => {
+
+    const teams =
+      TEAMS.filter(t => t.group === groupLetter);
+
+    const t = teams.map(team => team.id);
+
+    const fixtures = [
+      [t[0], t[1]],
+      [t[2], t[3]],
+
+      [t[0], t[2]],
+      [t[1], t[3]],
+
+      [t[0], t[3]],
+      [t[1], t[2]]
+    ];
+
+    fixtures.forEach((fixture, index) => {
+
+      matches.push({
+        id: `G_${groupLetter}_${index + 1}`,
+        stage: 'group',
+        group: groupLetter,
+        homeTeam: fixture[0],
+        awayTeam: fixture[1]
+      });
+
+    });
+
+  });
+
+  return matches;
+}
+
+const MATCHES = generateGroupMatches();
+
+// ============================================================
+// PLAYER MODEL
+// ============================================================
+
+const PLAYER = {
+  name: 'Demo-spelare',
+  tips: {}
+};
+
+// ============================================================
+// SAVE TIP
+// ============================================================
+
+function saveMatchTip(matchId, side, value) {
+
+  if (!PLAYER.tips[matchId]) {
+    PLAYER.tips[matchId] = {
+      home: '',
+      away: ''
+    };
+  }
+
+  PLAYER.tips[matchId][side] = value;
+
+  localStorage.setItem(
+    'vmtips2026_demo',
+    JSON.stringify(PLAYER)
+  );
+
+  console.log('Sparat:', PLAYER);
+}
+
+// ============================================================
+// LOAD SAVED DATA
+// ============================================================
+
+function loadSavedData() {
+
+  const saved =
+    localStorage.getItem('vmtips2026_demo');
+
+  if (saved) {
+    Object.assign(PLAYER, JSON.parse(saved));
+  }
+}
+
+// ============================================================
+// GET TEAM NAME
+// ============================================================
+
+function getTeamName(id) {
+
+  return TEAMS.find(
+    t => t.id === id
+  )?.name || id;
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+
+function render() {
+
+  const app =
+    document.getElementById('app');
+
+  app.innerHTML = '';
+
+  GROUPS.forEach(group => {
+
+    const section =
+      document.createElement('div');
+
+    section.className = 'section';
+
+    const matches =
+      MATCHES.filter(
+        m => m.group === group
+      );
+
+    section.innerHTML =
+      `<h2 class="group-title">Grupp ${group}</h2>`;
+
+    matches.forEach(match => {
+
+      const div =
+        document.createElement('div');
+
+      div.className = 'match';
+
+      const savedTip =
+        PLAYER.tips[match.id] || {};
+
+      div.innerHTML = `
+
+        <div class="team">
+          ${getTeamName(match.homeTeam)}
+        </div>
+
+        <div class="score">
+
+          <input
+            type="number"
+            min="0"
+            max="20"
+            value="${savedTip.home || ''}"
+            onchange="saveMatchTip('${match.id}','home',this.value)"
+          >
+
+          <span>:</span>
+
+          <input
+            type="number"
+            min="0"
+            max="20"
+            value="${savedTip.away || ''}"
+            onchange="saveMatchTip('${match.id}','away',this.value)"
+          >
+
+        </div>
+
+        <div class="team" style="text-align:right;">
+          ${getTeamName(match.awayTeam)}
+        </div>
+
+      `;
+
+      section.appendChild(div);
+
+    });
+
+    app.appendChild(section);
+
+  });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+
+loadSavedData();
+render();
+
+</script>
+
+</body>
+</html>
