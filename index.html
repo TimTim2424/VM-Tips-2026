@@ -408,12 +408,14 @@ window.saveTips = async function(){
   try{
 
     await setDoc(
-      doc(db, "tips", user.uid),
-      {
-        predictions: predictions,
-        updated: new Date().toISOString()
-      }
-    );
+  doc(db, "tips", user.uid),
+  {
+    email: user.email,
+    uid: user.uid,
+    predictions: predictions,
+    updated: new Date().toISOString()
+  }
+);
 
     alert("Tips sparade i molnet!");
 
