@@ -6,37 +6,113 @@
 <title>VM-Tips 2026</title>
 
 <style>
+
 body{
   margin:0;
   font-family:Arial,sans-serif;
   background:#08111f;
   color:#fff;
 }
+
 header{
   position:sticky;
   top:0;
   background:#10233b;
   padding:18px;
   z-index:100;
+  box-shadow:0 2px 10px rgba(0,0,0,0.3);
 }
+
+h1{
+  margin:0;
+  color:#7ee787;
+}
+
 .container{
   max-width:1400px;
   margin:auto;
   padding:20px;
+  padding-bottom:120px;
 }
+
+.stage{
+  margin-bottom:50px;
+}
+
+.stage h2{
+  color:#7ee787;
+  margin-bottom:20px;
+}
+
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
   gap:18px;
 }
+
 .card{
   background:#132238;
   border-radius:16px;
   padding:18px;
+  border:1px solid rgba(255,255,255,0.08);
 }
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:14px;
+  font-size:13px;
+  color:#9bb0c9;
+}
+
+.badge{
+  background:#1d3b5d;
+  color:#5da9ff;
+  border-radius:999px;
+  padding:5px 10px;
+}
+
+.teams{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.team{
+  width:100%;
+  font-weight:bold;
+}
+
+.team.right{
+  text-align:right;
+}
+
+.score{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
 .score input{
   width:42px;
+  height:38px;
+  border-radius:8px;
+  border:none;
+  background:#08111f;
+  color:#fff;
+  text-align:center;
+  font-size:18px;
+  font-weight:bold;
 }
+
+.meta{
+  margin-top:14px;
+  color:#9bb0c9;
+  font-size:13px;
+  line-height:1.5;
+}
+
 .footer{
   position:fixed;
   bottom:0;
@@ -46,7 +122,10 @@ header{
   padding:14px 20px;
   display:flex;
   justify-content:space-between;
+  align-items:center;
+  z-index:1000;
 }
+
 button{
   background:#5da9ff;
   border:none;
@@ -54,10 +133,15 @@ button{
   padding:12px 18px;
   border-radius:10px;
   cursor:pointer;
+  font-weight:bold;
 }
+
 .logged-in{
   background:#22c55e !important;
 }
+
+/* LOGIN MODAL */
+
 .modal{
   position:fixed;
   inset:0;
@@ -65,27 +149,98 @@ button{
   display:none;
   align-items:center;
   justify-content:center;
+  z-index:9999;
+  padding:20px;
 }
+
 .modal-content{
   width:100%;
   max-width:420px;
+  max-height:90vh;
+  overflow:auto;
   background:#132238;
   border-radius:20px;
   padding:24px;
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 10px 40px rgba(0,0,0,0.45);
 }
+
+.modal-content h2{
+  margin-top:0;
+  color:#7ee787;
+}
+
+.modal-content input{
+  width:100%;
+  padding:14px;
+  margin-bottom:14px;
+  border-radius:10px;
+  border:none;
+  background:#08111f;
+  color:white;
+  font-size:16px;
+  box-sizing:border-box;
+}
+
+.modal-content label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:16px;
+  color:#9bb0c9;
+  font-size:14px;
+}
+
+.modal-buttons{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.modal-buttons button{
+  flex:1;
+}
+
+.close-btn{
+  background:#334155;
+}
+
+.link-btn{
+  background:none;
+  border:none;
+  color:#5da9ff;
+  padding:0;
+  margin-top:10px;
+}
+
+.password-wrapper{
+  position:relative;
+}
+
+.password-toggle{
+  position:absolute;
+  right:14px;
+  top:14px;
+  color:#5da9ff;
+  cursor:pointer;
+  font-size:14px;
+}
+
 </style>
 </head>
 
 <body>
 
-<header style="display:flex;justify-content:space-between;align-items:center;">
-  <h1>VM-Tips 2026</h1>
+<header style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
 
-  <div style="display:flex;gap:10px">
-    <button onclick="register()">Registrera</button>
-    <button id="loginBtn" onclick="openLoginModal()">Logga in</button>
-    <button onclick="logout()">Logga ut</button>
-  </div>
+<h1>VM-Tips 2026</h1>
+
+<div style="display:flex;gap:10px">
+  <button onclick="register()">Registrera</button>
+  <button id="loginBtn" onclick="openLoginModal()">Logga in</button>
+  <button onclick="logout()">Logga ut</button>
+</div>
+
 </header>
 
 <div class="container" id="app"></div>
@@ -99,10 +254,9 @@ button{
 
 const MATCHES = [
 
-/* VIKTIG FIX:
-   Du saknade ett kommatecken efter sista matchen i Grupp D.
-   Därför kraschade hela sidan.
-*/
+/* =========================
+   GRUPP A
+========================= */
 
 {
   stage:'Gruppspel',
@@ -117,6 +271,21 @@ const MATCHES = [
 
 {
   stage:'Gruppspel',
+  group:'A',
+  date:'12 juni 2026',
+  time:'04:00',
+  home:'Sydkorea',
+  away:'Tjeckien',
+  stadium:'Guadalajara',
+  tv:'TV4'
+},
+
+/* =========================
+   GRUPP D
+========================= */
+
+{
+  stage:'Gruppspel',
   group:'D',
   date:'26 juni 2026',
   time:'04:00',
@@ -124,7 +293,11 @@ const MATCHES = [
   away:'Australien',
   stadium:'San Francisco',
   tv:'TV4'
-}, // <-- DENNA KOMMA SAKNADES
+}, /* <-- DETTA KOMMATECKEN SAKNADES */
+
+/* =========================
+   GRUPP E
+========================= */
 
 {
   stage:'Gruppspel',
@@ -140,7 +313,7 @@ const MATCHES = [
 ];
 
 let predictions =
-  JSON.parse(localStorage.getItem('vm_predictions') || '{}');
+JSON.parse(localStorage.getItem('vm_predictions') || '{}');
 
 function savePrediction(id, side, value){
 
@@ -183,97 +356,202 @@ function render(){
 
   app.innerHTML = '';
 
-  const grid = document.createElement('div');
-  grid.className = 'grid';
+  const grouped = {};
 
   MATCHES.forEach((match,index)=>{
 
-    const saved = predictions[index] || {};
+    match.id = index;
 
-    const card = document.createElement('div');
+    if(!grouped[match.stage]){
+      grouped[match.stage] = [];
+    }
 
-    card.className = 'card';
-
-    card.innerHTML = `
-      <h3>${match.home} - ${match.away}</h3>
-
-      <p>
-        ${match.date} ${match.time}
-      </p>
-
-      <div class="score">
-
-        <input
-          type="number"
-          value="${saved.home || ''}"
-          onchange="savePrediction(${index}, 'home', this.value)"
-        >
-
-        :
-
-        <input
-          type="number"
-          value="${saved.away || ''}"
-          onchange="savePrediction(${index}, 'away', this.value)"
-        >
-
-      </div>
-    `;
-
-    grid.appendChild(card);
+    grouped[match.stage].push(match);
 
   });
 
-  app.appendChild(grid);
+  Object.keys(grouped).forEach(stage=>{
+
+    const section = document.createElement('div');
+
+    section.className = 'stage';
+
+    section.innerHTML =
+      `<h2>${stage}</h2><div class="grid"></div>`;
+
+    const grid = section.querySelector('.grid');
+
+    grouped[stage].forEach(match=>{
+
+      const saved = predictions[match.id] || {};
+
+      const card = document.createElement('div');
+
+      card.className = 'card';
+
+      card.innerHTML = `
+
+      <div class="top">
+        <span class="badge">${match.group}</span>
+        <span>${match.date} · ${match.time}</span>
+      </div>
+
+      <div class="teams">
+
+        <div class="team">${match.home}</div>
+
+        <div class="score">
+
+          <input
+            type="number"
+            min="0"
+            max="20"
+            value="${saved.home || ''}"
+            onchange="savePrediction('${match.id}','home',this.value)"
+          >
+
+          <span>:</span>
+
+          <input
+            type="number"
+            min="0"
+            max="20"
+            value="${saved.away || ''}"
+            onchange="savePrediction('${match.id}','away',this.value)"
+          >
+
+        </div>
+
+        <div class="team right">${match.away}</div>
+
+      </div>
+
+      <div class="meta">
+        📍 ${match.stadium}<br>
+        📺 ${match.tv}
+      </div>
+
+      `;
+
+      grid.appendChild(card);
+
+    });
+
+    app.appendChild(section);
+
+  });
 
   updateStats();
+
 }
 
 render();
 
 </script>
 
+<!-- LOGIN MODAL -->
+
 <div class="modal" id="loginModal">
+
   <div class="modal-content">
 
     <h2>Logga in</h2>
 
-    <input type="email" id="loginEmail" placeholder="E-post">
+    <input
+      type="email"
+      id="loginEmail"
+      placeholder="E-post"
+      autocomplete="email"
+    >
 
-    <input type="password" id="loginPassword" placeholder="Lösenord">
+    <div class="password-wrapper">
 
-    <button onclick="submitLogin()">Logga in</button>
+      <input
+        type="password"
+        id="loginPassword"
+        placeholder="Lösenord"
+        autocomplete="current-password"
+      >
 
-    <button onclick="closeLoginModal()">Stäng</button>
+      <span
+        class="password-toggle"
+        onclick="togglePassword()"
+      >
+        Visa
+      </span>
+
+    </div>
+
+    <label>
+      <input type="checkbox" id="rememberMe">
+      Kom ihåg mig
+    </label>
+
+    <div class="modal-buttons">
+
+      <button onclick="submitLogin()">
+        Logga in
+      </button>
+
+      <button
+        class="close-btn"
+        onclick="closeLoginModal()"
+      >
+        Stäng
+      </button>
+
+    </div>
+
+    <button
+      class="link-btn"
+      onclick="resetPassword()"
+    >
+      Glömt lösenord?
+    </button>
 
   </div>
+
 </div>
+
+<!-- FIREBASE -->
 
 <script type="module">
 
-import { initializeApp }
+import {
+  initializeApp
+}
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
   getAuth,
+  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
+  onAuthStateChanged,
+  updateProfile,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
+  sendPasswordResetEmail
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 const firebaseConfig = {
 
-  apiKey: "AIzaSyCEDnmGznmY2rMYPlzBNXStjkCGOAXxYh4",
-
-  authDomain: "vm-tips-2026-fbbd3.firebaseapp.com",
-
-  projectId: "vm-tips-2026-fbbd3",
-
-  storageBucket: "vm-tips-2026-fbbd3.firebasestorage.app",
-
-  messagingSenderId: "714350716776",
-
-  appId: "1:714350716776:web:ff233e50e40787aa3a98dd"
+  apiKey: "DIN_API_KEY",
+  authDomain: "DIN_AUTH_DOMAIN",
+  projectId: "DIN_PROJECT_ID",
+  storageBucket: "DIN_BUCKET",
+  messagingSenderId: "DIN_SENDER_ID",
+  appId: "DIN_APP_ID"
 
 };
 
@@ -281,12 +559,96 @@ const appFirebase = initializeApp(firebaseConfig);
 
 const auth = getAuth(appFirebase);
 
+const db = getFirestore(appFirebase);
+
 window.openLoginModal = function(){
-  document.getElementById("loginModal").style.display = "flex";
+
+  document.getElementById("loginModal")
+    .style.display = "flex";
+
 }
 
 window.closeLoginModal = function(){
-  document.getElementById("loginModal").style.display = "none";
+
+  document.getElementById("loginModal")
+    .style.display = "none";
+
+}
+
+window.togglePassword = function(){
+
+  const input =
+    document.getElementById("loginPassword");
+
+  input.type =
+    input.type === "password"
+      ? "text"
+      : "password";
+
+}
+
+window.resetPassword = async function(){
+
+  const email =
+    document.getElementById("loginEmail").value;
+
+  if(!email){
+    alert("Fyll i e-post först");
+    return;
+  }
+
+  try{
+
+    await sendPasswordResetEmail(auth,email);
+
+    alert("Återställningsmail skickat!");
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+}
+
+window.register = async function(){
+
+  const username = prompt("Användarnamn:");
+  const email = prompt("E-post:");
+  const password = prompt("Lösenord:");
+
+  try{
+
+    const userCredential =
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+    const user = userCredential.user;
+
+    await updateProfile(user,{
+      displayName: username
+    });
+
+    await setDoc(
+      doc(db,"users",user.uid),
+      {
+        username: username,
+        email: email,
+        created: new Date().toISOString()
+      }
+    );
+
+    alert("Konto skapat!");
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
 }
 
 window.submitLogin = async function(){
@@ -297,13 +659,25 @@ window.submitLogin = async function(){
   const password =
     document.getElementById("loginPassword").value;
 
+  const remember =
+    document.getElementById("rememberMe").checked;
+
   try{
+
+    await setPersistence(
+      auth,
+      remember
+      ? browserLocalPersistence
+      : browserSessionPersistence
+    );
 
     await signInWithEmailAndPassword(
       auth,
       email,
       password
     );
+
+    closeLoginModal();
 
     alert("Inloggad!");
 
@@ -312,6 +686,7 @@ window.submitLogin = async function(){
     alert(error.message);
 
   }
+
 }
 
 window.logout = async function(){
@@ -322,21 +697,80 @@ window.logout = async function(){
 
 }
 
-window.register = function(){
+window.saveTips = async function(){
 
-  alert(
-    "Registrering fungerar i fullversionen."
-  );
+  const user = auth.currentUser;
+
+  if(!user){
+    alert("Du måste logga in");
+    return;
+  }
+
+  try{
+
+    await setDoc(
+      doc(db,"tips",user.uid),
+      {
+        username: user.displayName,
+        email: user.email,
+        uid: user.uid,
+        predictions: predictions,
+        updated: new Date().toISOString()
+      }
+    );
+
+    alert("Tips sparade i molnet!");
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
 
 }
 
-window.saveTips = function(){
+async function loadTips(){
 
-  alert(
-    "Tips sparade lokalt."
-  );
+  const user = auth.currentUser;
+
+  if(!user) return;
+
+  const docRef = doc(db,"tips",user.uid);
+
+  const snap = await getDoc(docRef);
+
+  if(snap.exists()){
+
+    predictions = snap.data().predictions || {};
+
+    render();
+
+  }
 
 }
+
+onAuthStateChanged(auth,(user)=>{
+
+  const loginBtn =
+    document.getElementById("loginBtn");
+
+  if(user){
+
+    loginBtn.innerText = "Inloggad";
+
+    loginBtn.classList.add("logged-in");
+
+    loadTips();
+
+  }else{
+
+    loginBtn.innerText = "Logga in";
+
+    loginBtn.classList.remove("logged-in");
+
+  }
+
+});
 
 </script>
 
