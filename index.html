@@ -292,7 +292,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
@@ -331,6 +332,7 @@ console.log("Firebase anslutet!");
 
 window.register = async function(){
 
+  const username = prompt("Användarnamn:");
   const email = prompt("E-post:");
   const password = prompt("Lösenord:");
 
@@ -342,6 +344,23 @@ window.register = async function(){
         email,
         password
       );
+
+    const user = userCredential.user;
+
+    // Sparar displayName i Firebase Auth
+    await updateProfile(user, {
+      displayName: username
+    });
+
+    // Sparar användardata i Firestore
+    await setDoc(
+      doc(db, "users", user.uid),
+      {
+        username: username,
+        email: email,
+        created: new Date().toISOString()
+      }
+    );
 
     alert("Konto skapat!");
 
@@ -409,12 +428,13 @@ window.saveTips = async function(){
 
     await setDoc(
   doc(db, "tips", user.uid),
-  {
-    email: user.email,
-    uid: user.uid,
-    predictions: predictions,
-    updated: new Date().toISOString()
-  }
+ {
+  username: user.displayName,
+  email: user.email,
+  uid: user.uid,
+  predictions: predictions,
+  updated: new Date().toISOString()
+}
 );
 
     alert("Tips sparade i molnet!");
