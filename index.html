@@ -133,6 +133,8 @@ button{
 .modal-content{
   width:100%;
   max-width:420px;
+  max-height:90vh;
+  overflow:auto;
   background:#132238;
   border-radius:20px;
   padding:24px;
@@ -229,51 +231,269 @@ button{
 <script>
 
 const MATCHES = [
-{stage:'Gruppspel',group:'A',date:'11 juni 2026',time:'15:00',home:'Mexico',away:'South Africa',stadium:'Estadio Azteca, Mexico City'},
-{stage:'Gruppspel',group:'A',date:'11 juni 2026',time:'22:00',home:'South Korea',away:'Czechia',stadium:'Estadio Akron, Zapopan'},
-{stage:'Gruppspel',group:'A',date:'18 juni 2026',time:'12:00',home:'Czechia',away:'South Africa',stadium:'Mercedes-Benz Stadium, Atlanta'},
-{stage:'Gruppspel',group:'A',date:'18 juni 2026',time:'21:00',home:'Mexico',away:'South Korea',stadium:'Estadio Akron, Zapopan'},
-{stage:'Gruppspel',group:'A',date:'24 juni 2026',time:'21:00',home:'Czechia',away:'Mexico',stadium:'Estadio Azteca, Mexico City'},
-{stage:'Gruppspel',group:'A',date:'24 juni 2026',time:'21:00',home:'South Africa',away:'South Korea',stadium:'Estadio BBVA, Guadalupe'},
+const MATCHES = [
 
-{stage:'Gruppspel',group:'B',date:'12 juni 2026',time:'15:00',home:'Canada',away:'Bosnia and Herzegovina',stadium:'BMO Field, Toronto'},
-{stage:'Gruppspel',group:'B',date:'13 juni 2026',time:'15:00',home:'Qatar',away:'Switzerland',stadium:'Levi’s Stadium, Santa Clara'},
-{stage:'Gruppspel',group:'B',date:'18 juni 2026',time:'15:00',home:'Switzerland',away:'Bosnia and Herzegovina',stadium:'SoFi Stadium, Inglewood'},
-{stage:'Gruppspel',group:'B',date:'18 juni 2026',time:'18:00',home:'Canada',away:'Qatar',stadium:'BC Place, Vancouver'},
-{stage:'Gruppspel',group:'B',date:'24 juni 2026',time:'15:00',home:'Switzerland',away:'Canada',stadium:'BC Place, Vancouver'},
-{stage:'Gruppspel',group:'B',date:'24 juni 2026',time:'15:00',home:'Bosnia and Herzegovina',away:'Qatar',stadium:'Lumen Field, Seattle'},
+/* =========================
+   GRUPP A
+========================= */
 
-{stage:'Gruppspel',group:'C',date:'13 juni 2026',time:'18:00',home:'Brazil',away:'Morocco',stadium:'MetLife Stadium, East Rutherford'},
-{stage:'Gruppspel',group:'C',date:'13 juni 2026',time:'21:00',home:'Haiti',away:'Scotland',stadium:'Gillette Stadium, Foxborough'},
-{stage:'Gruppspel',group:'C',date:'19 juni 2026',time:'18:00',home:'Scotland',away:'Morocco',stadium:'Gillette Stadium, Foxborough'},
-{stage:'Gruppspel',group:'C',date:'19 juni 2026',time:'21:00',home:'Brazil',away:'Haiti',stadium:'Lincoln Financial Field, Philadelphia'},
-{stage:'Gruppspel',group:'C',date:'24 juni 2026',time:'18:00',home:'Scotland',away:'Brazil',stadium:'Hard Rock Stadium, Miami Gardens'},
-{stage:'Gruppspel',group:'C',date:'24 juni 2026',time:'18:00',home:'Morocco',away:'Haiti',stadium:'Mercedes-Benz Stadium, Atlanta'},
+{
+  stage:'Gruppspel',
+  group:'A',
+  date:'11 juni 2026',
+  time:'21:00',
+  home:'Mexiko',
+  away:'Sydafrika',
+  stadium:'Mexico City',
+  tv:'TV4'
+},
+{
+  stage:'Gruppspel',
+  group:'A',
+  date:'12 juni 2026',
+  time:'04:00',
+  home:'Sydkorea',
+  away:'Tjeckien',
+  stadium:'Guadalajara',
+  tv:'TV4'
+},
+{
+  stage:'Gruppspel',
+  group:'A',
+  date:'18 juni 2026',
+  time:'18:00',
+  home:'Tjeckien',
+  away:'Sydafrika',
+  stadium:'Atlanta',
+  tv:'TV4'
+},
+{
+  stage:'Gruppspel',
+  group:'A',
+  date:'19 juni 2026',
+  time:'03:00',
+  home:'Mexiko',
+  away:'Sydkorea',
+  stadium:'Guadalajara',
+  tv:'TV4'
+},
+{
+  stage:'Gruppspel',
+  group:'A',
+  date:'25 juni 2026',
+  time:'03:00',
+  home:'Tjeckien',
+  away:'Mexiko',
+  stadium:'Mexico City',
+  tv:'SVT1'
+},
+{
+  stage:'Gruppspel',
+  group:'A',
+  date:'25 juni 2026',
+  time:'03:00',
+  home:'Sydafrika',
+  away:'Sydkorea',
+  stadium:'Monterrey',
+  tv:'SVT2'
+},
 
-{stage:'Gruppspel',group:'D',date:'12 juni 2026',time:'21:00',home:'USMNT',away:'Paraguay',stadium:'SoFi Stadium, Inglewood'},
-{stage:'Gruppspel',group:'D',date:'13 juni 2026',time:'00:00',home:'Australia',away:'Türkiye',stadium:'BC Place, Vancouver'},
-{stage:'Gruppspel',group:'D',date:'19 juni 2026',time:'00:00',home:'Türkiye',away:'Paraguay',stadium:'Levi’s Stadium, Santa Clara'},
-{stage:'Gruppspel',group:'D',date:'19 juni 2026',time:'15:00',home:'USMNT',away:'Australia',stadium:'Lumen Field, Seattle'},
-{stage:'Gruppspel',group:'D',date:'25 juni 2026',time:'22:00',home:'Türkiye',away:'USMNT',stadium:'SoFi Stadium, Inglewood'},
-{stage:'Gruppspel',group:'D',date:'25 juni 2026',time:'22:00',home:'Paraguay',away:'Australia',stadium:'Levi’s Stadium, Santa Clara'},
+/* =========================
+   GRUPP B
+========================= */
 
-{stage:'Round of 32',group:'Slutspel',date:'28 juni 2026',time:'18:00',home:'Grp. A runner-up',away:'Grp. B runner-up',stadium:'SoFi Stadium, Inglewood'},
-{stage:'Round of 32',group:'Slutspel',date:'29 juni 2026',time:'18:00',home:'Grp. E winner',away:'Best third place',stadium:'Gillette Stadium, Foxborough'},
-{stage:'Round of 32',group:'Slutspel',date:'29 juni 2026',time:'21:00',home:'Grp. F winner',away:'Grp. C runner-up',stadium:'Estadio BBVA, Guadalupe'},
-{stage:'Round of 32',group:'Slutspel',date:'29 juni 2026',time:'22:00',home:'Grp. C winner',away:'Grp. F runner-up',stadium:'NRG Stadium, Houston'},
+{
+  stage:'Gruppspel',
+  group:'B',
+  date:'12 juni 2026',
+  time:'21:00',
+  home:'Kanada',
+  away:'Bosnien och Hercegovina',
+  stadium:'Toronto',
+  tv:'SVT1'
+},
+{
+  stage:'Gruppspel',
+  group:'B',
+  date:'13 juni 2026',
+  time:'21:00',
+  home:'Qatar',
+  away:'Schweiz',
+  stadium:'San Francisco',
+  tv:'TV4'
+},
+{
+  stage:'Gruppspel',
+  group:'B',
+  date:'18 juni 2026',
+  time:'21:00',
+  home:'Schweiz',
+  away:'Bosnien och Hercegovina',
+  stadium:'Los Angeles',
+  tv:'TV4'
+},
+{
+  stage:'Gruppspel',
+  group:'B',
+  date:'19 juni 2026',
+  time:'00:00',
+  home:'Kanada',
+  away:'Qatar',
+  stadium:'Vancouver',
+  tv:'TV4'
+},
+{
+  stage:'Gruppspel',
+  group:'B',
+  date:'24 juni 2026',
+  time:'21:00',
+  home:'Schweiz',
+  away:'Kanada',
+  stadium:'Vancouver',
+  tv:'TV4'
+},
+{
+  stage:'Gruppspel',
+  group:'B',
+  date:'24 juni 2026',
+  time:'21:00',
+  home:'Bosnien och Hercegovina',
+  away:'Qatar',
+  stadium:'Seattle',
+  tv:'TV4'
+},
 
-{stage:'Åttondelsfinal',group:'Slutspel',date:'4 juli 2026',time:'18:00',home:'R32 winner 2',away:'R32 winner 5',stadium:'Lincoln Financial Field, Philadelphia'},
-{stage:'Åttondelsfinal',group:'Slutspel',date:'4 juli 2026',time:'21:00',home:'R32 winner 1',away:'R32 winner 3',stadium:'NRG Stadium, Houston'},
+/* =========================
+   GRUPP C
+========================= */
 
-{stage:'Kvartsfinal',group:'Slutspel',date:'9 juli 2026',time:'20:00',home:'R16 winner 1',away:'R16 winner 2',stadium:'Gillette Stadium, Foxborough'},
-{stage:'Kvartsfinal',group:'Slutspel',date:'10 juli 2026',time:'20:00',home:'R16 winner 5',away:'R16 winner 6',stadium:'SoFi Stadium, Inglewood'},
+{
+  stage:'Gruppspel',
+  group:'C',
+  date:'14 juni 2026',
+  time:'00:00',
+  home:'Brasilien',
+  away:'Marocko',
+  stadium:'New Jersey',
+  tv:'SVT1'
+},
+{
+  stage:'Gruppspel',
+  group:'C',
+  date:'14 juni 2026',
+  time:'03:00',
+  home:'Haiti',
+  away:'Skottland',
+  stadium:'Boston',
+  tv:'SVT1'
+},
+{
+  stage:'Gruppspel',
+  group:'C',
+  date:'20 juni 2026',
+  time:'00:00',
+  home:'Skottland',
+  away:'Marocko',
+  stadium:'Boston',
+  tv:'SVT1'
+},
+{
+  stage:'Gruppspel',
+  group:'C',
+  date:'20 juni 2026',
+  time:'03:00',
+  home:'Brasilien',
+  away:'Haiti',
+  stadium:'Philadelphia',
+  tv:'TV4'
+},
+{
+  stage:'Gruppspel',
+  group:'C',
+  date:'25 juni 2026',
+  time:'00:00',
+  home:'Marocko',
+  away:'Haiti',
+  stadium:'Atlanta',
+  tv:'TV4'
+},
+{
+  stage:'Gruppspel',
+  group:'C',
+  date:'25 juni 2026',
+  time:'00:00',
+  home:'Skottland',
+  away:'Brasilien',
+  stadium:'Miami',
+  tv:'TV4'
+},
 
-{stage:'Semifinal',group:'Slutspel',date:'14 juli 2026',time:'20:00',home:'QF winner 1',away:'QF winner 2',stadium:'AT&T Stadium, Arlington'},
-{stage:'Semifinal',group:'Slutspel',date:'15 juli 2026',time:'20:00',home:'QF winner 3',away:'QF winner 4',stadium:'Mercedes-Benz Stadium, Atlanta'},
+/* =========================
+   GRUPP D
+========================= */
 
-{stage:'Bronsmatch',group:'Slutspel',date:'18 juli 2026',time:'20:00',home:'SF loser 1',away:'SF loser 2',stadium:'Hard Rock Stadium, Miami Gardens'},
+{
+  stage:'Gruppspel',
+  group:'D',
+  date:'13 juni 2026',
+  time:'03:00',
+  home:'USA',
+  away:'Paraguay',
+  stadium:'Los Angeles',
+  tv:'TV4'
+},
+{
+  stage:'Gruppspel',
+  group:'D',
+  date:'14 juni 2026',
+  time:'06:00',
+  home:'Australien',
+  away:'Turkiet',
+  stadium:'Vancouver',
+  tv:'TV4'
+},
+{
+  stage:'Gruppspel',
+  group:'D',
+  date:'20 juni 2026',
+  time:'06:00',
+  home:'Turkiet',
+  away:'Paraguay',
+  stadium:'San Francisco',
+  tv:'TV4'
+},
+{
+  stage:'Gruppspel',
+  group:'D',
+  date:'19 juni 2026',
+  time:'21:00',
+  home:'USA',
+  away:'Australien',
+  stadium:'Seattle',
+  tv:'SVT2'
+},
+{
+  stage:'Gruppspel',
+  group:'D',
+  date:'26 juni 2026',
+  time:'04:00',
+  home:'Turkiet',
+  away:'USA',
+  stadium:'Los Angeles',
+  tv:'TV4'
+},
+{
+  stage:'Gruppspel',
+  group:'D',
+  date:'26 juni 2026',
+  time:'04:00',
+  home:'Paraguay',
+  away:'Australien',
+  stadium:'San Francisco',
+  tv:'TV4'
+}
 
-{stage:'Final',group:'Slutspel',date:'19 juli 2026',time:'20:00',home:'SF winner 1',away:'SF winner 2',stadium:'MetLife Stadium, East Rutherford'}
+];
 ];
 
 let predictions = JSON.parse(localStorage.getItem('vm_predictions') || '{}');
@@ -349,8 +569,9 @@ function render(){
       </div>
 
       <div class="meta">
-      📍 ${match.stadium}
-      </div>
+📍 ${match.stadium}<br>
+📺 ${match.tv}
+</div>
       `;
 
       grid.appendChild(card);
