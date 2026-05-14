@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VM-Tips 2026</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#08111f;
+  color:#fff;
+}
+header{
+  position:sticky;
+  top:0;
+  background:#10233b;
+  padding:18px;
+  z-index:100;
+}
+.container{
+  max-width:1400px;
+  margin:auto;
+  padding:20px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+  gap:18px;
+}
+.card{
+  background:#132238;
+  border-radius:16px;
+  padding:18px;
+}
+.score input{
+  width:42px;
+}
+.footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#10233b;
+  padding:14px 20px;
+  display:flex;
+  justify-content:space-between;
+}
+button{
+  background:#5da9ff;
+  border:none;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:10px;
+  cursor:pointer;
+}
+.logged-in{
+  background:#22c55e !important;
+}
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.modal-content{
+  width:100%;
+  max-width:420px;
+  background:#132238;
+  border-radius:20px;
+  padding:24px;
+}
+</style>
+</head>
+
+<body>
+
+<header style="display:flex;justify-content:space-between;align-items:center;">
+  <h1>VM-Tips 2026</h1>
+
+  <div style="display:flex;gap:10px">
+    <button onclick="register()">Registrera</button>
+    <button id="loginBtn" onclick="openLoginModal()">Logga in</button>
+    <button onclick="logout()">Logga ut</button>
+  </div>
+</header>
+
+<div class="container" id="app"></div>
+
+<div class="footer">
+  <div id="stats">0 matcher ifyllda</div>
+  <button onclick="saveTips()">Spara tips</button>
+</div>
+
+<script>
+
+const MATCHES = [
+
+/* VIKTIG FIX:
+   Du saknade ett kommatecken efter sista matchen i Grupp D.
+   Därför kraschade hela sidan.
+*/
+
+{
+  stage:'Gruppspel',
+  group:'A',
+  date:'11 juni 2026',
+  time:'21:00',
+  home:'Mexiko',
+  away:'Sydafrika',
+  stadium:'Mexico City',
+  tv:'TV4'
+},
+
+{
+  stage:'Gruppspel',
+  group:'D',
+  date:'26 juni 2026',
+  time:'04:00',
+  home:'Paraguay',
+  away:'Australien',
+  stadium:'San Francisco',
+  tv:'TV4'
+}, // <-- DENNA KOMMA SAKNADES
+
+{
+  stage:'Gruppspel',
+  group:'E',
+  date:'14 juni 2026',
+  time:'19:00',
+  home:'Tyskland',
+  away:'Curaçao',
+  stadium:'Houston',
+  tv:'TV4'
+}
+
+];
+
+let predictions =
+  JSON.parse(localStorage.getItem('vm_predictions') || '{}');
+
+function savePrediction(id, side, value){
+
+  if(!predictions[id]){
+    predictions[id] = {
+      home:'',
+      away:''
+    };
+  }
+
+  predictions[id][side] = value;
+
+  localStorage.setItem(
+    'vm_predictions',
+    JSON.stringify(predictions)
+  );
+
+  updateStats();
+}
+
+function updateStats(){
+
+  let total = 0;
+
+  Object.values(predictions).forEach(m=>{
+
+    if(m.home !== '' && m.away !== ''){
+      total++;
+    }
+
+  });
+
+  document.getElementById('stats').innerText =
+    total + ' matcher ifyllda';
+}
+
+const app = document.getElementById('app');
+
+function render(){
+
+  app.innerHTML = '';
+
+  const grid = document.createElement('div');
+  grid.className = 'grid';
+
+  MATCHES.forEach((match,index)=>{
+
+    const saved = predictions[index] || {};
+
+    const card = document.createElement('div');
+
+    card.className = 'card';
+
+    card.innerHTML = `
+      <h3>${match.home} - ${match.away}</h3>
+
+      <p>
+        ${match.date} ${match.time}
+      </p>
+
+      <div class="score">
+
+        <input
+          type="number"
+          value="${saved.home || ''}"
+          onchange="savePrediction(${index}, 'home', this.value)"
+        >
+
+        :
+
+        <input
+          type="number"
+          value="${saved.away || ''}"
+          onchange="savePrediction(${index}, 'away', this.value)"
+        >
+
+      </div>
+    `;
+
+    grid.appendChild(card);
+
+  });
+
+  app.appendChild(grid);
+
+  updateStats();
+}
+
+render();
+
+</script>
+
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+
+    <h2>Logga in</h2>
+
+    <input type="email" id="loginEmail" placeholder="E-post">
+
+    <input type="password" id="loginPassword" placeholder="Lösenord">
+
+    <button onclick="submitLogin()">Logga in</button>
+
+    <button onclick="closeLoginModal()">Stäng</button>
+
+  </div>
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyCEDnmGznmY2rMYPlzBNXStjkCGOAXxYh4",
+
+  authDomain: "vm-tips-2026-fbbd3.firebaseapp.com",
+
+  projectId: "vm-tips-2026-fbbd3",
+
+  storageBucket: "vm-tips-2026-fbbd3.firebasestorage.app",
+
+  messagingSenderId: "714350716776",
+
+  appId: "1:714350716776:web:ff233e50e40787aa3a98dd"
+
+};
+
+const appFirebase = initializeApp(firebaseConfig);
+
+const auth = getAuth(appFirebase);
+
+window.openLoginModal = function(){
+  document.getElementById("loginModal").style.display = "flex";
+}
+
+window.closeLoginModal = function(){
+  document.getElementById("loginModal").style.display = "none";
+}
+
+window.submitLogin = async function(){
+
+  const email =
+    document.getElementById("loginEmail").value;
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+  try{
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    alert("Inloggad!");
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+}
+
+window.logout = async function(){
+
+  await signOut(auth);
+
+  alert("Utloggad");
+
+}
+
+window.register = function(){
+
+  alert(
+    "Registrering fungerar i fullversionen."
+  );
+
+}
+
+window.saveTips = function(){
+
+  alert(
+    "Tips sparade lokalt."
+  );
+
+}
+
+</script>
+
+</body>
+</html>
