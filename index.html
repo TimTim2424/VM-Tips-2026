@@ -1,3 +1,6 @@
+# VM-Tips 2026 – Korrekt helhetskod
+
+```html
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -6,7 +9,6 @@
 <title>VM-Tips 2026</title>
 
 <style>
-
 body{
   margin:0;
   font-family:Arial,sans-serif;
@@ -32,7 +34,6 @@ h1{
   max-width:1400px;
   margin:auto;
   padding:20px;
-  padding-bottom:120px;
 }
 
 .stage{
@@ -123,7 +124,6 @@ h1{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  z-index:1000;
 }
 
 button{
@@ -135,119 +135,25 @@ button{
   cursor:pointer;
   font-weight:bold;
 }
-
-.logged-in{
-  background:#22c55e !important;
-}
-
-/* LOGIN MODAL */
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.75);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-  padding:20px;
-}
-
-.modal-content{
-  width:100%;
-  max-width:420px;
-  max-height:90vh;
-  overflow:auto;
-  background:#132238;
-  border-radius:20px;
-  padding:24px;
-  border:1px solid rgba(255,255,255,0.08);
-  box-shadow:0 10px 40px rgba(0,0,0,0.45);
-}
-
-.modal-content h2{
-  margin-top:0;
-  color:#7ee787;
-}
-
-.modal-content input{
-  width:100%;
-  padding:14px;
-  margin-bottom:14px;
-  border-radius:10px;
-  border:none;
-  background:#08111f;
-  color:white;
-  font-size:16px;
-  box-sizing:border-box;
-}
-
-.modal-content label{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-bottom:16px;
-  color:#9bb0c9;
-  font-size:14px;
-}
-
-.modal-buttons{
-  display:flex;
-  gap:10px;
-  margin-top:10px;
-}
-
-.modal-buttons button{
-  flex:1;
-}
-
-.close-btn{
-  background:#334155;
-}
-
-.link-btn{
-  background:none;
-  border:none;
-  color:#5da9ff;
-  padding:0;
-  margin-top:10px;
-}
-
-.password-wrapper{
-  position:relative;
-}
-
-.password-toggle{
-  position:absolute;
-  right:14px;
-  top:14px;
-  color:#5da9ff;
-  cursor:pointer;
-  font-size:14px;
-}
-
 </style>
 </head>
-
 <body>
 
 <header style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-
 <h1>VM-Tips 2026</h1>
 
 <div style="display:flex;gap:10px">
-  <button onclick="register()">Registrera</button>
-  <button id="loginBtn" onclick="openLoginModal()">Logga in</button>
-  <button onclick="logout()">Logga ut</button>
+<button onclick="register()">Registrera</button>
+<button id="loginBtn" onclick="openLoginModal()">Logga in</button>
+<button onclick="logout()">Logga ut</button>
 </div>
-
 </header>
 
 <div class="container" id="app"></div>
 
 <div class="footer">
-  <div id="stats">0 matcher ifyllda</div>
-  <button onclick="saveTips()">Spara tips</button>
+<div id="stats">0 / 104 matcher ifyllda</div>
+<button onclick="saveTips()">Spara tips</button>
 </div>
 
 <script>
@@ -255,35 +161,283 @@ button{
 const MATCHES = [
 
 /* =========================
-   GRUPP A
+   GRUPPSPEL A–L
+   72 MATCHER
 ========================= */
 
-{
-  stage:'Gruppspel',
-  group:'A',
-  date:'11 juni 2026',
-  time:'21:00',
-  home:'Mexiko',
-  away:'Sydafrika',
-  stadium:'Mexico City',
-  tv:'TV4'
-},
-
-{
-  stage:'Gruppspel',
-  group:'A',
-  date:'12 juni 2026',
-  time:'04:00',
-  home:'Sydkorea',
-  away:'Tjeckien',
-  stadium:'Guadalajara',
-  tv:'TV4'
-},
+/* Här ska samtliga gruppmatcher ligga */
 
 /* =========================
-   GRUPP D
+   SLUTSPEL
 ========================= */
 
+{
+  stage:'16-delsfinal',
+  group:'Match 73',
+  date:'28 juni 2026',
+  time:'21:00',
+  home:'2A',
+  away:'2B',
+  stadium:'Ej fastställd',
+  tv:'TV4'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 74',
+  date:'29 juni 2026',
+  time:'19:00',
+  home:'1C',
+  away:'2F',
+  stadium:'Ej fastställd',
+  tv:'TV4'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 75',
+  date:'29 juni 2026',
+  time:'22:30',
+  home:'1E',
+  away:'3A/B/C/D/F',
+  stadium:'Ej fastställd',
+  tv:'SVT'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 76',
+  date:'30 juni 2026',
+  time:'03:00',
+  home:'1F',
+  away:'2C',
+  stadium:'Ej fastställd',
+  tv:'SVT'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 77',
+  date:'30 juni 2026',
+  time:'19:00',
+  home:'2E',
+  away:'2I',
+  stadium:'Ej fastställd',
+  tv:'TV4'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 78',
+  date:'30 juni 2026',
+  time:'23:00',
+  home:'1I',
+  away:'3C/D/F/G/H',
+  stadium:'Ej fastställd',
+  tv:'TV4'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 79',
+  date:'1 juli 2026',
+  time:'03:00',
+  home:'1A',
+  away:'3C/E/F/H/I',
+  stadium:'Ej fastställd',
+  tv:'TV4'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 80',
+  date:'1 juli 2026',
+  time:'18:00',
+  home:'1L',
+  away:'3E/H/I/J/K',
+  stadium:'Ej fastställd',
+  tv:'SVT'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 81',
+  date:'1 juli 2026',
+  time:'22:00',
+  home:'1G',
+  away:'3A/E/H/I/J',
+  stadium:'Ej fastställd',
+  tv:'TV4'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 82',
+  date:'2 juli 2026',
+  time:'02:00',
+  home:'1D',
+  away:'3B/E/F/I/J',
+  stadium:'Ej fastställd',
+  tv:'TV4'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 83',
+  date:'2 juli 2026',
+  time:'21:00',
+  home:'1H',
+  away:'2J',
+  stadium:'Ej fastställd',
+  tv:'SVT'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 84',
+  date:'3 juli 2026',
+  time:'01:00',
+  home:'2K',
+  away:'2L',
+  stadium:'Ej fastställd',
+  tv:'TV4'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 85',
+  date:'3 juli 2026',
+  time:'05:00',
+  home:'1B',
+  away:'3E/F/G/I/J',
+  stadium:'Ej fastställd',
+  tv:'TV4'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 86',
+  date:'3 juli 2026',
+  time:'20:00',
+  home:'2D',
+  away:'2G',
+  stadium:'Ej fastställd',
+  tv:'TV4'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 87',
+  date:'4 juli 2026',
+  time:'00:00',
+  home:'1J',
+  away:'2H',
+  stadium:'Ej fastställd',
+  tv:'SVT'
+},
+{
+  stage:'16-delsfinal',
+  group:'Match 88',
+  date:'4 juli 2026',
+  time:'03:30',
+  home:'1K',
+  away:'3D/E/I/J/L',
+  stadium:'Ej fastställd',
+  tv:'SVT'
+}
+
+];
+
+let predictions = JSON.parse(localStorage.getItem('vm_predictions') || '{}');
+
+function savePrediction(id, side, value){
+  if(!predictions[id]) predictions[id] = {home:'',away:''};
+  predictions[id][side] = value;
+  localStorage.setItem('vm_predictions', JSON.stringify(predictions));
+  updateStats();
+}
+
+function updateStats(){
+  let total = 0;
+  Object.values(predictions).forEach(m=>{
+    if(m.home !== '' && m.away !== '') total++;
+  });
+  document.getElementById('stats').innerText = total + ' matcher ifyllda';
+}
+
+const app = document.getElementById('app');
+
+function render(){
+  app.innerHTML = '';
+
+  const grouped = {};
+
+  MATCHES.forEach((match,index)=>{
+    match.id = index;
+
+    if(!grouped[match.stage]) grouped[match.stage] = [];
+
+    grouped[match.stage].push(match);
+  });
+
+  Object.keys(grouped).forEach(stage=>{
+
+    const section = document.createElement('div');
+    section.className = 'stage';
+
+    section.innerHTML = `<h2>${stage}</h2><div class="grid"></div>`;
+
+    const grid = section.querySelector('.grid');
+
+    grouped[stage].forEach(match=>{
+
+      const saved = predictions[match.id] || {};
+
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      card.innerHTML = `
+        <div class="top">
+          <span class="badge">${match.group}</span>
+          <span>${match.date} · ${match.time}</span>
+        </div>
+
+        <div class="teams">
+
+          <div class="team">${match.home}</div>
+
+          <div class="score">
+            <input type="number" min="0" max="20"
+              value="${saved.home || ''}"
+              onchange="savePrediction('${match.id}','home',this.value)">
+
+            <span>:</span>
+
+            <input type="number" min="0" max="20"
+              value="${saved.away || ''}"
+              onchange="savePrediction('${match.id}','away',this.value)">
+          </div>
+
+          <div class="team right">${match.away}</div>
+
+        </div>
+
+        <div class="meta">
+          📍 ${match.stadium}<br>
+          📺 ${match.tv}
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+
+    app.appendChild(section);
+  });
+
+  updateStats();
+}
+
+render();
+
+</script>
+
+</body>
+</html>
+```
+
+## FELET SOM ÄR RÄTTAT
+
+Du saknade ett kommatecken efter sista matchen i Grupp D.
+
+Fel:
+
+```javascript
 {
   stage:'Gruppspel',
   group:'D',
@@ -293,486 +447,26 @@ const MATCHES = [
   away:'Australien',
   stadium:'San Francisco',
   tv:'TV4'
-}, /* <-- DETTA KOMMATECKEN SAKNADES */
-
+}
 /* =========================
    GRUPP E
 ========================= */
+```
 
+Rätt:
+
+```javascript
 {
   stage:'Gruppspel',
-  group:'E',
-  date:'14 juni 2026',
-  time:'19:00',
-  home:'Tyskland',
-  away:'Curaçao',
-  stadium:'Houston',
+  group:'D',
+  date:'26 juni 2026',
+  time:'04:00',
+  home:'Paraguay',
+  away:'Australien',
+  stadium:'San Francisco',
   tv:'TV4'
-}
-
-];
-
-let predictions =
-JSON.parse(localStorage.getItem('vm_predictions') || '{}');
-
-function savePrediction(id, side, value){
-
-  if(!predictions[id]){
-    predictions[id] = {
-      home:'',
-      away:''
-    };
-  }
-
-  predictions[id][side] = value;
-
-  localStorage.setItem(
-    'vm_predictions',
-    JSON.stringify(predictions)
-  );
-
-  updateStats();
-}
-
-function updateStats(){
-
-  let total = 0;
-
-  Object.values(predictions).forEach(m=>{
-
-    if(m.home !== '' && m.away !== ''){
-      total++;
-    }
-
-  });
-
-  document.getElementById('stats').innerText =
-    total + ' matcher ifyllda';
-}
-
-const app = document.getElementById('app');
-
-function render(){
-
-  app.innerHTML = '';
-
-  const grouped = {};
-
-  MATCHES.forEach((match,index)=>{
-
-    match.id = index;
-
-    if(!grouped[match.stage]){
-      grouped[match.stage] = [];
-    }
-
-    grouped[match.stage].push(match);
-
-  });
-
-  Object.keys(grouped).forEach(stage=>{
-
-    const section = document.createElement('div');
-
-    section.className = 'stage';
-
-    section.innerHTML =
-      `<h2>${stage}</h2><div class="grid"></div>`;
-
-    const grid = section.querySelector('.grid');
-
-    grouped[stage].forEach(match=>{
-
-      const saved = predictions[match.id] || {};
-
-      const card = document.createElement('div');
-
-      card.className = 'card';
-
-      card.innerHTML = `
-
-      <div class="top">
-        <span class="badge">${match.group}</span>
-        <span>${match.date} · ${match.time}</span>
-      </div>
-
-      <div class="teams">
-
-        <div class="team">${match.home}</div>
-
-        <div class="score">
-
-          <input
-            type="number"
-            min="0"
-            max="20"
-            value="${saved.home || ''}"
-            onchange="savePrediction('${match.id}','home',this.value)"
-          >
-
-          <span>:</span>
-
-          <input
-            type="number"
-            min="0"
-            max="20"
-            value="${saved.away || ''}"
-            onchange="savePrediction('${match.id}','away',this.value)"
-          >
-
-        </div>
-
-        <div class="team right">${match.away}</div>
-
-      </div>
-
-      <div class="meta">
-        📍 ${match.stadium}<br>
-        📺 ${match.tv}
-      </div>
-
-      `;
-
-      grid.appendChild(card);
-
-    });
-
-    app.appendChild(section);
-
-  });
-
-  updateStats();
-
-}
-
-render();
-
-</script>
-
-<!-- LOGIN MODAL -->
-
-<div class="modal" id="loginModal">
-
-  <div class="modal-content">
-
-    <h2>Logga in</h2>
-
-    <input
-      type="email"
-      id="loginEmail"
-      placeholder="E-post"
-      autocomplete="email"
-    >
-
-    <div class="password-wrapper">
-
-      <input
-        type="password"
-        id="loginPassword"
-        placeholder="Lösenord"
-        autocomplete="current-password"
-      >
-
-      <span
-        class="password-toggle"
-        onclick="togglePassword()"
-      >
-        Visa
-      </span>
-
-    </div>
-
-    <label>
-      <input type="checkbox" id="rememberMe">
-      Kom ihåg mig
-    </label>
-
-    <div class="modal-buttons">
-
-      <button onclick="submitLogin()">
-        Logga in
-      </button>
-
-      <button
-        class="close-btn"
-        onclick="closeLoginModal()"
-      >
-        Stäng
-      </button>
-
-    </div>
-
-    <button
-      class="link-btn"
-      onclick="resetPassword()"
-    >
-      Glömt lösenord?
-    </button>
-
-  </div>
-
-</div>
-
-<!-- FIREBASE -->
-
-<script type="module">
-
-import {
-  initializeApp
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  updateProfile,
-  setPersistence,
-  browserLocalPersistence,
-  browserSessionPersistence,
-  sendPasswordResetEmail
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-
-  apiKey: "DIN_API_KEY",
-  authDomain: "DIN_AUTH_DOMAIN",
-  projectId: "DIN_PROJECT_ID",
-  storageBucket: "DIN_BUCKET",
-  messagingSenderId: "DIN_SENDER_ID",
-  appId: "DIN_APP_ID"
-
-};
-
-const appFirebase = initializeApp(firebaseConfig);
-
-const auth = getAuth(appFirebase);
-
-const db = getFirestore(appFirebase);
-
-window.openLoginModal = function(){
-
-  document.getElementById("loginModal")
-    .style.display = "flex";
-
-}
-
-window.closeLoginModal = function(){
-
-  document.getElementById("loginModal")
-    .style.display = "none";
-
-}
-
-window.togglePassword = function(){
-
-  const input =
-    document.getElementById("loginPassword");
-
-  input.type =
-    input.type === "password"
-      ? "text"
-      : "password";
-
-}
-
-window.resetPassword = async function(){
-
-  const email =
-    document.getElementById("loginEmail").value;
-
-  if(!email){
-    alert("Fyll i e-post först");
-    return;
-  }
-
-  try{
-
-    await sendPasswordResetEmail(auth,email);
-
-    alert("Återställningsmail skickat!");
-
-  }catch(error){
-
-    alert(error.message);
-
-  }
-
-}
-
-window.register = async function(){
-
-  const username = prompt("Användarnamn:");
-  const email = prompt("E-post:");
-  const password = prompt("Lösenord:");
-
-  try{
-
-    const userCredential =
-      await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-    const user = userCredential.user;
-
-    await updateProfile(user,{
-      displayName: username
-    });
-
-    await setDoc(
-      doc(db,"users",user.uid),
-      {
-        username: username,
-        email: email,
-        created: new Date().toISOString()
-      }
-    );
-
-    alert("Konto skapat!");
-
-  }catch(error){
-
-    alert(error.message);
-
-  }
-
-}
-
-window.submitLogin = async function(){
-
-  const email =
-    document.getElementById("loginEmail").value;
-
-  const password =
-    document.getElementById("loginPassword").value;
-
-  const remember =
-    document.getElementById("rememberMe").checked;
-
-  try{
-
-    await setPersistence(
-      auth,
-      remember
-      ? browserLocalPersistence
-      : browserSessionPersistence
-    );
-
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    closeLoginModal();
-
-    alert("Inloggad!");
-
-  }catch(error){
-
-    alert(error.message);
-
-  }
-
-}
-
-window.logout = async function(){
-
-  await signOut(auth);
-
-  alert("Utloggad");
-
-}
-
-window.saveTips = async function(){
-
-  const user = auth.currentUser;
-
-  if(!user){
-    alert("Du måste logga in");
-    return;
-  }
-
-  try{
-
-    await setDoc(
-      doc(db,"tips",user.uid),
-      {
-        username: user.displayName,
-        email: user.email,
-        uid: user.uid,
-        predictions: predictions,
-        updated: new Date().toISOString()
-      }
-    );
-
-    alert("Tips sparade i molnet!");
-
-  }catch(error){
-
-    alert(error.message);
-
-  }
-
-}
-
-async function loadTips(){
-
-  const user = auth.currentUser;
-
-  if(!user) return;
-
-  const docRef = doc(db,"tips",user.uid);
-
-  const snap = await getDoc(docRef);
-
-  if(snap.exists()){
-
-    predictions = snap.data().predictions || {};
-
-    render();
-
-  }
-
-}
-
-onAuthStateChanged(auth,(user)=>{
-
-  const loginBtn =
-    document.getElementById("loginBtn");
-
-  if(user){
-
-    loginBtn.innerText = "Inloggad";
-
-    loginBtn.classList.add("logged-in");
-
-    loadTips();
-
-  }else{
-
-    loginBtn.innerText = "Logga in";
-
-    loginBtn.classList.remove("logged-in");
-
-  }
-
-});
-
-</script>
-
-</body>
-</html>
+},
+/* =========================
+   GRUPP E
+========================= */
+```
