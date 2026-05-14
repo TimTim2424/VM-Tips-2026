@@ -112,6 +112,81 @@ button{
   cursor:pointer;
   font-weight:bold;
 }
+.logged-in{
+  background:#22c55e !important;
+}  
+/* =========================
+   LOGIN MODAL
+========================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  padding:20px;
+}
+
+.modal-content{
+  width:100%;
+  max-width:420px;
+  background:#132238;
+  border-radius:20px;
+  padding:24px;
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 10px 40px rgba(0,0,0,0.45);
+}
+
+.modal-content h2{
+  margin-top:0;
+  color:#7ee787;
+}
+
+.modal-content input{
+  width:100%;
+  padding:14px;
+  margin-bottom:14px;
+  border-radius:10px;
+  border:none;
+  background:#08111f;
+  color:white;
+  font-size:16px;
+  box-sizing:border-box;
+}
+
+.modal-content label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:16px;
+  color:#9bb0c9;
+  font-size:14px;
+}
+
+.modal-buttons{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.modal-buttons button{
+  flex:1;
+}
+
+.close-btn{
+  background:#334155;
+}
+
+.link-btn{
+  background:none;
+  border:none;
+  color:#5da9ff;
+  padding:0;
+  margin-top:10px;
+}  
 </style>
 </head>
 <body>
@@ -124,7 +199,7 @@ button{
 
 <button onclick="register()">Registrera</button>
 
-<button onclick="login()">Logga in</button>
+<button id="loginBtn" onclick="openLoginModal()">Logga in</button>
 
 <button onclick="logout()">Logga ut</button>
 
@@ -278,8 +353,67 @@ function render(){
 
 }
 render();
-
 </script>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+
+    <h2>Logga in</h2>
+
+    <input
+      type="email"
+      id="loginEmail"
+      placeholder="E-post"
+      autocomplete="email"
+    >
+
+    <div class="password-wrapper">
+
+      <input
+        type="password"
+        id="loginPassword"
+        placeholder="Lösenord"
+        autocomplete="current-password"
+      >
+
+      <span
+        class="password-toggle"
+        onclick="togglePassword()"
+      >
+        Visa
+      </span>
+
+    </div>
+
+    <label>
+      <input type="checkbox" id="rememberMe">
+      Kom ihåg mig
+    </label>
+
+    <div class="modal-buttons">
+      <button onclick="submitLogin()">
+        Logga in
+      </button>
+
+      <button
+        class="close-btn"
+        onclick="closeLoginModal()"
+      >
+        Stäng
+      </button>
+    </div>
+
+    <button
+      class="link-btn"
+      onclick="resetPassword()"
+    >
+      Glömt lösenord?
+    </button>
+
+  </div>
+
+</div>
 
 <!-- FIREBASE -->
 
@@ -293,8 +427,13 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  updateProfile
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  updateProfile,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
+  sendPasswordResetEmail
+}
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
   getFirestore,
@@ -326,6 +465,91 @@ const auth = getAuth(appFirebase);
 const db = getFirestore(appFirebase);
 
 console.log("Firebase anslutet!");
+  window.openLoginModal = function(){
+  document.getElementById("loginModal")
+    .style.display = "flex";
+}
+
+window.closeLoginModal = function(){
+  document.getElementById("loginModal")
+    .style.display = "none";
+}
+
+window.togglePassword = function(){
+
+  const input =
+    document.getElementById("loginPassword");
+
+  input.type =
+    input.type === "password"
+      ? "text"
+      : "password";
+}
+
+window.resetPassword = async function(){
+
+  const email =
+    document.getElementById("loginEmail").value;
+
+  if(!email){
+    alert("Fyll i e-post först");
+    return;
+  }
+
+  try{
+
+    await sendPasswordResetEmail(auth, email);
+
+    alert("Återställningsmail skickat!");
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+}
+// =======================
+// LOGIN MODAL
+// =======================
+
+{
+
+  const email =
+    document.getElementById("loginEmail").value;
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+  const remember =
+    document.getElementById("rememberMe").checked;
+
+  try{
+
+    await setPersistence(
+      auth,
+      remember
+        ? browserLocalPersistence
+        : browserSessionPersistence
+    );
+
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    closeLoginModal();
+
+    alert("Inloggad!");
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+}
 // =======================
 // REGISTRERA ANVÄNDARE
 // =======================
@@ -376,18 +600,33 @@ window.register = async function(){
 // LOGGA IN
 // =======================
 
-window.login = async function(){
+window.submitLogin = async function(){
 
-  const email = prompt("E-post:");
-  const password = prompt("Lösenord:");
+  const email =
+    document.getElementById("loginEmail").value;
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+  const remember =
+    document.getElementById("rememberMe").checked;
 
   try{
+
+    await setPersistence(
+      auth,
+      remember
+        ? browserLocalPersistence
+        : browserSessionPersistence
+    );
 
     await signInWithEmailAndPassword(
       auth,
       email,
       password
     );
+
+    closeLoginModal();
 
     alert("Inloggad!");
 
@@ -477,15 +716,26 @@ async function loadTips(){
 
 onAuthStateChanged(auth, (user)=>{
 
+  const loginBtn =
+    document.getElementById("loginBtn");
+
   if(user){
 
     console.log("Inloggad:", user.email);
+
+    loginBtn.innerText = "Inloggad";
+
+    loginBtn.classList.add("logged-in");
 
     loadTips();
 
   }else{
 
     console.log("Inte inloggad");
+
+    loginBtn.innerText = "Logga in";
+
+    loginBtn.classList.remove("logged-in");
 
   }
 
