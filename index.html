@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RDF:s VM-Tips 2026</title>
+<title>VM-Tips 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
---gold: #59D5FF;
---gold-dark: #1FA9D6;
+  --gold: #59D5FF;
+  --gold-dark: #1FA9D6;
   --green: #0E4E63;
   --bg: #12384d;
   --bg2: #0d2c40;
@@ -44,31 +44,14 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .page.active { display: block; }
 .page-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 26px; color: var(--gold); margin-bottom: 4px; text-shadow: 0 0 10px rgba(89,213,255,0.30) }
 .page-sub { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
-.groups-grid { display: flex; flex-direction: column; gap: 14px; } 
-.group-card { background: var(--bg3); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; }
-.group-header { background: var(--green); padding: 9px 16px; display: flex; align-items: center; gap: 10px; }
-.group-letter { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px; color: var(--gold); }
-.match-row { padding: 11px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.match-card { background: var(--bg3); border-radius: 12px; border: 1px solid var(--border); margin-bottom: 8px; overflow: hidden; }
+.match-row { padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
 .match-info { flex: 1; min-width: 0; }
-.match-teams { font-size: 13px; font-weight: 600; }
+.match-teams { font-size: 14px; font-weight: 600; }
 .match-meta { font-size: 11px; color: var(--text2); margin-top: 2px; }
 .score-inputs { display: flex; align-items: center; gap: 5px; }
-.score-inputs input { width: 38px; height: 34px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; background: var(--bg); color: var(--gold); border: 1px solid rgba(89,213,255,0.28); border-radius: 6px; }
-.knockout-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; }
-.ko-card { background: var(--bg3); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; }
-.ko-header { background: var(--bg2); padding: 8px 16px; display: flex; justify-content: space-between; }
-.ko-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; color: var(--gold); font-weight: 700; }
-.bonus-section { background: rgba(0,0,0,0.2); border-top: 1px solid var(--border); padding: 12px 16px; }
-.bonus-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.opt-btn { font-size: 11px; font-family: 'Barlow Condensed', sans-serif; padding: 3px 9px; border: 1px solid var(--border); border-radius: 4px; background: transparent; color: var(--text2); cursor: pointer; }
-.opt-btn.selected { background: var(--gold); color: var(--bg); border-color: var(--gold); }
-.tournament-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-.tourn-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 16px; padding: 16px; }
-.tourn-input { width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 7px; padding: 8px; }
-.tb-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
-.lb-wrap { background: var(--bg3); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-.lb-header-row { display: grid; grid-template-columns: 44px 1fr 80px 80px 80px 90px; gap: 8px; padding: 10px 16px; background: var(--bg2); font-size: 12px; color: var(--text2); }
-.lb-row { display: grid; grid-template-columns: 44px 1fr 80px 80px 80px 90px; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--border); align-items: center; }
+.score-inputs input { width: 40px; height: 36px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; background: var(--bg); color: var(--gold); border: 1px solid rgba(89,213,255,0.28); border-radius: 6px; }
+.date-divider { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; color: var(--gold); margin: 20px 0 10px 5px; font-size: 18px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
 .footer { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13,44,64,0.82); backdrop-filter: blur(10px); border-top: 1px solid var(--border); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 99; }
 .btn { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; padding: 8px 18px; border-radius: 8px; cursor: pointer; border: 1px solid var(--blue); background: transparent; color: var(--blue); }
 .btn.primary { background: var(--gold); color: #04131d; border-color: var(--gold); }
@@ -84,15 +67,14 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 <body>
 
 <div class="loading" id="loading">
-  <div style="font-family:'Barlow Condensed'; font-size:36px; color:var(--gold);">RDF:s VM-TIPS 2026</div>
+  <div style="font-family:'Barlow Condensed'; font-size:36px; color:var(--gold);">VM-TIPS 2026</div>
 </div>
 
 <header>
-  <div class="logo">RDF:s VM-TIPS 2026</div>
+  <div class="logo">VM-TIPS 2026</div>
   <div class="header-right">
     <span class="user-badge" id="userBadge"></span>
     <button class="btn" id="loginBtn" onclick="openModal('loginModal')">Logga in</button>
-    <button class="btn" id="registerBtn" onclick="openModal('registerModal')">Registrera</button>
     <button class="btn danger" id="logoutBtn" onclick="doLogout()" style="display:none">Logga ut</button>
   </div>
 </header>
@@ -106,35 +88,20 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
     <button onclick="showPage('semi')">Semifinaler</button>
     <button onclick="showPage('final')">Final & Brons</button>
     <button onclick="showPage('tournament')">Turneringstips</button>
-    <button onclick="showPage('tiebreakers')">Utslagsfrågor</button>
-    <button onclick="showPage('leaderboard')">Poängtabell</button>
   </div>
 </nav>
 
 <div class="container">
   <div class="page active" id="page-groups">
     <div class="page-title">Gruppspel</div>
-    <div id="groups-grid"></div>
+    <div class="page-sub">Matcherna tippas i spelordning</div>
+    <div id="schedule-grid"></div>
   </div>
-  <div class="page" id="page-r16"><div class="knockout-grid" id="r16-grid"></div></div>
-  <div class="page" id="page-qf"><div class="knockout-grid" id="qf-grid"></div></div>
-  <div class="page" id="page-sf"><div class="knockout-grid" id="sf-grid"></div></div>
-  <div class="page" id="page-semi"><div class="knockout-grid" id="semi-grid"></div></div>
-  <div class="page" id="page-final"><div class="knockout-grid" id="final-grid"></div></div>
-  <div class="page" id="page-tournament"><div class="tournament-grid" id="tournament-grid"></div></div>
-  <div class="page" id="page-tiebreakers"><div class="tb-card" id="tb-container"></div></div>
-  <div class="page" id="page-leaderboard">
-    <div class="lb-wrap">
-      <div class="lb-header-row">
-        <div>#</div><div>Spelare</div><div style="text-align:center">Matcher</div><div style="text-align:center">Bonus</div><div style="text-align:center">Turnering</div><div style="text-align:center">Total</div>
-      </div>
-      <div id="lb-body"></div>
-    </div>
+  <div class="page" id="page-r16">Slutspel kommer inom kort...</div>
   </div>
-</div>
 
 <div class="footer">
-  <div id="footer-stats">Logga in för att spara dina tips</div>
+  <div id="footer-stats">Logga in för att spara</div>
   <button class="btn primary" onclick="saveTips()">Spara tips</button>
 </div>
 
@@ -148,23 +115,12 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
   </div>
 </div>
 
-<div class="modal" id="registerModal">
-  <div class="modal-content">
-    <h3>Skapa konto</h3>
-    <input type="text" id="regName" placeholder="Ditt namn" style="width:100%; margin:10px 0; padding:10px;">
-    <input type="email" id="regEmail" placeholder="E-post" style="width:100%; margin:10px 0; padding:10px;">
-    <input type="password" id="regPassword" placeholder="Lösenord" style="width:100%; margin:10px 0; padding:10px;">
-    <button class="btn primary" onclick="doRegister()">Registrera</button>
-    <button class="btn" onclick="closeModal('registerModal')">Stäng</button>
-  </div>
-</div>
-
 <div id="toast" class="toast"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCEDnmGznmY2rMYPlzBNXStjkCGOAXxYh4",
@@ -179,124 +135,52 @@ const fbApp = initializeApp(firebaseConfig);
 const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
 
-window.doLogin = async () => {
-  const e = document.getElementById('loginEmail').value;
-  const p = document.getElementById('loginPassword').value;
-  try {
-    await signInWithEmailAndPassword(auth, e, p);
-    closeModal('loginModal');
-    showToast("Inloggad!");
-  } catch(e) { showToast("Fel vid inloggning", true); }
-};
-
-window.doRegister = async () => {
-  const n = document.getElementById('regName').value;
-  const e = document.getElementById('regEmail').value;
-  const p = document.getElementById('regPassword').value;
-  try {
-    const cred = await createUserWithEmailAndPassword(auth, e, p);
-    await updateProfile(cred.user, { displayName: n });
-    closeModal('registerModal');
-    showToast("Konto skapat!");
-  } catch(e) { showToast("Fel vid registrering", true); }
-};
-
-window.doLogout = async () => { await signOut(auth); showToast("Utloggad"); };
-
-window.saveTips = async () => {
-  if(!auth.currentUser) return showToast("Logga in först", true);
-  await setDoc(doc(db, "tips", auth.currentUser.uid), {
-    predictions, bonuses, tournament, username: auth.currentUser.displayName || auth.currentUser.email,
-    updated: new Date().toISOString()
-  });
-  showToast("Sparat!");
-  loadLeaderboard();
-};
-
-async function loadLeaderboard() {
-  const snap = await getDocs(collection(db, "tips"));
-  const rows = [];
-  snap.forEach(d => rows.push(d.data()));
-  document.getElementById('lb-body').innerHTML = rows.map((r, i) => `
-    <div class="lb-row">
-      <div>${i+1}</div><div>${r.username}</div><div style="text-align:center">${Object.keys(r.predictions || {}).length}</div><div style="text-align:center">0</div><div style="text-align:center">0</div><div style="text-align:center">0</div>
-    </div>`).join('');
-}
-
-onAuthStateChanged(auth, user => {
-  document.getElementById('loading').classList.add('hidden');
-  if(user) {
-    document.getElementById('userBadge').textContent = user.displayName || user.email;
-    document.getElementById('userBadge').style.display = 'block';
-    document.getElementById('loginBtn').style.display = 'none';
-    document.getElementById('registerBtn').style.display = 'none';
-    document.getElementById('logoutBtn').style.display = 'block';
-    loadUserTips(user);
-  } else {
-    document.getElementById('userBadge').style.display = 'none';
-    document.getElementById('loginBtn').style.display = 'block';
-    document.getElementById('registerBtn').style.display = 'block';
-    document.getElementById('logoutBtn').style.display = 'none';
-  }
-  loadLeaderboard();
-});
-
-async function loadUserTips(user) {
-  const d = await getDoc(doc(db, "tips", user.uid));
-  if(d.exists()) {
-    const data = d.data();
-    predictions = data.predictions || {};
-    bonuses = data.bonuses || {};
-    tournament = data.tournament || {};
-    renderGroups();
-    updateStats();
-  }
-}
-</script>
-
-<script>
-const GROUPS = [
-  { letter:'A', matches:[{h:'Mexiko', a:'Sydafrika', date:'11 jun', time:'21:00'}, {h:'Sydkorea', a:'Tjeckien', date:'12 jun', time:'04:00'}, {h:'Tjeckien', a:'Sydafrika', date:'18 jun', time:'18:00'}, {h:'Mexiko', a:'Sydkorea', date:'19 jun', time:'03:00'}, {h:'Sydafrika', a:'Sydkorea', date:'25 jun', time:'03:00'}, {h:'Tjeckien', a:'Mexiko', date:'25 jun', time:'03:00'}]},
-  { letter:'B', matches:[{h:'Kanada', a:'Bosnien', date:'12 jun', time:'21:00'}, {h:'Qatar', a:'Schweiz', date:'13 jun', time:'21:00'}, {h:'Schweiz', a:'Bosnien', date:'18 jun', time:'21:00'}, {h:'Kanada', a:'Qatar', date:'19 jun', time:'00:00'}, {h:'Schweiz', a:'Kanada', date:'24 jun', time:'21:00'}, {h:'Bosnien', a:'Qatar', date:'24 jun', time:'21:00'}]},
-  { letter:'C', matches:[{h:'Brasilien', a:'Marocko', date:'14 jun', time:'00:00'}, {h:'Haiti', a:'Skottland', date:'14 jun', time:'03:00'}, {h:'Skottland', a:'Marocko', date:'20 jun', time:'00:00'}, {h:'Brasilien', a:'Haiti', date:'20 jun', time:'03:00'}, {h:'Marocko', a:'Haiti', date:'25 jun', time:'00:00'}, {h:'Skottland', a:'Brasilien', date:'25 jun', time:'00:00'}]},
-  { letter:'D', matches:[{h:'USA', a:'Paraguay', date:'13 jun', time:'03:00'}, {h:'Australien', a:'Turkiet', date:'14 jun', time:'06:00'}, {h:'USA', a:'Australien', date:'19 jun', time:'21:00'}, {h:'Turkiet', a:'Paraguay', date:'20 jun', time:'06:00'}, {h:'Turkiet', a:'USA', date:'26 jun', time:'04:00'}, {h:'Paraguay', a:'Australien', date:'26 jun', time:'04:00'}]},
-  { letter:'E', matches:[{h:'Tyskland', a:'Curaçao', date:'14 jun', time:'19:00'}, {h:'Elfenbenskusten', a:'Ecuador', date:'15 jun', time:'01:00'}, {h:'Tyskland', a:'Elfenbenskusten', date:'20 jun', time:'22:00'}, {h:'Ecuador', a:'Curaçao', date:'21 jun', time:'02:00'}, {h:'Curaçao', a:'Elfenbenskusten', date:'25 jun', time:'22:00'}, {h:'Ecuador', a:'Tyskland', date:'25 jun', time:'22:00'}]},
-  { letter:'F', matches:[{h:'Nederländerna', a:'Japan', date:'14 jun', time:'22:00'}, {h:'Sverige', a:'Tunisien', date:'15 jun', time:'04:00'}, {h:'Nederländerna', a:'Sverige', date:'20 jun', time:'19:00'}, {h:'Tunisien', a:'Japan', date:'21 jun', time:'06:00'}, {h:'Tunisien', a:'Nederländerna', date:'26 jun', time:'01:00'}, {h:'Japan', a:'Sverige', date:'26 jun', time:'01:00'}]},
-  { letter:'G', matches:[{h:'Belgien', a:'Egypten', date:'15 jun', time:'21:00'}, {h:'Iran', a:'Nya Zeeland', date:'16 jun', time:'03:00'}, {h:'Belgien', a:'Iran', date:'21 jun', time:'21:00'}, {h:'Nya Zeeland', a:'Egypten', date:'22 jun', time:'03:00'}, {h:'Nya Zeeland', a:'Belgien', date:'27 jun', time:'05:00'}, {h:'Egypten', a:'Iran', date:'27 jun', time:'05:00'}]},
-  { letter:'H', matches:[{h:'Spanien', a:'Kap Verde', date:'15 jun', time:'18:00'}, {h:'Saudiarabien', a:'Uruguay', date:'16 jun', time:'00:00'}, {h:'Spanien', a:'Saudiarabien', date:'21 jun', time:'18:00'}, {h:'Uruguay', a:'Kap Verde', date:'22 jun', time:'00:00'}, {h:'Kap Verde', a:'Saudiarabien', date:'27 jun', time:'02:00'}, {h:'Uruguay', a:'Spanien', date:'27 jun', time:'02:00'}]},
-  { letter:'I', matches:[{h:'Frankrike', a:'Senegal', date:'16 jun', time:'21:00'}, {h:'Irak', a:'Norge', date:'17 jun', time:'00:00'}, {h:'Frankrike', a:'Irak', date:'22 jun', time:'23:00'}, {h:'Norge', a:'Senegal', date:'23 jun', time:'02:00'}, {h:'Norge', a:'Frankrike', date:'26 jun', time:'21:00'}, {h:'Senegal', a:'Irak', date:'26 jun', time:'21:00'}]},
-  { letter:'J', matches:[{h:'Argentina', a:'Algeriet', date:'17 jun', time:'03:00'}, {h:'Österrike', a:'Jordanien', date:'17 jun', time:'06:00'}, {h:'Argentina', a:'Österrike', date:'22 jun', time:'19:00'}, {h:'Jordanien', a:'Algeriet', date:'23 jun', time:'05:00'}, {h:'Algeriet', a:'Österrike', date:'28 jun', time:'04:00'}, {h:'Jordanien', a:'Argentina', date:'28 jun', time:'04:00'}]},
-  { letter:'K', matches:[{h:'Portugal', a:'DR Kongo', date:'17 jun', time:'19:00'}, {h:'Uzbekistan', a:'Colombia', date:'18 jun', time:'04:00'}, {h:'Portugal', a:'Uzbekistan', date:'23 jun', time:'19:00'}, {h:'Colombia', a:'DR Kongo', date:'24 jun', time:'04:00'}, {h:'Colombia', a:'Portugal', date:'28 jun', time:'01:30'}, {h:'DR Kongo', a:'Uzbekistan', date:'28 jun', time:'01:30'}]},
-  { letter:'L', matches:[{h:'England', a:'Kroatien', date:'17 jun', time:'22:00'}, {h:'Ghana', a:'Panama', date:'18 jun', time:'01:00'}, {h:'England', a:'Ghana', date:'23 jun', time:'22:00'}, {h:'Panama', a:'Kroatien', date:'24 jun', time:'01:00'}, {h:'Panama', a:'England', date:'27 jun', time:'23:00'}, {h:'Kroatien', a:'Ghana', date:'27 jun', time:'23:00'}]}
+const SCHEDULE = [
+  {date:'Torsdag 11 juni', matches:[{h:'Mexiko', a:'Sydafrika', time:'21.00', tv:'TV4', id:'m1'}]},
+  {date:'Fredag 12 juni', matches:[{h:'Sydkorea', a:'Tjeckien', time:'04.00', tv:'TV4', id:'m2'}, {h:'Kanada', a:'Bosnien & Herr.', time:'21.00', tv:'SVT Play', id:'m3'}]},
+  {date:'Lördag 13 juni', matches:[{h:'USA', a:'Paraguay', time:'03.00', tv:'TV4', id:'m4'}, {h:'Qatar', a:'Schweiz', time:'21.00', tv:'TV4', id:'m5'}]},
+  {date:'Söndag 14 juni', matches:[{h:'Brasilien', a:'Marocko', time:'00.00', tv:'SVT Play', id:'m6'}, {h:'Haiti', a:'Skottland', time:'03.00', tv:'SVT Play', id:'m7'}, {h:'Australien', a:'Turkiet', time:'06.00', tv:'TV4', id:'m8'}, {h:'Tyskland', a:'Curaçao', time:'19.00', tv:'TV4', id:'m9'}, {h:'Nederländerna', a:'Japan', time:'22.00', tv:'TV4', id:'m10'}]},
+  {date:'Måndag 15 juni', matches:[{h:'Elfenbenskusten', a:'Ecuador', time:'01.00', tv:'TV4', id:'m11'}, {h:'Sverige', a:'Tunisien', time:'04.00', tv:'SVT Play', id:'m12'}, {h:'Spanien', a:'Kap Verde', time:'18.00', tv:'SVT Play', id:'m13'}, {h:'Belgien', a:'Egypten', time:'21.00', tv:'SVT Play', id:'m14'}]},
+  {date:'Tisdag 16 juni', matches:[{h:'Saudiarabien', a:'Uruguay', time:'00.00', tv:'TV4', id:'m15'}, {h:'Iran', a:'Nya Zeeland', time:'03.00', tv:'TV4', id:'m16'}, {h:'Frankrike', a:'Senegal', time:'21.00', tv:'SVT Play', id:'m17'}]},
+  {date:'Onsdag 17 juni', matches:[{h:'Irak', a:'Norge', time:'00.00', tv:'TV4', id:'m18'}, {h:'Argentina', a:'Algeriet', time:'03.00', tv:'TV4', id:'m19'}, {h:'Österrike', a:'Jordanien', time:'06.00', tv:'TV4', id:'m20'}, {h:'Portugal', a:'DR Kongo', time:'19.00', tv:'TV4', id:'m21'}, {h:'England', a:'Kroatien', time:'22.00', tv:'TV4', id:'m22'}]},
+  {date:'Torsdag 18 juni', matches:[{h:'Ghana', a:'Panama', time:'01.00', tv:'TV4', id:'m23'}, {h:'Uzbekistan', a:'Colombia', time:'04.00', tv:'TV4', id:'m24'}, {h:'Tjeckien', a:'Sydafrika', time:'18.00', tv:'TV4', id:'m25'}, {h:'Schweiz', a:'Bosnien & Herr.', time:'21.00', tv:'TV4', id:'m26'}]},
+  {date:'Fredag 19 juni', matches:[{h:'Kanada', a:'Qatar', time:'00.00', tv:'TV4', id:'m27'}, {h:'Mexiko', a:'Sydkorea', time:'03.00', tv:'TV4', id:'m28'}, {h:'USA', a:'Australien', time:'21.00', tv:'SVT Play', id:'m29'}]},
+  {date:'Lördag 20 juni', matches:[{h:'Skottland', a:'Marocko', time:'00.00', tv:'SVT Play', id:'m30'}, {h:'Brasilien', a:'Haiti', time:'03.00', tv:'TV4', id:'m31'}, {h:'Turkiet', a:'Paraguay', time:'06.00', tv:'TV4', id:'m32'}, {h:'Nederländerna', a:'Sverige', time:'19.00', tv:'TV4', id:'m33'}, {h:'Tyskland', a:'Elfenbenskusten', time:'22.00', tv:'TV4', id:'m34'}]},
+  {date:'Söndag 21 juni', matches:[{h:'Ecuador', a:'Curaçao', time:'02.00', tv:'TV4', id:'m35'}, {h:'Tunisien', a:'Japan', time:'06.00', tv:'SVT Play', id:'m36'}, {h:'Spanien', a:'Saudiarabien', time:'18.00', tv:'TV4', id:'m37'}, {h:'Belgien', a:'Iran', time:'21.00', tv:'TV4', id:'m38'}]},
+  {date:'Måndag 22 juni', matches:[{h:'Uruguay', a:'Kap Verde', time:'00.00', tv:'TV4', id:'m39'}, {h:'Nya Zeeland', a:'Egypten', time:'03.00', tv:'TV4', id:'m40'}, {h:'Argentina', a:'Österrike', time:'19.00', tv:'SVT Play', id:'m41'}, {h:'Frankrike', a:'Irak', time:'23.00', tv:'SVT Play', id:'m42'}]},
+  {date:'Tisdag 23 juni', matches:[{h:'Norge', a:'Senegal', time:'02.00', tv:'SVT Play', id:'m43'}, {h:'Jordanien', a:'Algeriet', time:'05.00', tv:'TV4', id:'m44'}, {h:'Portugal', a:'Uzbekistan', time:'19.00', tv:'SVT Play', id:'m45'}, {h:'England', a:'Ghana', time:'22.00', tv:'SVT Play', id:'m46'}]},
+  {date:'Onsdag 24 juni', matches:[{h:'Panama', a:'Kroatien', time:'01.00', tv:'TV4', id:'m47'}, {h:'Colombia', a:'DR Kongo', time:'04.00', tv:'TV4', id:'m48'}, {h:'Schweiz', a:'Kanada', time:'21.00', tv:'TV4', id:'m49'}, {h:'Bosnien & Herr.', a:'Qatar', time:'21.00', tv:'TV4', id:'m50'}]},
+  {date:'Torsdag 25 juni', matches:[{h:'Marocko', a:'Haiti', time:'00.00', tv:'TV4', id:'m51'}, {h:'Skottland', a:'Brasilien', time:'00.00', tv:'TV4', id:'m52'}, {h:'Sydafrika', a:'Sydkorea', time:'03.00', tv:'SVT Play', id:'m53'}, {h:'Tjeckien', a:'Mexiko', time:'03.00', tv:'SVT Play', id:'m54'}, {h:'Curaçao', a:'Elfenbenskusten', time:'22.00', tv:'SVT Play', id:'m55'}, {h:'Ecuador', a:'Tyskland', time:'22.00', tv:'SVT Play', id:'m56'}]},
+  {date:'Fredag 26 juni', matches:[{h:'Tunisien', a:'Nederländerna', time:'01.00', tv:'SVT Play', id:'m57'}, {h:'Japan', a:'Sverige', time:'01.00', tv:'SVT Play', id:'m58'}, {h:'Turkiet', a:'USA', time:'04.00', tv:'TV4', id:'m59'}, {h:'Paraguay', a:'Australien', time:'04.00', tv:'TV4', id:'m60'}, {h:'Norge', a:'Frankrike', time:'21.00', tv:'TV4', id:'m61'}, {h:'Senegal', a:'Irak', time:'21.00', tv:'TV4', id:'m62'}]},
+  {date:'Lördag 27 juni', matches:[{h:'Kap Verde', a:'Saudiarabien', time:'02.00', tv:'TV4', id:'m63'}, {h:'Uruguay', a:'Spanien', time:'02.00', tv:'TV4', id:'m64'}, {h:'Nya Zeeland', a:'Belgien', time:'05.00', tv:'TV4', id:'m65'}, {h:'Egypten', a:'Iran', time:'05.00', tv:'TV4', id:'m66'}, {h:'Panama', a:'England', time:'23.00', tv:'SVT Play', id:'m67'}, {h:'Kroatien', a:'Ghana', time:'23.00', tv:'SVT Play', id:'m68'}]},
+  {date:'Söndag 28 juni', matches:[{h:'DR Kongo', a:'Uzbekistan', time:'01.30', tv:'TV4', id:'m69'}, {h:'Colombia', a:'Portugal', time:'01.30', tv:'TV4', id:'m70'}, {h:'Algeriet', a:'Österrike', time:'04.00', tv:'TV4', id:'m71'}, {h:'Jordanien', a:'Argentina', time:'04.00', tv:'TV4', id:'m72'}]}
 ];
 
 let predictions = {};
-let bonuses = {};
-let tournament = {};
 
 function renderGroups() {
-  const container = document.getElementById('groups-grid');
-  container.innerHTML = GROUPS.map(g => `
-    <div class="group-card">
-      <div class="group-header"><span class="group-letter">GRUPP ${g.letter}</span></div>
-      ${g.matches.map((m, i) => {
-        const id = `g_${g.letter}_${i}`;
-        const valH = predictions[id]?.h || '';
-        const valA = predictions[id]?.a || '';
-        return `
+  const container = document.getElementById('schedule-grid');
+  container.innerHTML = SCHEDULE.map(day => `
+    <div class="date-divider">${day.date}</div>
+    ${day.matches.map(m => {
+      const valH = predictions[m.id]?.h || '';
+      const valA = predictions[m.id]?.a || '';
+      return `
+      <div class="match-card">
         <div class="match-row">
           <div class="match-info">
             <div class="match-teams">${m.h} – ${m.a}</div>
-            <div class="match-meta">${m.date} · ${m.time}</div>
+            <div class="match-meta">${m.time} · ${m.tv}</div>
           </div>
           <div class="score-inputs">
-            <input type="number" value="${valH}" onchange="updatePred('${id}','h',this.value)">
+            <input type="number" value="${valH}" onchange="updatePred('${m.id}','h',this.value)">
             <span>-</span>
-            <input type="number" value="${valA}" onchange="updatePred('${id}','a',this.value)">
+            <input type="number" value="${valA}" onchange="updatePred('${m.id}','a',this.value)">
           </div>
-        </div>`;
-      }).join('')}
-    </div>`).join('');
+        </div>
+      </div>`;
+    }).join('')}
+  `).join('');
 }
 
 window.updatePred = (id, side, val) => {
@@ -305,6 +189,52 @@ window.updatePred = (id, side, val) => {
   updateStats();
 };
 
+window.saveTips = async () => {
+  if(!auth.currentUser) return showToast("Logga in först", true);
+  await setDoc(doc(db, "tips", auth.currentUser.uid), {
+    predictions, username: auth.currentUser.email
+  });
+  showToast("Sparat!");
+};
+
+window.doLogin = async () => {
+  const e = document.getElementById('loginEmail').value;
+  const p = document.getElementById('loginPassword').value;
+  try {
+    await signInWithEmailAndPassword(auth, e, p);
+    closeModal('loginModal');
+  } catch(e) { alert("Fel vid inloggning"); }
+};
+
+onAuthStateChanged(auth, user => {
+  document.getElementById('loading').classList.add('hidden');
+  if(user) {
+    document.getElementById('userBadge').textContent = user.email;
+    document.getElementById('userBadge').style.display = 'block';
+    loadUserTips(user);
+  }
+});
+
+async function loadUserTips(user) {
+  const d = await getDoc(doc(db, "tips", user.uid));
+  if(d.exists()) {
+    predictions = d.data().predictions || {};
+    renderGroups();
+    updateStats();
+  }
+}
+
+function updateStats() {
+  const count = Object.values(predictions).filter(p => p.h !== '' && p.a !== '').length;
+  document.getElementById('footer-stats').textContent = `Tippat: ${count} / 72 matcher`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
 window.showPage = (id) => {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
@@ -312,23 +242,10 @@ window.showPage = (id) => {
   event.target.classList.add('active');
 };
 
-function updateStats() {
-  const count = Object.values(predictions).filter(p => p.h !== '' && p.a !== '').length;
-  document.getElementById('footer-stats').textContent = `Tippat: ${count} / 72 matcher`;
-}
-
-function showToast(msg, isError) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; 
-  t.className = 'toast' + (isError ? ' error' : '') + ' show';
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
-
 window.openModal = (id) => document.getElementById(id).classList.add('open');
 window.closeModal = (id) => document.getElementById(id).classList.remove('open');
 
 renderGroups();
-updateStats();
 </script>
 </body>
 </html>
