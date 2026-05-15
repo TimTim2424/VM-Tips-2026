@@ -67,6 +67,17 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .toast.show { opacity: 1; }
 .loading { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 500; }
 .loading.hidden { display: none; }
+
+/* Döljer pilarna i Chrome, Safari, Edge och Opera */
+.score-inputs input::-webkit-outer-spin-button,
+.score-inputs input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Döljer pilarna i Firefox */
+.score-inputs input[type=number] {
+  -moz-appearance: textfield;
+} 
 </style>
 </head>
 <body>
@@ -85,14 +96,14 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 </header>
 
 <nav>
-  <div class="nav-inner">
-    <button class="active" onclick="showPage('groups', this)">Gruppspel</button>
-    <button onclick="showPage('r16', this)">16-delsfinaler</button>
-    <button onclick="showPage('qf', this)">Åttondelsfinaler</button>
-    <button onclick="showPage('sf', this)">Kvartsfinaler</button>
-    <button onclick="showPage('semi', this)">Semifinaler</button>
-    <button onclick="showPage('final', this)">Final & Brons</button>
-  </div>
+  <div class="nav-inner">
+    <button class="active" onclick="showPage('groups', this)">Gruppspel</button>
+    <button onclick="showPage('r16', this)">16-delsfinaler</button>
+    <button onclick="showPage('qf', this)">Åttondelsfinaler</button>
+    <button onclick="showPage('sf', this)">Kvartsfinaler</button>
+    <button onclick="showPage('semi', this)">Semifinaler</button>
+    <button onclick="showPage('final', this)">Final & Brons</button>
+  </div>
 </nav>
 
 <div class="container">
@@ -280,7 +291,7 @@ function getFriendlyErrorMessage(error) {
       
     // Användarfel
     case 'auth/user-not-found':
-      return 'Det finns inget konto registrerat med denna e-postadress.';
+      return 'Det finns inget konto registrarat med denna e-postadress.';
       
     // Nätverks- och blockeringsfel (Det fel du fick på bilden!)
     case 'auth/network-request-failed':
@@ -377,10 +388,10 @@ function showToast(msg) {
 }
 
 window.showPage = (id, btn) => {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
 };
 
 window.openModal = (id) => document.getElementById(id).classList.add('open');
