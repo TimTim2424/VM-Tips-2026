@@ -389,7 +389,7 @@ async function loadUserTips(user) {
       tournament = d.tournament || {};
       tiebreakers = d.tiebreakers || {};
       syncAllInputs();
-      updateStats();
+      updateStats(user);
     }
   } catch(e) { console.error(e); }
 }
@@ -663,7 +663,22 @@ const TIEBREAKERS = [
 let predictions = {};
 let bonuses = {};
 let tournament = {};
-let tiebreakers = {};
+let tiebreakers = {}; function updateStats(user) {
+  const filled = Object.values(predictions)
+    .filter(m => m.home !== '' && m.away !== '')
+    .length;
+
+  const el = document.getElementById('footer-stats');
+
+  if (user) {
+    el.innerHTML =
+      `Inloggad som <span>${user.displayName || user.email}</span> · ${filled}/104 matcher ifyllda`;
+  } else {
+    el.textContent =
+      `${filled}/104 matcher ifyllda – logga in för att spara`;
+  }
+}
+window.updateStats = updateStats;
 const TOURNAMENT_LOCK = new Date(2026, 5, 11, 21, 0);
 function isLocked() {
   return new Date() >= TOURNAMENT_LOCK;
@@ -1008,7 +1023,7 @@ renderKnockout('semi', 'semi-grid');
 renderKnockout('final', 'final-grid');
 renderTournament();
 renderTiebreakers();
-updateStats();
+updateStats(null);
 if (isLocked()) {
   document.getElementById('saveBtn').disabled = true;
 }
