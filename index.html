@@ -472,107 +472,163 @@ function firebaseError(e) {
 
 <script>
 // ============================================================
-// MATCHDATA – alla 12 grupper
+// MATCHDATA – ALLA 12 GRUPPER (72 matcher)
 // ============================================================
 const GROUPS = [
   { letter:'A', matches:[
-    {h:'Mexiko',          a:'Sydafrika',               date:'11 jun', time:'21:00', stadium:'Mexico City',  tv:'TV4'},
-    {h:'Sydkorea',        a:'Tjeckien',                date:'12 jun', time:'04:00', stadium:'Guadalajara',  tv:'TV4'},
-    {h:'Tjeckien',        a:'Sydafrika',               date:'18 jun', time:'18:00', stadium:'Atlanta',      tv:'TV4'},
-    {h:'Mexiko',          a:'Sydkorea',                date:'19 jun', time:'03:00', stadium:'Guadalajara',  tv:'TV4'},
-    {h:'Tjeckien',        a:'Mexiko',                  date:'25 jun', time:'03:00', stadium:'Mexico City',  tv:'SVT1'},
-    {h:'Sydafrika',       a:'Sydkorea',                date:'25 jun', time:'03:00', stadium:'Monterrey',    tv:'SVT2'},
+    {h:'Mexiko', a:'Sydafrika', date:'11 jun', time:'21:00', stadium:'Mexico City', tv:'TV4'},
+    {h:'Sydkorea', a:'Tjeckien', date:'12 jun', time:'04:00', stadium:'Guadalajara', tv:'TV4'},
+    {h:'Tjeckien', a:'Sydafrika', date:'18 jun', time:'18:00', stadium:'Atlanta', tv:'TV4'},
+    {h:'Mexiko', a:'Sydkorea', date:'19 jun', time:'03:00', stadium:'Guadalajara', tv:'TV4'},
+    {h:'Sydafrika', a:'Sydkorea', date:'25 jun', time:'03:00', stadium:'Monterrey', tv:'SVT Play'},
+    {h:'Tjeckien', a:'Mexiko', date:'25 jun', time:'03:00', stadium:'Mexico City', tv:'SVT Play'}
   ]},
   { letter:'B', matches:[
-    {h:'Kanada',          a:'Bosnien och Hercegovina', date:'12 jun', time:'21:00', stadium:'Toronto',      tv:'SVT1'},
-    {h:'Qatar',           a:'Schweiz',                 date:'13 jun', time:'21:00', stadium:'San Francisco',tv:'TV4'},
-    {h:'Schweiz',         a:'Bosnien och Hercegovina', date:'18 jun', time:'21:00', stadium:'Los Angeles',  tv:'TV4'},
-    {h:'Kanada',          a:'Qatar',                   date:'19 jun', time:'00:00', stadium:'Vancouver',    tv:'TV4'},
-    {h:'Schweiz',         a:'Kanada',                  date:'24 jun', time:'21:00', stadium:'Vancouver',    tv:'TV4'},
-    {h:'Bosnien och Hercegovina', a:'Qatar',           date:'24 jun', time:'21:00', stadium:'Seattle',      tv:'TV4'},
+    {h:'Kanada', a:'Bosnien och Hercegovina', date:'12 jun', time:'21:00', stadium:'Toronto', tv:'SVT Play'},
+    {h:'Qatar', a:'Schweiz', date:'13 jun', time:'21:00', stadium:'San Francisco', tv:'TV4'},
+    {h:'Schweiz', a:'Bosnien och Hercegovina', date:'18 jun', time:'21:00', stadium:'Los Angeles', tv:'TV4'},
+    {h:'Kanada', a:'Qatar', date:'19 jun', time:'00:00', stadium:'Vancouver', tv:'TV4'},
+    {h:'Schweiz', a:'Kanada', date:'24 jun', time:'21:00', stadium:'Vancouver', tv:'TV4'},
+    {h:'Bosnien och Hercegovina', a:'Qatar', date:'24 jun', time:'21:00', stadium:'Seattle', tv:'TV4'}
   ]},
   { letter:'C', matches:[
-    {h:'Brasilien',       a:'Marocko',                 date:'14 jun', time:'00:00', stadium:'New Jersey',   tv:'SVT1'},
-    {h:'Haiti',           a:'Skottland',               date:'14 jun', time:'03:00', stadium:'Boston',       tv:'SVT1'},
-    {h:'Skottland',       a:'Marocko',                 date:'20 jun', time:'00:00', stadium:'Boston',       tv:'SVT1'},
-    {h:'Brasilien',       a:'Haiti',                   date:'20 jun', time:'03:00', stadium:'Philadelphia', tv:'TV4'},
-    {h:'Marocko',         a:'Haiti',                   date:'25 jun', time:'00:00', stadium:'Atlanta',      tv:'TV4'},
-    {h:'Skottland',       a:'Brasilien',               date:'25 jun', time:'00:00', stadium:'Miami',        tv:'TV4'},
+    {h:'Brasilien', a:'Marocko', date:'14 jun', time:'00:00', stadium:'New Jersey', tv:'SVT Play'},
+    {h:'Haiti', a:'Skottland', date:'14 jun', time:'03:00', stadium:'Boston', tv:'SVT Play'},
+    {h:'Skottland', a:'Marocko', date:'20 jun', time:'00:00', stadium:'Boston', tv:'SVT Play'},
+    {h:'Brasilien', a:'Haiti', date:'20 jun', time:'03:00', stadium:'Philadelphia', tv:'TV4'},
+    {h:'Marocko', a:'Haiti', date:'25 jun', time:'00:00', stadium:'Atlanta', tv:'TV4'},
+    {h:'Skottland', a:'Brasilien', date:'25 jun', time:'00:00', stadium:'Miami', tv:'TV4'}
   ]},
   { letter:'D', matches:[
-    {h:'USA',             a:'Paraguay',                date:'13 jun', time:'03:00', stadium:'Los Angeles',  tv:'TV4'},
-    {h:'Australien',      a:'Turkiet',                 date:'14 jun', time:'06:00', stadium:'Vancouver',    tv:'TV4'},
-    {h:'Turkiet',         a:'Paraguay',                date:'20 jun', time:'06:00', stadium:'San Francisco',tv:'TV4'},
-    {h:'USA',             a:'Australien',              date:'19 jun', time:'21:00', stadium:'Seattle',      tv:'SVT2'},
-    {h:'Turkiet',         a:'USA',                     date:'26 jun', time:'04:00', stadium:'Los Angeles',  tv:'TV4'},
-    {h:'Paraguay',        a:'Australien',              date:'26 jun', time:'04:00', stadium:'San Francisco',tv:'TV4'},
+    {h:'USA', a:'Paraguay', date:'13 jun', time:'03:00', stadium:'Los Angeles', tv:'TV4'},
+    {h:'Australien', a:'Turkiet', date:'14 jun', time:'06:00', stadium:'Vancouver', tv:'TV4'},
+    {h:'USA', a:'Australien', date:'19 jun', time:'21:00', stadium:'Seattle', tv:'SVT Play'},
+    {h:'Turkiet', a:'Paraguay', date:'20 jun', time:'06:00', stadium:'San Francisco', tv:'TV4'},
+    {h:'Turkiet', a:'USA', date:'26 jun', time:'04:00', stadium:'Los Angeles', tv:'TV4'},
+    {h:'Paraguay', a:'Australien', date:'26 jun', time:'04:00', stadium:'San Francisco', tv:'TV4'}
   ]},
   { letter:'E', matches:[
-    {h:'Tyskland',        a:'Curaçao',                 date:'14 jun', time:'19:00', stadium:'Houston',      tv:'TV4'},
-    {h:'Elfenbenskusten', a:'Ecuador',                 date:'15 jun', time:'01:00', stadium:'Philadelphia', tv:'TV4'},
-    {h:'Tyskland',        a:'Elfenbenskusten',         date:'20 jun', time:'22:00', stadium:'Toronto',      tv:'TV4'},
-    {h:'Ecuador',         a:'Curaçao',                 date:'21 jun', time:'02:00', stadium:'Kansas City',  tv:'TV4'},
-    {h:'Curaçao',         a:'Elfenbenskusten',         date:'25 jun', time:'22:00', stadium:'Philadelphia', tv:'SVT'},
-    {h:'Ecuador',         a:'Tyskland',                date:'25 jun', time:'22:00', stadium:'New Jersey',   tv:'SVT'},
+    {h:'Tyskland', a:'Curaçao', date:'14 jun', time:'19:00', stadium:'Houston', tv:'TV4'},
+    {h:'Elfenbenskusten', a:'Ecuador', date:'15 jun', time:'01:00', stadium:'Philadelphia', tv:'TV4'},
+    {h:'Tyskland', a:'Elfenbenskusten', date:'20 jun', time:'22:00', stadium:'Toronto', tv:'TV4'},
+    {h:'Ecuador', a:'Curaçao', date:'21 jun', time:'02:00', stadium:'Kansas City', tv:'TV4'},
+    {h:'Curaçao', a:'Elfenbenskusten', date:'25 jun', time:'22:00', stadium:'Philadelphia', tv:'SVT Play'},
+    {h:'Ecuador', a:'Tyskland', date:'25 jun', time:'22:00', stadium:'New Jersey', tv:'SVT Play'}
   ]},
   { letter:'F', matches:[
-    {h:'Nederländerna',   a:'Japan',                   date:'14 jun', time:'22:00', stadium:'Dallas',       tv:'TV4'},
-    {h:'Sverige',         a:'Tunisien',                date:'15 jun', time:'04:00', stadium:'Monterrey',    tv:'SVT'},
-    {h:'Nederländerna',   a:'Sverige',                 date:'20 jun', time:'19:00', stadium:'Houston',      tv:'TV4'},
-    {h:'Tunisien',        a:'Japan',                   date:'21 jun', time:'06:00', stadium:'Monterrey',    tv:'SVT'},
-    {h:'Tunisien',        a:'Nederländerna',           date:'26 jun', time:'01:00', stadium:'Kansas City',  tv:'SVT'},
-    {h:'Japan',           a:'Sverige',                 date:'26 jun', time:'01:00', stadium:'Dallas',       tv:'SVT'},
+    {h:'Nederländerna', a:'Japan', date:'14 jun', time:'22:00', stadium:'Dallas', tv:'TV4'},
+    {h:'Sverige', a:'Tunisien', date:'15 jun', time:'04:00', stadium:'Monterrey', tv:'SVT Play'},
+    {h:'Nederländerna', a:'Sverige', date:'20 jun', time:'19:00', stadium:'Houston', tv:'TV4'},
+    {h:'Tunisien', a:'Japan', date:'21 jun', time:'06:00', stadium:'Monterrey', tv:'SVT Play'},
+    {h:'Tunisien', a:'Nederländerna', date:'26 jun', time:'01:00', stadium:'Kansas City', tv:'SVT Play'},
+    {h:'Japan', a:'Sverige', date:'26 jun', time:'01:00', stadium:'Dallas', tv:'SVT Play'}
   ]},
   { letter:'G', matches:[
-    {h:'Belgien',         a:'Egypten',                 date:'15 jun', time:'21:00', stadium:'Seattle',      tv:'SVT'},
-    {h:'Iran',            a:'Nya Zeeland',             date:'16 jun', time:'03:00', stadium:'Los Angeles',  tv:'TV4'},
-    {h:'Belgien',         a:'Iran',                    date:'21 jun', time:'21:00', stadium:'Los Angeles',  tv:'TV4'},
-    {h:'Nya Zeeland',     a:'Egypten',                 date:'22 jun', time:'03:00', stadium:'Vancouver',    tv:'TV4'},
-    {h:'Nya Zeeland',     a:'Belgien',                 date:'27 jun', time:'05:00', stadium:'Vancouver',    tv:'TV4'},
-    {h:'Egypten',         a:'Iran',                    date:'27 jun', time:'05:00', stadium:'Seattle',      tv:'TV4'},
+    {h:'Belgien', a:'Egypten', date:'15 jun', time:'21:00', stadium:'Seattle', tv:'SVT Play'},
+    {h:'Iran', a:'Nya Zeeland', date:'16 jun', time:'03:00', stadium:'Los Angeles', tv:'TV4'},
+    {h:'Belgien', a:'Iran', date:'21 jun', time:'21:00', stadium:'Los Angeles', tv:'TV4'},
+    {h:'Nya Zeeland', a:'Egypten', date:'22 jun', time:'03:00', stadium:'Vancouver', tv:'TV4'},
+    {h:'Nya Zeeland', a:'Belgien', date:'27 jun', time:'05:00', stadium:'Vancouver', tv:'TV4'},
+    {h:'Egypten', a:'Iran', date:'27 jun', time:'05:00', stadium:'Seattle', tv:'TV4'}
   ]},
   { letter:'H', matches:[
-    {h:'Spanien',         a:'Kap Verde',               date:'15 jun', time:'18:00', stadium:'Atlanta',      tv:'SVT'},
-    {h:'Saudiarabien',    a:'Uruguay',                 date:'16 jun', time:'00:00', stadium:'Miami',        tv:'TV4'},
-    {h:'Spanien',         a:'Saudiarabien',            date:'21 jun', time:'18:00', stadium:'Atlanta',      tv:'TV4'},
-    {h:'Uruguay',         a:'Kap Verde',               date:'22 jun', time:'00:00', stadium:'Miami',        tv:'TV4'},
-    {h:'Kap Verde',       a:'Saudiarabien',            date:'27 jun', time:'02:00', stadium:'Houston',      tv:'TV4'},
-    {h:'Uruguay',         a:'Spanien',                 date:'27 jun', time:'02:00', stadium:'Guadalajara',  tv:'TV4'},
+    {h:'Spanien', a:'Kap Verde', date:'15 jun', time:'18:00', stadium:'Atlanta', tv:'SVT Play'},
+    {h:'Saudiarabien', a:'Uruguay', date:'16 jun', time:'00:00', stadium:'Miami', tv:'TV4'},
+    {h:'Spanien', a:'Saudiarabien', date:'21 jun', time:'18:00', stadium:'Atlanta', tv:'TV4'},
+    {h:'Uruguay', a:'Kap Verde', date:'22 jun', time:'00:00', stadium:'Miami', tv:'TV4'},
+    {h:'Kap Verde', a:'Saudiarabien', date:'27 jun', time:'02:00', stadium:'Houston', tv:'TV4'},
+    {h:'Uruguay', a:'Spanien', date:'27 jun', time:'02:00', stadium:'Guadalajara', tv:'TV4'}
   ]},
   { letter:'I', matches:[
-    {h:'Frankrike',       a:'Senegal',                 date:'16 jun', time:'21:00', stadium:'New Jersey',   tv:'SVT'},
-    {h:'Irak',            a:'Norge',                   date:'17 jun', time:'00:00', stadium:'Boston',       tv:'TV4'},
-    {h:'Frankrike',       a:'Irak',                    date:'22 jun', time:'23:00', stadium:'Philadelphia', tv:'SVT'},
-    {h:'Norge',           a:'Senegal',                 date:'23 jun', time:'02:00', stadium:'New Jersey',   tv:'SVT'},
-    {h:'Norge',           a:'Frankrike',               date:'26 jun', time:'21:00', stadium:'Boston',       tv:'TV4'},
-    {h:'Senegal',         a:'Irak',                    date:'26 jun', time:'21:00', stadium:'Toronto',      tv:'TV4'},
+    {h:'Frankrike', a:'Senegal', date:'16 jun', time:'21:00', stadium:'New Jersey', tv:'SVT Play'},
+    {h:'Irak', a:'Norge', date:'17 jun', time:'00:00', stadium:'Boston', tv:'TV4'},
+    {h:'Frankrike', a:'Irak', date:'22 jun', time:'23:00', stadium:'Philadelphia', tv:'SVT Play'},
+    {h:'Norge', a:'Senegal', date:'23 jun', time:'02:00', stadium:'New Jersey', tv:'SVT Play'},
+    {h:'Norge', a:'Frankrike', date:'26 jun', time:'21:00', stadium:'Boston', tv:'TV4'},
+    {h:'Senegal', a:'Irak', date:'26 jun', time:'21:00', stadium:'Toronto', tv:'TV4'}
   ]},
   { letter:'J', matches:[
-    {h:'Argentina',       a:'Algeriet',                date:'17 jun', time:'03:00', stadium:'Kansas City',  tv:'TV4'},
-    {h:'Österrike',       a:'Jordanien',               date:'17 jun', time:'06:00', stadium:'San Francisco',tv:'TV4'},
-    {h:'Argentina',       a:'Österrike',               date:'22 jun', time:'19:00', stadium:'Dallas',       tv:'SVT'},
-    {h:'Jordanien',       a:'Algeriet',                date:'23 jun', time:'05:00', stadium:'San Francisco',tv:'TV4'},
-    {h:'Algeriet',        a:'Österrike',               date:'28 jun', time:'04:00', stadium:'Kansas City',  tv:'TV4'},
-    {h:'Jordanien',       a:'Argentina',               date:'28 jun', time:'04:00', stadium:'Dallas',       tv:'TV4'},
+    {h:'Argentina', a:'Algeriet', date:'17 jun', time:'03:00', stadium:'Kansas City', tv:'TV4'},
+    {h:'Österrike', a:'Jordanien', date:'17 jun', time:'06:00', stadium:'San Francisco', tv:'TV4'},
+    {h:'Argentina', a:'Österrike', date:'22 jun', time:'19:00', stadium:'Dallas', tv:'SVT Play'},
+    {h:'Jordanien', a:'Algeriet', date:'23 jun', time:'05:00', stadium:'San Francisco', tv:'TV4'},
+    {h:'Algeriet', a:'Österrike', date:'28 jun', time:'04:00', stadium:'Kansas City', tv:'TV4'},
+    {h:'Jordanien', a:'Argentina', date:'28 jun', time:'04:00', stadium:'Dallas', tv:'TV4'}
   ]},
   { letter:'K', matches:[
-    {h:'Portugal',        a:'DR Kongo',                date:'17 jun', time:'19:00', stadium:'Houston',      tv:'TV4'},
-    {h:'Uzbekistan',      a:'Colombia',                date:'18 jun', time:'04:00', stadium:'Mexico City',  tv:'TV4'},
-    {h:'Portugal',        a:'Uzbekistan',              date:'23 jun', time:'19:00', stadium:'Houston',      tv:'SVT'},
-    {h:'Colombia',        a:'DR Kongo',                date:'24 jun', time:'04:00', stadium:'Guadalajara',  tv:'TV4'},
-    {h:'DR Kongo',        a:'Uzbekistan',              date:'28 jun', time:'01:30', stadium:'Atlanta',      tv:'TV4'},
-    {h:'Colombia',        a:'Portugal',                date:'28 jun', time:'01:30', stadium:'Miami',        tv:'TV4'},
+    {h:'Portugal', a:'DR Kongo', date:'17 jun', time:'19:00', stadium:'Houston', tv:'TV4'},
+    {h:'Uzbekistan', a:'Colombia', date:'18 jun', time:'04:00', stadium:'Mexico City', tv:'TV4'},
+    {h:'Portugal', a:'Uzbekistan', date:'23 jun', time:'19:00', stadium:'Houston', tv:'SVT Play'},
+    {h:'Colombia', a:'DR Kongo', date:'24 jun', time:'04:00', stadium:'Guadalajara', tv:'TV4'},
+    {h:'Colombia', a:'Portugal', date:'28 jun', time:'01:30', stadium:'Miami', tv:'TV4'},
+    {h:'DR Kongo', a:'Uzbekistan', date:'28 jun', time:'01:30', stadium:'Atlanta', tv:'TV4'}
   ]},
   { letter:'L', matches:[
-    {h:'England',         a:'Kroatien',                date:'17 jun', time:'22:00', stadium:'Dallas',       tv:'TV4'},
-    {h:'Ghana',           a:'Panama',                  date:'18 jun', time:'01:00', stadium:'Toronto',      tv:'TV4'},
-    {h:'England',         a:'Ghana',                   date:'23 jun', time:'22:00', stadium:'Boston',       tv:'SVT'},
-    {h:'Panama',          a:'Kroatien',                date:'24 jun', time:'01:00', stadium:'Toronto',      tv:'TV4'},
-    {h:'Panama',          a:'England',                 date:'27 jun', time:'23:00', stadium:'New Jersey',   tv:'SVT'},
-    {h:'Kroatien',        a:'Ghana',                   date:'27 jun', time:'23:00', stadium:'Philadelphia', tv:'SVT'},
-  ]},
-  
-];
+    {h:'England', a:'Kroatien', date:'17 jun', time:'22:00', stadium:'Dallas', tv:'TV4'},
+    {h:'Ghana', a:'Panama', date:'18 jun', time:'01:00', stadium:'Toronto', tv:'TV4'},
+    {h:'England', a:'Ghana', date:'23 jun', time:'22:00', stadium:'Boston', tv:'SVT Play'},
+    {h:'Panama', a:'Kroatien', date:'24 jun', time:'01:00', stadium:'Toronto', tv:'TV4'},
+    {h:'Panama', a:'England', date:'27 jun', time:'23:00', stadium:'New Jersey', tv:'SVT Play'},
+    {h:'Kroatien', a:'Ghana', date:'27 jun', time:'23:00', stadium:'Philadelphia', tv:'SVT Play'}
+  ]}
+]; 
+
+// Variabler för att lagra tips
+let predictions = {};
+let bonuses = {};
+let tournament = {};
+let tiebreakers = {};
+
+// Funktion för att byta flikar
+window.showPage = function(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + pageId).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0,0);
+};
+
+// Rendera gruppspelet
+function renderGroups() {
+  const grid = document.getElementById('groups-grid');
+  grid.innerHTML = GROUPS.map(g => `
+    <div class="group-card">
+      <div class="group-header">
+        <div class="group-letter">GRUPP ${g.letter}</div>
+      </div>
+      ${g.matches.map((m, idx) => {
+        const mid = `g_${g.letter}_${idx}`;
+        return `
+        <div class="match-row">
+          <div class="match-info">
+            <div class="match-teams">${m.h} – ${m.a}</div>
+            <div class="match-meta">${m.date} kl ${m.time} · ${m.tv}</div>
+          </div>
+          <div class="score-inputs">
+            <input type="number" placeholder="0" onchange="updateScore('${mid}', 'home', this.value)" id="${mid}_h">
+            <span class="score-sep">-</span>
+            <input type="number" placeholder="0" onchange="updateScore('${mid}', 'away', this.value)" id="${mid}_a">
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  `).join('');
+}
+
+// Hantera inmatning
+window.updateScore = function(mid, side, val) {
+  if (!predictions[mid]) predictions[mid] = { home: '', away: '' };
+  predictions[mid][side] = val;
+  updateStats();
+};
+
+function updateStats() {
+  const count = Object.values(predictions).filter(p => p.home !== '' && p.away !== '').length;
+  document.getElementById('footer-stats').innerHTML = `Ifyllda tips: <span>${count} / 72</span>`;
+}
+
+// Starta renderingen
+renderGroups();
 
 const KNOCKOUT = {
   r16: {
