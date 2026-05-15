@@ -112,7 +112,17 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
     <div class="page-sub">Matcher i spelordning</div>
     <div id="schedule-grid"></div>
   </div>
-  <div class="page" id="page-r16">Slutspel kommer inom kort...</div>
+  
+  <div class="page" id="page-r16">
+    <div class="page-title">16-delsfinaler</div>
+    <div class="page-sub">Slutspelsmatcher (Ev. match med Sverige sänds i TV4)</div>
+    <div id="schedule-r16-grid"></div>
+  </div>
+
+  <div class="page" id="page-qf">Åttondelsfinaler kommer inom kort...</div>
+  <div class="page" id="page-sf">Kvartsfinaler kommer inom kort...</div>
+  <div class="page" id="page-semi">Semifinaler kommer inom kort...</div>
+  <div class="page" id="page-final">Final & Brons kommer inom kort...</div>
 </div>
 
 <div class="footer">
@@ -184,7 +194,7 @@ const SCHEDULE = [
   {date:'Lördag 13 juni', matches:[{h:'USA', a:'Paraguay', time:'03.00', tv:'TV4', city:'Los Angeles', id:'m4'}, {h:'Qatar', a:'Schweiz', time:'21.00', tv:'TV4', city:'San Francisco', id:'m5'}]},
   {date:'Söndag 14 juni', matches:[{h:'Brasilien', a:'Marocko', time:'00.00', tv:'SVT Play', city:'New Jersey', id:'m6'}, {h:'Haiti', a:'Skottland', time:'03.00', tv:'SVT Play', city:'Boston', id:'m7'}, {h:'Australien', a:'Turkiet', time:'06.00', tv:'TV4', city:'Vancouver', id:'m8'}, {h:'Tyskland', a:'Curaçao', time:'19.00', tv:'TV4', city:'Houston', id:'m9'}, {h:'Nederländerna', a:'Japan', time:'22.00', tv:'TV4', city:'Dallas', id:'m10'}]},
   {date:'Måndag 15 juni', matches:[{h:'Elfenbenskusten', a:'Ecuador', time:'01.00', tv:'TV4', city:'Philadelphia', id:'m11'}, {h:'Sverige', a:'Tunisien', time:'04.00', tv:'SVT Play', city:'Monterrey', id:'m12'}, {h:'Spanien', a:'Kap Verde', time:'18.00', tv:'SVT Play', city:'Atlanta', id:'m13'}, {h:'Belgien', a:'Egypten', time:'21.00', tv:'SVT Play', city:'Seattle', id:'m14'}]},
-  {date:'Tisdag 16 juni', matches:[{h:'Saudiarabien', a:'Uruguay', time:'00.00', tv:'TV4', city:'Miami', id:'m15'}, {h:'Iran', a:'Nya Zeeland', time:'03.00', tv:'TV4', city:'Los Angeles', id:'m16'}, {h:'Frankrike', a:'Senegal', time:'21.00', tv:'SVT Play', city:'New Jersey', id:'m17'}]},
+  {date:'Tisdag 16 juni', matches:[{h:'Saudiarabien', a:'Uruguay', time:'00.00', tv:'Miami', city:'Miami', id:'m15'}, {h:'Iran', a:'Nya Zeeland', time:'03.00', tv:'TV4', city:'Los Angeles', id:'m16'}, {h:'Frankrike', a:'Senegal', time:'21.00', tv:'SVT Play', city:'New Jersey', id:'m17'}]},
   {date:'Onsdag 17 juni', matches:[{h:'Irak', a:'Norge', time:'00.00', tv:'TV4', city:'Boston', id:'m18'}, {h:'Argentina', a:'Algeriet', time:'03.00', tv:'TV4', city:'Kansas City', id:'m19'}, {h:'Österrike', a:'Jordanien', time:'06.00', tv:'TV4', city:'San Francisco', id:'m20'}, {h:'Portugal', a:'DR Kongo', time:'19.00', tv:'TV4', city:'Houston', id:'m21'}, {h:'England', a:'Kroatien', time:'22.00', tv:'TV4', city:'Dallas', id:'m22'}]},
   {date:'Torsdag 18 juni', matches:[{h:'Ghana', a:'Panama', time:'01.00', tv:'TV4', city:'Toronto', id:'m23'}, {h:'Uzbekistan', a:'Colombia', time:'04.00', tv:'TV4', city:'Mexico City', id:'m24'}, {h:'Tjeckien', a:'Sydafrika', time:'18.00', tv:'TV4', city:'Atlanta', id:'m25'}, {h:'Schweiz', a:'Bosnien & Herr.', time:'21.00', tv:'TV4', city:'Los Angeles', id:'m26'}]},
   {date:'Fredag 19 juni', matches:[{h:'Kanada', a:'Qatar', time:'00.00', tv:'TV4', city:'Vancouver', id:'m27'}, {h:'Mexiko', a:'Sydkorea', time:'03.00', tv:'TV4', city:'Guadalajara', id:'m28'}, {h:'USA', a:'Australien', time:'21.00', tv:'SVT Play', city:'Seattle', id:'m29'}]},
@@ -195,8 +205,19 @@ const SCHEDULE = [
   {date:'Onsdag 24 juni', matches:[{h:'Panama', a:'Kroatien', time:'01.00', tv:'TV4', city:'Toronto', id:'m47'}, {h:'Colombia', a:'DR Kongo', time:'04.00', tv:'TV4', city:'Guadalajara', id:'m48'}, {h:'Schweiz', a:'Kanada', time:'21.00', tv:'TV4', city:'Vancouver', id:'m49'}, {h:'Bosnien & Herr.', a:'Qatar', time:'21.00', tv:'TV4', city:'Seattle', id:'m50'}]},
   {date:'Torsdag 25 juni', matches:[{h:'Marocko', a:'Haiti', time:'00.00', tv:'TV4', city:'Atlanta', id:'m51'}, {h:'Skottland', a:'Brasilien', time:'00.00', tv:'TV4', city:'Miami', id:'m52'}, {h:'Sydafrika', a:'Sydkorea', time:'03.00', tv:'SVT Play', city:'Monterrey', id:'m53'}, {h:'Tjeckien', a:'Mexiko', time:'03.00', tv:'SVT Play', city:'Mexico City', id:'m54'}, {h:'Curaçao', a:'Elfenbenskusten', time:'22.00', tv:'SVT Play', city:'Philadelphia', id:'m55'}, {h:'Ecuador', a:'Tyskland', time:'22.00', tv:'SVT Play', city:'New Jersey', id:'m56'}]},
   {date:'Fredag 26 juni', matches:[{h:'Tunisien', a:'Nederländerna', time:'01.00', tv:'SVT Play', city:'Kansas City', id:'m57'}, {h:'Japan', a:'Sverige', time:'01.00', tv:'SVT Play', city:'Dallas', id:'m58'}, {h:'Turkiet', a:'USA', time:'04.00', tv:'TV4', city:'Los Angeles', id:'m59'}, {h:'Paraguay', a:'Australien', time:'04.00', tv:'TV4', city:'San Francisco', id:'m60'}, {h:'Norge', a:'Frankrike', time:'21.00', tv:'TV4', city:'Boston', id:'m61'}, {h:'Senegal', a:'Irak', time:'21.00', tv:'TV4', city:'Toronto', id:'m62'}]},
-  {date:'Lördag 27 juni', matches:[{h:'Kap Verde', a:'Saudiarabien', time:'02.00', tv:'TV4', city:'Houston', id:'m63'}, {h:'Uruguay', a:'Spanien', time:'02.00', tv:'TV4', city:'Guadalajara', id:'m64'}, {h:'Nya Zeeland', a:'Belgien', time:'05.00', tv:'TV4', city:'Vancouver', id:'m65'}, {h:'Egypten', a:'Iran', time:'05.00', tv:'TV4', city:'Seattle', id:'m66'}, {h:'Panama', a:'England', time:'23.00', tv:'SVT Play', city:'New Jersey', id:'m67'}, {h:'Kroatien', a:'Ghana', time:'23.00', tv:'SVT Play', city:'Philadelphia', id:'m68'}]},
+  {date:'Lördag 27 juni', matches:[{h:'Kap Verde', a:'Saudiarabien', time:'02.00', tv:'TV4', city:'Houston', id:'m63'}, {h:'Uruguay', a:'Spanien', time:'02.00', tv:'TV4', city:'Guadalajara', id:'m64'}, {h:'Nya Zeeland', a:'Belgien', time:'05.00', tv:'TV4', city:'Vancouver', id:'m65'}, {h:'Egypten', a:'Iran', time:'05.00', tv:'TV4', city:'Seattle', id:'m66'}, {h['Panama', a:'England', time:'23.00', tv:'SVT Play', city:'New Jersey', id:'m67'}, {h:'Kroatien', a:'Ghana', time:'23.00', tv:'SVT Play', city:'Philadelphia', id:'m68'}]},
   {date:'Söndag 28 juni', matches:[{h:'DR Kongo', a:'Uzbekistan', time:'01.30', tv:'TV4', city:'Atlanta', id:'m69'}, {h:'Colombia', a:'Portugal', time:'01.30', tv:'TV4', city:'Miami', id:'m70'}, {h:'Algeriet', a:'Österrike', time:'04.00', tv:'TV4', city:'Kansas City', id:'m71'}, {h:'Jordanien', a:'Argentina', time:'04.00', tv:'TV4', city:'Dallas', id:'m72'}]}
+];
+
+// Nytt schema för 16-delsfinalerna med din administrativa struktur
+const SCHEDULE_R16 = [
+  {date:'Söndag 28 juni', matches:[{h:'2A', a:'2B', time:'21.00', tv:'TV4', id:'r16_1'}]},
+  {date:'Måndag 29 juni', matches:[{h:'1C', a:'2F', time:'19.00', tv:'TV4', id:'r16_2'}, {h:'1E', a:'3A/B/C/D/F', time:'22.30', tv:'SVT', id:'r16_3'}]},
+  {date:'Tisdag 30 juni', matches:[{h:'1F', a:'2C', time:'03.00', tv:'SVT', id:'r16_4'}, {h:'2E', a:'2I', time:'19.00', tv:'TV4', id:'r16_5'}, {h:'1I', a:'3C/D/F/G/H', time:'23.00', tv:'TV4', id:'r16_6'}]},
+  {date:'Onsdag 1 juli', matches:[{h:'1A', a:'3C/E/F/H/I', time:'03.00', tv:'TV4', id:'r16_7'}, {h:'1L', a:'3E/H/I/J/K', time:'18.00', tv:'SVT', id:'r16_8'}, {h:'1G', a:'3A/E/H/I/J', time:'22.00', tv:'TV4', id:'r16_9'}]},
+  {date:'Torsdag 2 juli', matches:[{h:'1D', a:'3B/E/F/I/J', time:'02.00', tv:'TV4', id:'r16_10'}, {h:'1H', a:'2J', time:'21.00', tv:'SVT', id:'r16_11'}]},
+  {date:'Fredag 3 juli', matches:[{h:'2K', a:'2L', time:'01.00', tv:'TV4', id:'r16_12'}, {h:'1B', a:'3E/F/G/I/J', time:'05.00', tv:'TV4', id:'r16_13'}, {h:'2D', a:'2G', time:'20.00', tv:'TV4', id:'r16_14'}]},
+  {date:'Lördag 4 juli', matches:[{h:'1J', a:'2H', time:'00.00', tv:'SVT', id:'r16_15'}, {h:'1K', a:'3D/E/I/J/L', time:'03.30', tv:'SVT', id:'r16_16'}]}
 ];
 
 let predictions = {};
@@ -234,16 +255,73 @@ function renderGroups() {
   `).join('');
 }
 
+// NY FUNKTION: Ritar ut 16-delsfinalerna med fritextfält för lag
+function renderR16() {
+  const container = document.getElementById('schedule-r16-grid');
+  if (!container) return;
+  
+  container.innerHTML = SCHEDULE_R16.map(day => `
+    <div class="date-divider">${day.date}</div>
+    ${day.matches.map(m => {
+      const valH = predictions[m.id]?.h || '';
+      const valA = predictions[m.id]?.a || '';
+      const teamH = predictions[m.id]?.teamH || '';
+      const teamA = predictions[m.id]?.teamA || '';
+      
+      return `
+      <div class="match-card">
+        <div class="match-row">
+          <div class="match-info" style="display: flex; flex-direction: column; gap: 8px; flex: 1;">
+            
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">🏳️</span>
+              <input type="text" 
+                     value="${teamH}" 
+                     placeholder="${m.h}" 
+                     onchange="updateSlutspelTeam('${m.id}', 'teamH', this.value)"
+                     style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">🏳️</span>
+              <input type="text" 
+                     value="${teamA}" 
+                     placeholder="${m.a}" 
+                     onchange="updateSlutspelTeam('${m.id}', 'teamA', this.value)"
+                     style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
+            </div>
+            
+            <div class="match-meta">
+              <span class="meta-item">🕒 ${m.time}</span>
+              <span class="meta-item">📺 ${m.tv}</span>
+            </div>
+          </div>
+          
+          <div class="score-inputs">
+            <input type="number" value="${valH}" onchange="updatePred('${m.id}','h',this.value)">
+            <span>-</span>
+            <input type="number" value="${valA}" onchange="updatePred('${m.id}','a',this.value)">
+          </div>
+        </div>
+      </div>`;
+    }).join('')}
+  `).join('');
+}
+
 window.updatePred = (id, side, val) => {
   if(!predictions[id]) predictions[id] = {h:'', a:''};
   predictions[id][side] = val;
   updateStats();
 };
 
+// Sparar både mål och de manuellt inskrivna lagnamnen i slutspelet
+window.updateSlutspelTeam = (id, side, val) => {
+  if(!predictions[id]) predictions[id] = {h:'', a:'', teamH:'', teamA:''};
+  predictions[id][side] = val;
+};
+
 window.saveTips = async () => {
   if(!auth.currentUser) return showToast("Logga in först", true);
-  
-  // Sparar tips samt bifogar användarnamn för enkel spårning
   await setDoc(doc(db, "tips", auth.currentUser.uid), {
     predictions, 
     username: currentUserProfile?.username || auth.currentUser.email
@@ -251,7 +329,6 @@ window.saveTips = async () => {
   showToast("Sparat!");
 };
 
-// Hanterar växling mellan flikarna Logga in / Registrera
 window.switchAuthTab = (mode) => {
   currentAuthMode = mode;
   const loginTab = document.getElementById('tab-login');
@@ -272,94 +349,56 @@ window.switchAuthTab = (mode) => {
   }
 };
 
-// Hjälpfunktion för att göra felmeddelanden begripliga och ge tydliga instruktioner
 function getFriendlyErrorMessage(error) {
   const code = error.code;
-  
   switch(code) {
-    // Lösenordsfel
-    case 'auth/weak-password':
-      return 'Lösenordet är för svagt. Det måste vara minst 6 tecken långt och bör innehålla en blandning av bokstäver och siffror.';
-    case 'auth/wrong-password':
-      return 'Felaktigt lösenord. Försök igen eller återställ ditt lösenord.';
-      
-    // E-postfel
-    case 'auth/invalid-email':
-      return 'E-postadressen är felaktigt formaterad. Kontrollera att du har skrivit rätt (t.ex. namn@domän.se).';
-    case 'auth/email-already-in-use':
-      return 'Denna e-postadress är redan registrerad. Gå till "Logga in" eller välj en annan e-postadress.';
-      
-    // Användarfel
-    case 'auth/user-not-found':
-      return 'Det finns inget konto registrarat med denna e-postadress.';
-      
-    // Nätverks- och blockeringsfel (Det fel du fick på bilden!)
-    case 'auth/network-request-failed':
-      return 'Kunde inte ansluta till servern. Detta beror oftast på ett tillfälligt nätverksfel eller att en Adblocker blockerar anslutningen. Prova att stänga av eventuella tillägg eller kontrollera ditt internet.';
-      
-    // Standardmeddelande om något annat oväntat händer
-    default:
-      return 'Ett oväntat fel uppstod: ' + error.message;
+    case 'auth/weak-password': return 'Lösenordet är för svagt. Det måste vara minst 6 tecken långt.';
+    case 'auth/wrong-password': return 'Felaktigt lösenord. Försök igen.';
+    case 'auth/invalid-email': return 'E-postadressen är felaktigt formaterad.';
+    case 'auth/email-already-in-use': return 'Denna e-postadress är redan registrerad.';
+    case 'auth/user-not-found': return 'Det finns inget konto registrerat med denna e-postadress.';
+    case 'auth/network-request-failed': return 'Kunde inte ansluta till servern. Kontrollera din anslutning eller adblocker.';
+    default: return 'Ett fel uppstod: ' + error.message;
   }
 }
 
 window.submitAuth = async () => {
   const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPassword').value;
-  
   if (!email || !password) return alert("Fyll i både e-post och lösenord.");
   
   if (currentAuthMode === 'login') {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       closeModal('authModal');
-    } catch(e) { 
-      alert(getFriendlyErrorMessage(e)); 
-    }
+    } catch(e) { alert(getFriendlyErrorMessage(e)); }
   } else {
-    // Registrering
     const firstName = document.getElementById('regFirstName').value.trim();
     const lastName = document.getElementById('regLastName').value.trim();
     const username = document.getElementById('regUsername').value.trim();
-    
-    if (!firstName || !lastName || !username) {
-      return alert("Fyll i alla profiluppgifter för att registrera dig.");
-    }
+    if (!firstName || !lastName || !username) return alert("Fyll i alla profiluppgifter.");
     
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      
-      // Spara de publika användaruppgifterna i en separat 'users'-samling
-      await setDoc(doc(db, "users", user.uid), {
-        firstName,
-        lastName,
-        username,
-        email
-      });
-      
+      await setDoc(doc(db, "users", userCredential.user.uid), { firstName, lastName, username, email });
       closeModal('authModal');
       showToast("Konto skapat!");
-    } catch(e) { 
-      alert(getFriendlyErrorMessage(e)); 
-    }
+    } catch(e) { alert(getFriendlyErrorMessage(e)); }
   }
 };
+
 window.doLogout = async () => { await signOut(auth); location.reload(); };
 
 onAuthStateChanged(auth, async (user) => {
   document.getElementById('loading').classList.add('hidden');
   if(user) {
-    // Hämta profilen (användarnamn m.m.) från Firestore
     const userDoc = await getDoc(doc(db, "users", user.uid));
     if (userDoc.exists()) {
       currentUserProfile = userDoc.data();
-      // Här sätter vi det publika användarnamnet i badgen!
       document.getElementById('userBadge').textContent = currentUserProfile.username;
     } else {
       document.getElementById('userBadge').textContent = user.email;
     }
-    
     document.getElementById('userBadge').style.display = 'block';
     document.getElementById('loginBtn').style.display = 'none';
     document.getElementById('logoutBtn').style.display = 'block';
@@ -372,13 +411,14 @@ async function loadUserTips(user) {
   if(d.exists()) {
     predictions = d.data().predictions || {};
     renderGroups();
+    renderR16(); // Laddar in slutspelet
     updateStats();
   }
 }
 
 function updateStats() {
   const count = Object.values(predictions).filter(p => p.h !== '' && p.a !== '').length;
-  document.getElementById('footer-stats').textContent = `Tippat: ${count} / 72 matcher`;
+  document.getElementById('footer-stats').textContent = `Tippat: ${count} / 88 matcher`;
 }
 
 function showToast(msg) {
@@ -397,7 +437,9 @@ window.showPage = (id, btn) => {
 window.openModal = (id) => document.getElementById(id).classList.add('open');
 window.closeModal = (id) => document.getElementById(id).classList.remove('open');
 
+// Startar upp båda vyerna när sidan laddas
 renderGroups();
+renderR16();
 </script>
 </body>
 </html>
