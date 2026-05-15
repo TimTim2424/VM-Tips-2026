@@ -47,8 +47,9 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .match-card { background: var(--bg3); border-radius: 12px; border: 1px solid var(--border); margin-bottom: 8px; overflow: hidden; }
 .match-row { padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
 .match-info { flex: 1; min-width: 0; }
-.match-teams { font-size: 14px; font-weight: 600; }
-.match-meta { font-size: 11px; color: var(--text2); margin-top: 2px; }
+.match-teams { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.match-meta { font-size: 11px; color: var(--text2); margin-top: 4px; display: flex; flex-wrap: wrap; gap: 8px; }
+.meta-item { display: flex; align-items: center; gap: 3px; }
 .score-inputs { display: flex; align-items: center; gap: 5px; }
 .score-inputs input { width: 40px; height: 36px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; background: var(--bg); color: var(--gold); border: 1px solid rgba(89,213,255,0.28); border-radius: 6px; }
 .date-divider { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; color: var(--gold); margin: 20px 0 10px 5px; font-size: 18px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
@@ -87,18 +88,17 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
     <button onclick="showPage('sf')">Kvartsfinaler</button>
     <button onclick="showPage('semi')">Semifinaler</button>
     <button onclick="showPage('final')">Final & Brons</button>
-    <button onclick="showPage('tournament')">Turneringstips</button>
   </div>
 </nav>
 
 <div class="container">
   <div class="page active" id="page-groups">
     <div class="page-title">Gruppspel</div>
-    <div class="page-sub">Matcherna tippas i spelordning</div>
+    <div class="page-sub">Matcher i spelordning</div>
     <div id="schedule-grid"></div>
   </div>
   <div class="page" id="page-r16">Slutspel kommer inom kort...</div>
-  </div>
+</div>
 
 <div class="footer">
   <div id="footer-stats">Logga in för att spara</div>
@@ -135,25 +135,39 @@ const fbApp = initializeApp(firebaseConfig);
 const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
 
+// Flagg-mappning
+const flags = {
+  'Mexiko': '🇲🇽', 'Sydafrika': '🇿🇦', 'Sydkorea': '🇰🇷', 'Tjeckien': '🇨🇿', 'Kanada': '🇨🇦',
+  'Bosnien & Herr.': '🇧🇦', 'USA': '🇺🇸', 'Paraguay': '🇵🇾', 'Qatar': '🇶🇦', 'Schweiz': '🇨🇭',
+  'Brasilien': '🇧🇷', 'Marocko': '🇲🇦', 'Haiti': '🇭🇹', 'Skottland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'Australien': '🇦🇺',
+  'Turkiet': '🇹🇷', 'Tyskland': '🇩🇪', 'Curaçao': '🇨🇼', 'Nederländerna': '🇳🇱', 'Japan': '🇯🇵',
+  'Elfenbenskusten': '🇨🇮', 'Ecuador': '🇪🇨', 'Sverige': '🇸🇪', 'Tunisien': '🇹🇳', 'Spanien': '🇪🇸',
+  'Kap Verde': '🇨🇻', 'Belgien': '🇧🇪', 'Egypten': '🇪🇬', 'Saudiarabien': '🇸🇦', 'Uruguay': '🇺🇾',
+  'Iran': '🇮🇷', 'Nya Zeeland': '🇳🇿', 'Frankrike': '🇫🇷', 'Senegal': '🇸🇳', 'Irak': '🇮🇶',
+  'Norge': '🇳🇴', 'Argentina': '🇦🇷', 'Algeriet': '🇩🇿', 'Österrike': '🇦🇹', 'Jordanien': '🇯🇴',
+  'Portugal': '🇵🇹', 'DR Kongo': '🇨🇩', 'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'Kroatien': '🇭🇷', 'Ghana': '🇬🇭',
+  'Panama': '🇵🇦', 'Uzbekistan': '🇺🇿', 'Colombia': '🇨🇴'
+};
+
 const SCHEDULE = [
-  {date:'Torsdag 11 juni', matches:[{h:'Mexiko', a:'Sydafrika', time:'21.00', tv:'TV4', id:'m1'}]},
-  {date:'Fredag 12 juni', matches:[{h:'Sydkorea', a:'Tjeckien', time:'04.00', tv:'TV4', id:'m2'}, {h:'Kanada', a:'Bosnien & Herr.', time:'21.00', tv:'SVT Play', id:'m3'}]},
-  {date:'Lördag 13 juni', matches:[{h:'USA', a:'Paraguay', time:'03.00', tv:'TV4', id:'m4'}, {h:'Qatar', a:'Schweiz', time:'21.00', tv:'TV4', id:'m5'}]},
-  {date:'Söndag 14 juni', matches:[{h:'Brasilien', a:'Marocko', time:'00.00', tv:'SVT Play', id:'m6'}, {h:'Haiti', a:'Skottland', time:'03.00', tv:'SVT Play', id:'m7'}, {h:'Australien', a:'Turkiet', time:'06.00', tv:'TV4', id:'m8'}, {h:'Tyskland', a:'Curaçao', time:'19.00', tv:'TV4', id:'m9'}, {h:'Nederländerna', a:'Japan', time:'22.00', tv:'TV4', id:'m10'}]},
-  {date:'Måndag 15 juni', matches:[{h:'Elfenbenskusten', a:'Ecuador', time:'01.00', tv:'TV4', id:'m11'}, {h:'Sverige', a:'Tunisien', time:'04.00', tv:'SVT Play', id:'m12'}, {h:'Spanien', a:'Kap Verde', time:'18.00', tv:'SVT Play', id:'m13'}, {h:'Belgien', a:'Egypten', time:'21.00', tv:'SVT Play', id:'m14'}]},
-  {date:'Tisdag 16 juni', matches:[{h:'Saudiarabien', a:'Uruguay', time:'00.00', tv:'TV4', id:'m15'}, {h:'Iran', a:'Nya Zeeland', time:'03.00', tv:'TV4', id:'m16'}, {h:'Frankrike', a:'Senegal', time:'21.00', tv:'SVT Play', id:'m17'}]},
-  {date:'Onsdag 17 juni', matches:[{h:'Irak', a:'Norge', time:'00.00', tv:'TV4', id:'m18'}, {h:'Argentina', a:'Algeriet', time:'03.00', tv:'TV4', id:'m19'}, {h:'Österrike', a:'Jordanien', time:'06.00', tv:'TV4', id:'m20'}, {h:'Portugal', a:'DR Kongo', time:'19.00', tv:'TV4', id:'m21'}, {h:'England', a:'Kroatien', time:'22.00', tv:'TV4', id:'m22'}]},
-  {date:'Torsdag 18 juni', matches:[{h:'Ghana', a:'Panama', time:'01.00', tv:'TV4', id:'m23'}, {h:'Uzbekistan', a:'Colombia', time:'04.00', tv:'TV4', id:'m24'}, {h:'Tjeckien', a:'Sydafrika', time:'18.00', tv:'TV4', id:'m25'}, {h:'Schweiz', a:'Bosnien & Herr.', time:'21.00', tv:'TV4', id:'m26'}]},
-  {date:'Fredag 19 juni', matches:[{h:'Kanada', a:'Qatar', time:'00.00', tv:'TV4', id:'m27'}, {h:'Mexiko', a:'Sydkorea', time:'03.00', tv:'TV4', id:'m28'}, {h:'USA', a:'Australien', time:'21.00', tv:'SVT Play', id:'m29'}]},
-  {date:'Lördag 20 juni', matches:[{h:'Skottland', a:'Marocko', time:'00.00', tv:'SVT Play', id:'m30'}, {h:'Brasilien', a:'Haiti', time:'03.00', tv:'TV4', id:'m31'}, {h:'Turkiet', a:'Paraguay', time:'06.00', tv:'TV4', id:'m32'}, {h:'Nederländerna', a:'Sverige', time:'19.00', tv:'TV4', id:'m33'}, {h:'Tyskland', a:'Elfenbenskusten', time:'22.00', tv:'TV4', id:'m34'}]},
-  {date:'Söndag 21 juni', matches:[{h:'Ecuador', a:'Curaçao', time:'02.00', tv:'TV4', id:'m35'}, {h:'Tunisien', a:'Japan', time:'06.00', tv:'SVT Play', id:'m36'}, {h:'Spanien', a:'Saudiarabien', time:'18.00', tv:'TV4', id:'m37'}, {h:'Belgien', a:'Iran', time:'21.00', tv:'TV4', id:'m38'}]},
-  {date:'Måndag 22 juni', matches:[{h:'Uruguay', a:'Kap Verde', time:'00.00', tv:'TV4', id:'m39'}, {h:'Nya Zeeland', a:'Egypten', time:'03.00', tv:'TV4', id:'m40'}, {h:'Argentina', a:'Österrike', time:'19.00', tv:'SVT Play', id:'m41'}, {h:'Frankrike', a:'Irak', time:'23.00', tv:'SVT Play', id:'m42'}]},
-  {date:'Tisdag 23 juni', matches:[{h:'Norge', a:'Senegal', time:'02.00', tv:'SVT Play', id:'m43'}, {h:'Jordanien', a:'Algeriet', time:'05.00', tv:'TV4', id:'m44'}, {h:'Portugal', a:'Uzbekistan', time:'19.00', tv:'SVT Play', id:'m45'}, {h:'England', a:'Ghana', time:'22.00', tv:'SVT Play', id:'m46'}]},
-  {date:'Onsdag 24 juni', matches:[{h:'Panama', a:'Kroatien', time:'01.00', tv:'TV4', id:'m47'}, {h:'Colombia', a:'DR Kongo', time:'04.00', tv:'TV4', id:'m48'}, {h:'Schweiz', a:'Kanada', time:'21.00', tv:'TV4', id:'m49'}, {h:'Bosnien & Herr.', a:'Qatar', time:'21.00', tv:'TV4', id:'m50'}]},
-  {date:'Torsdag 25 juni', matches:[{h:'Marocko', a:'Haiti', time:'00.00', tv:'TV4', id:'m51'}, {h:'Skottland', a:'Brasilien', time:'00.00', tv:'TV4', id:'m52'}, {h:'Sydafrika', a:'Sydkorea', time:'03.00', tv:'SVT Play', id:'m53'}, {h:'Tjeckien', a:'Mexiko', time:'03.00', tv:'SVT Play', id:'m54'}, {h:'Curaçao', a:'Elfenbenskusten', time:'22.00', tv:'SVT Play', id:'m55'}, {h:'Ecuador', a:'Tyskland', time:'22.00', tv:'SVT Play', id:'m56'}]},
-  {date:'Fredag 26 juni', matches:[{h:'Tunisien', a:'Nederländerna', time:'01.00', tv:'SVT Play', id:'m57'}, {h:'Japan', a:'Sverige', time:'01.00', tv:'SVT Play', id:'m58'}, {h:'Turkiet', a:'USA', time:'04.00', tv:'TV4', id:'m59'}, {h:'Paraguay', a:'Australien', time:'04.00', tv:'TV4', id:'m60'}, {h:'Norge', a:'Frankrike', time:'21.00', tv:'TV4', id:'m61'}, {h:'Senegal', a:'Irak', time:'21.00', tv:'TV4', id:'m62'}]},
-  {date:'Lördag 27 juni', matches:[{h:'Kap Verde', a:'Saudiarabien', time:'02.00', tv:'TV4', id:'m63'}, {h:'Uruguay', a:'Spanien', time:'02.00', tv:'TV4', id:'m64'}, {h:'Nya Zeeland', a:'Belgien', time:'05.00', tv:'TV4', id:'m65'}, {h:'Egypten', a:'Iran', time:'05.00', tv:'TV4', id:'m66'}, {h:'Panama', a:'England', time:'23.00', tv:'SVT Play', id:'m67'}, {h:'Kroatien', a:'Ghana', time:'23.00', tv:'SVT Play', id:'m68'}]},
-  {date:'Söndag 28 juni', matches:[{h:'DR Kongo', a:'Uzbekistan', time:'01.30', tv:'TV4', id:'m69'}, {h:'Colombia', a:'Portugal', time:'01.30', tv:'TV4', id:'m70'}, {h:'Algeriet', a:'Österrike', time:'04.00', tv:'TV4', id:'m71'}, {h:'Jordanien', a:'Argentina', time:'04.00', tv:'TV4', id:'m72'}]}
+  {date:'Torsdag 11 juni', matches:[{h:'Mexiko', a:'Sydafrika', time:'21.00', tv:'TV4', city:'Mexico City', id:'m1'}]},
+  {date:'Fredag 12 juni', matches:[{h:'Sydkorea', a:'Tjeckien', time:'04.00', tv:'TV4', city:'Guadalajara', id:'m2'}, {h:'Kanada', a:'Bosnien & Herr.', time:'21.00', tv:'SVT Play', city:'Toronto', id:'m3'}]},
+  {date:'Lördag 13 juni', matches:[{h:'USA', a:'Paraguay', time:'03.00', tv:'TV4', city:'Los Angeles', id:'m4'}, {h:'Qatar', a:'Schweiz', time:'21.00', tv:'TV4', city:'San Francisco', id:'m5'}]},
+  {date:'Söndag 14 juni', matches:[{h:'Brasilien', a:'Marocko', time:'00.00', tv:'SVT Play', city:'New Jersey', id:'m6'}, {h:'Haiti', a:'Skottland', time:'03.00', tv:'SVT Play', city:'Boston', id:'m7'}, {h:'Australien', a:'Turkiet', time:'06.00', tv:'TV4', city:'Vancouver', id:'m8'}, {h:'Tyskland', a:'Curaçao', time:'19.00', tv:'TV4', city:'Houston', id:'m9'}, {h:'Nederländerna', a:'Japan', time:'22.00', tv:'TV4', city:'Dallas', id:'m10'}]},
+  {date:'Måndag 15 juni', matches:[{h:'Elfenbenskusten', a:'Ecuador', time:'01.00', tv:'TV4', city:'Philadelphia', id:'m11'}, {h:'Sverige', a:'Tunisien', time:'04.00', tv:'SVT Play', city:'Monterrey', id:'m12'}, {h:'Spanien', a:'Kap Verde', time:'18.00', tv:'SVT Play', city:'Atlanta', id:'m13'}, {h:'Belgien', a:'Egypten', time:'21.00', tv:'SVT Play', city:'Seattle', id:'m14'}]},
+  {date:'Tisdag 16 juni', matches:[{h:'Saudiarabien', a:'Uruguay', time:'00.00', tv:'TV4', city:'Miami', id:'m15'}, {h:'Iran', a:'Nya Zeeland', time:'03.00', tv:'TV4', city:'Los Angeles', id:'m16'}, {h:'Frankrike', a:'Senegal', time:'21.00', tv:'SVT Play', city:'New Jersey', id:'m17'}]},
+  {date:'Onsdag 17 juni', matches:[{h:'Irak', a:'Norge', time:'00.00', tv:'TV4', city:'Boston', id:'m18'}, {h:'Argentina', a:'Algeriet', time:'03.00', tv:'TV4', city:'Kansas City', id:'m19'}, {h:'Österrike', a:'Jordanien', time:'06.00', tv:'TV4', city:'San Francisco', id:'m20'}, {h:'Portugal', a:'DR Kongo', time:'19.00', tv:'TV4', city:'Houston', id:'m21'}, {h:'England', a:'Kroatien', time:'22.00', tv:'TV4', city:'Dallas', id:'m22'}]},
+  {date:'Torsdag 18 juni', matches:[{h:'Ghana', a:'Panama', time:'01.00', tv:'TV4', city:'Toronto', id:'m23'}, {h:'Uzbekistan', a:'Colombia', time:'04.00', tv:'TV4', city:'Mexico City', id:'m24'}, {h:'Tjeckien', a:'Sydafrika', time:'18.00', tv:'TV4', city:'Atlanta', id:'m25'}, {h:'Schweiz', a:'Bosnien & Herr.', time:'21.00', tv:'TV4', city:'Los Angeles', id:'m26'}]},
+  {date:'Fredag 19 juni', matches:[{h:'Kanada', a:'Qatar', time:'00.00', tv:'TV4', city:'Vancouver', id:'m27'}, {h:'Mexiko', a:'Sydkorea', time:'03.00', tv:'TV4', city:'Guadalajara', id:'m28'}, {h:'USA', a:'Australien', time:'21.00', tv:'SVT Play', city:'Seattle', id:'m29'}]},
+  {date:'Lördag 20 juni', matches:[{h:'Skottland', a:'Marocko', time:'00.00', tv:'SVT Play', city:'Boston', id:'m30'}, {h:'Brasilien', a:'Haiti', time:'03.00', tv:'TV4', city:'Philadelphia', id:'m31'}, {h:'Turkiet', a:'Paraguay', time:'06.00', tv:'TV4', city:'San Francisco', id:'m32'}, {h:'Nederländerna', a:'Sverige', time:'19.00', tv:'TV4', city:'Houston', id:'m33'}, {h:'Tyskland', a:'Elfenbenskusten', time:'22.00', tv:'TV4', city:'Toronto', id:'m34'}]},
+  {date:'Söndag 21 juni', matches:[{h:'Ecuador', a:'Curaçao', time:'02.00', tv:'TV4', city:'Kansas City', id:'m35'}, {h:'Tunisien', a:'Japan', time:'06.00', tv:'SVT Play', city:'Monterrey', id:'m36'}, {h:'Spanien', a:'Saudiarabien', time:'18.00', tv:'TV4', city:'Atlanta', id:'m37'}, {h:'Belgien', a:'Iran', time:'21.00', tv:'TV4', city:'Los Angeles', id:'m38'}]},
+  {date:'Måndag 22 juni', matches:[{h:'Uruguay', a:'Kap Verde', time:'00.00', tv:'TV4', city:'Miami', id:'m39'}, {h:'Nya Zeeland', a:'Egypten', time:'03.00', tv:'TV4', city:'Vancouver', id:'m40'}, {h:'Argentina', a:'Österrike', time:'19.00', tv:'SVT Play', city:'Dallas', id:'m41'}, {h:'Frankrike', a:'Irak', time:'23.00', tv:'SVT Play', city:'Philadelphia', id:'m42'}]},
+  {date:'Tisdag 23 juni', matches:[{h:'Norge', a:'Senegal', time:'02.00', tv:'SVT Play', city:'New Jersey', id:'m43'}, {h:'Jordanien', a:'Algeriet', time:'05.00', tv:'TV4', city:'San Francisco', id:'m44'}, {h:'Portugal', a:'Uzbekistan', time:'19.00', tv:'SVT Play', city:'Houston', id:'m45'}, {h:'England', a:'Ghana', time:'22.00', tv:'SVT Play', city:'Boston', id:'m46'}]},
+  {date:'Onsdag 24 juni', matches:[{h:'Panama', a:'Kroatien', time:'01.00', tv:'TV4', city:'Toronto', id:'m47'}, {h:'Colombia', a:'DR Kongo', time:'04.00', tv:'TV4', city:'Guadalajara', id:'m48'}, {h:'Schweiz', a:'Kanada', time:'21.00', tv:'TV4', city:'Vancouver', id:'m49'}, {h:'Bosnien & Herr.', a:'Qatar', time:'21.00', tv:'TV4', city:'Seattle', id:'m50'}]},
+  {date:'Torsdag 25 juni', matches:[{h:'Marocko', a:'Haiti', time:'00.00', tv:'TV4', city:'Atlanta', id:'m51'}, {h:'Skottland', a:'Brasilien', time:'00.00', tv:'TV4', city:'Miami', id:'m52'}, {h:'Sydafrika', a:'Sydkorea', time:'03.00', tv:'SVT Play', city:'Monterrey', id:'m53'}, {h:'Tjeckien', a:'Mexiko', time:'03.00', tv:'SVT Play', city:'Mexico City', id:'m54'}, {h:'Curaçao', a:'Elfenbenskusten', time:'22.00', tv:'SVT Play', city:'Philadelphia', id:'m55'}, {h:'Ecuador', a:'Tyskland', time:'22.00', tv:'SVT Play', city:'New Jersey', id:'m56'}]},
+  {date:'Fredag 26 juni', matches:[{h:'Tunisien', a:'Nederländerna', time:'01.00', tv:'SVT Play', city:'Kansas City', id:'m57'}, {h:'Japan', a:'Sverige', time:'01.00', tv:'SVT Play', city:'Dallas', id:'m58'}, {h:'Turkiet', a:'USA', time:'04.00', tv:'TV4', city:'Los Angeles', id:'m59'}, {h:'Paraguay', a:'Australien', time:'04.00', tv:'TV4', city:'San Francisco', id:'m60'}, {h:'Norge', a:'Frankrike', time:'21.00', tv:'TV4', city:'Boston', id:'m61'}, {h:'Senegal', a:'Irak', time:'21.00', tv:'TV4', city:'Toronto', id:'m62'}]},
+  {date:'Lördag 27 juni', matches:[{h:'Kap Verde', a:'Saudiarabien', time:'02.00', tv:'TV4', city:'Houston', id:'m63'}, {h:'Uruguay', a:'Spanien', time:'02.00', tv:'TV4', city:'Guadalajara', id:'m64'}, {h:'Nya Zeeland', a:'Belgien', time:'05.00', tv:'TV4', city:'Vancouver', id:'m65'}, {h:'Egypten', a:'Iran', time:'05.00', tv:'TV4', city:'Seattle', id:'m66'}, {h:'Panama', a:'England', time:'23.00', tv:'SVT Play', city:'New Jersey', id:'m67'}, {h:'Kroatien', a:'Ghana', time:'23.00', tv:'SVT Play', city:'Philadelphia', id:'m68'}]},
+  {date:'Söndag 28 juni', matches:[{h:'DR Kongo', a:'Uzbekistan', time:'01.30', tv:'TV4', city:'Atlanta', id:'m69'}, {h:'Colombia', a:'Portugal', time:'01.30', tv:'TV4', city:'Miami', id:'m70'}, {h:'Algeriet', a:'Österrike', time:'04.00', tv:'TV4', city:'Kansas City', id:'m71'}, {h:'Jordanien', a:'Argentina', time:'04.00', tv:'TV4', city:'Dallas', id:'m72'}]}
 ];
 
 let predictions = {};
@@ -169,8 +183,14 @@ function renderGroups() {
       <div class="match-card">
         <div class="match-row">
           <div class="match-info">
-            <div class="match-teams">${m.h} – ${m.a}</div>
-            <div class="match-meta">${m.time} · ${m.tv}</div>
+            <div class="match-teams">
+              ${flags[m.h] || ''} ${m.h} – ${flags[m.a] || ''} ${m.a}
+            </div>
+            <div class="match-meta">
+              <span class="meta-item">🕒 ${m.time}</span>
+              <span class="meta-item">📺 ${m.tv}</span>
+              <span class="meta-item">📍 <span style="color:#ff4d4d">📍</span> ${m.city}</span>
+            </div>
           </div>
           <div class="score-inputs">
             <input type="number" value="${valH}" onchange="updatePred('${m.id}','h',this.value)">
@@ -193,7 +213,7 @@ window.saveTips = async () => {
   if(!auth.currentUser) return showToast("Logga in först", true);
   await setDoc(doc(db, "tips", auth.currentUser.uid), {
     predictions, username: auth.currentUser.email
-  });
+  }, {merge: true});
   showToast("Sparat!");
 };
 
@@ -206,11 +226,15 @@ window.doLogin = async () => {
   } catch(e) { alert("Fel vid inloggning"); }
 };
 
+window.doLogout = async () => { await signOut(auth); location.reload(); };
+
 onAuthStateChanged(auth, user => {
   document.getElementById('loading').classList.add('hidden');
   if(user) {
     document.getElementById('userBadge').textContent = user.email;
     document.getElementById('userBadge').style.display = 'block';
+    document.getElementById('loginBtn').style.display = 'none';
+    document.getElementById('logoutBtn').style.display = 'block';
     loadUserTips(user);
   }
 });
