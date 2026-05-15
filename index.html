@@ -664,6 +664,18 @@ const TIEBREAKERS = [
   { key:'tb3', q:'Antal matcher som avgörs på straffar' },
   { key:'tb4', q:'Skytteligavinnare + exakt antal mål (t.ex. "Mbappé 9")' },
   { key:'tb5', q:'I vilken halvlek avgörs flest matcher? (1 / 2 / Lika)' },
+  function updateStats(user) {
+  const filled = Object.values(predictions)
+    .filter(m => m.home !== '' && m.away !== '')
+    .length;
+  const el = document.getElementById('footer-stats');
+  if (user) {
+    el.innerHTML = `Inloggad som <span>${user.displayName || user.email}</span> · ${filled}/104 matcher ifyllda`;
+  } else {
+    el.textContent = `${filled}/104 matcher ifyllda – logga in för att spara`;
+  }
+}
+window.updateStats = updateStats;
 ];
 
 // ============================================================
