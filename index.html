@@ -85,14 +85,14 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 </header>
 
 <nav>
-  <div class="nav-inner">
-    <button class="active" onclick="showPage('groups')">Gruppspel</button>
-    <button onclick="showPage('r16')">16-delsfinaler</button>
-    <button onclick="showPage('qf')">Åttondelsfinaler</button>
-    <button onclick="showPage('sf')">Kvartsfinaler</button>
-    <button onclick="showPage('semi')">Semifinaler</button>
-    <button onclick="showPage('final')">Final & Brons</button>
-  </div>
+  <div class="nav-inner">
+    <button class="active" onclick="showPage('groups', this)">Gruppspel</button>
+    <button onclick="showPage('r16', this)">16-delsfinaler</button>
+    <button onclick="showPage('qf', this)">Åttondelsfinaler</button>
+    <button onclick="showPage('sf', this)">Kvartsfinaler</button>
+    <button onclick="showPage('semi', this)">Semifinaler</button>
+    <button onclick="showPage('final', this)">Final & Brons</button>
+  </div>
 </nav>
 
 <div class="container">
@@ -342,11 +342,11 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-window.showPage = (id) => {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  if (event) event.target.classList.add('active');
+window.showPage = (id, btn) => {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
 };
 
 window.openModal = (id) => document.getElementById(id).classList.add('open');
