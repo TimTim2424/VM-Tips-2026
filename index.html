@@ -59,6 +59,10 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 9999; }
 .modal.open { display: flex; }
 .modal-content { width: 100%; max-width: 420px; background: var(--bg3); border-radius: 20px; padding: 28px; }
+.modal-form-toggle { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+.modal-form-toggle span { cursor: pointer; color: var(--text2); font-weight: 600; }
+.modal-form-toggle span.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
+.input-field { width: 100%; margin: 6px 0; padding: 10px; background: var(--bg); border: 1px solid var(--border); color: #fff; border-radius: 6px; }
 .toast { position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%); background: #22c55e; color: white; padding: 9px 22px; border-radius: 30px; opacity: 0; transition: 0.3s; z-index: 200; }
 .toast.show { opacity: 1; }
 .loading { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 500; }
@@ -75,7 +79,7 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
   <div class="logo">VM-TIPS 2026</div>
   <div class="header-right">
     <span class="user-badge" id="userBadge"></span>
-    <button class="btn" id="loginBtn" onclick="openModal('loginModal')">Logga in</button>
+    <button class="btn" id="loginBtn" onclick="openModal('authModal')">Logga in / Registrera</button>
     <button class="btn danger" id="logoutBtn" onclick="doLogout()" style="display:none">Logga ut</button>
   </div>
 </header>
@@ -105,13 +109,28 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
   <button class="btn primary" onclick="saveTips()">Spara tips</button>
 </div>
 
-<div class="modal" id="loginModal">
+<div class="modal" id="authModal">
   <div class="modal-content">
-    <h3>Logga in</h3>
-    <input type="email" id="loginEmail" placeholder="E-post" style="width:100%; margin:10px 0; padding:10px;">
-    <input type="password" id="loginPassword" placeholder="Lösenord" style="width:100%; margin:10px 0; padding:10px;">
-    <button class="btn primary" onclick="doLogin()">Logga in</button>
-    <button class="btn" onclick="closeModal('loginModal')">Stäng</button>
+    <div class="modal-form-toggle">
+      <span id="tab-login" class="active" onclick="switchAuthTab('login')">Logga in</span>
+      <span id="tab-register" onclick="switchAuthTab('register')">Registrera dig</span>
+    </div>
+    
+    <div id="auth-common-fields">
+      <input type="email" id="authEmail" placeholder="E-post" class="input-field">
+      <input type="password" id="authPassword" placeholder="Lösenord" class="input-field">
+    </div>
+    
+    <div id="auth-register-fields" style="display: none;">
+      <input type="text" id="regFirstName" placeholder="Förnamn" class="input-field">
+      <input type="text" id="regLastName" placeholder="Efternamn" class="input-field">
+      <input type="text" id="regUsername" placeholder="Användarnamn (synligt för alla)" class="input-field">
+    </div>
+    
+    <div style="margin-top: 15px; display:flex; gap:10px;">
+      <button class="btn primary" id="authSubmitBtn" onclick="submitAuth()">Logga in</button>
+      <button class="btn" onclick="closeModal('authModal')">Stäng</button>
+    </div>
   </div>
 </div>
 
@@ -119,7 +138,7 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -135,7 +154,6 @@ const fbApp = initializeApp(firebaseConfig);
 const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
 
-// Flagg-mappning
 const flags = {
   'Mexiko': '🇲🇽', 'Sydafrika': '🇿🇦', 'Sydkorea': '🇰🇷', 'Tjeckien': '🇨🇿', 'Kanada': '🇨🇦',
   'Bosnien & Herr.': '🇧🇦', 'USA': '🇺🇸', 'Paraguay': '🇵🇾', 'Qatar': '🇶🇦', 'Schweiz': '🇨🇭',
@@ -164,13 +182,15 @@ const SCHEDULE = [
   {date:'Måndag 22 juni', matches:[{h:'Uruguay', a:'Kap Verde', time:'00.00', tv:'TV4', city:'Miami', id:'m39'}, {h:'Nya Zeeland', a:'Egypten', time:'03.00', tv:'TV4', city:'Vancouver', id:'m40'}, {h:'Argentina', a:'Österrike', time:'19.00', tv:'SVT Play', city:'Dallas', id:'m41'}, {h:'Frankrike', a:'Irak', time:'23.00', tv:'SVT Play', city:'Philadelphia', id:'m42'}]},
   {date:'Tisdag 23 juni', matches:[{h:'Norge', a:'Senegal', time:'02.00', tv:'SVT Play', city:'New Jersey', id:'m43'}, {h:'Jordanien', a:'Algeriet', time:'05.00', tv:'TV4', city:'San Francisco', id:'m44'}, {h:'Portugal', a:'Uzbekistan', time:'19.00', tv:'SVT Play', city:'Houston', id:'m45'}, {h:'England', a:'Ghana', time:'22.00', tv:'SVT Play', city:'Boston', id:'m46'}]},
   {date:'Onsdag 24 juni', matches:[{h:'Panama', a:'Kroatien', time:'01.00', tv:'TV4', city:'Toronto', id:'m47'}, {h:'Colombia', a:'DR Kongo', time:'04.00', tv:'TV4', city:'Guadalajara', id:'m48'}, {h:'Schweiz', a:'Kanada', time:'21.00', tv:'TV4', city:'Vancouver', id:'m49'}, {h:'Bosnien & Herr.', a:'Qatar', time:'21.00', tv:'TV4', city:'Seattle', id:'m50'}]},
-  {date:'Torsdag 25 juni', matches:[{h:'Marocko', a:'Haiti', time:'00.00', tv:'TV4', city:'Atlanta', id:'m51'}, {h:'Skottland', a:'Brasilien', time:'00.00', tv:'TV4', city:'Miami', id:'m52'}, {h:'Sydafrika', a:'Sydkorea', time:'03.00', tv:'SVT Play', city:'Monterrey', id:'m53'}, {h:'Tjeckien', a:'Mexiko', time:'03.00', tv:'SVT Play', city:'Mexico City', id:'m54'}, {h:'Curaçao', a:'Elfenbenskusten', time:'22.00', tv:'SVT Play', city:'Philadelphia', id:'m55'}, {h:'Ecuador', a:'Tyskland', time:'22.00', tv:'SVT Play', city:'New Jersey', id:'m56'}]},
+  {date:'Torsdag 25 juni', matches:[{h:'Marocko', a:'Haiti', time:'00.00', tv:'TV4', city:'Atlanta', id:'m51'}, {h:'Skottland', a:'Brasilien', time:'00.00', tv:'TV4', city:'Miami', id:'m52'}, {h:'Sydafrika', a:'Sydkorea', time:'03.00', tv:'SVT Play', city:'Monterrey', id:'m53'}, {h:'Tjeckien', a:'Mexiko', time:'03.00', tv:'SVT Play', city:'Mexico City', id:'m54'}, {h:'Curaçao', a:'Elfenbenskusten', time:'22.00', tv:'SVT Play', city:'Philadelphia', id:'m55'}, {h:'Ecuador', a:'Tyskland', time:'22.00', tv:'SVT Play', city:'New Jersey', id(--m56)}}]},
   {date:'Fredag 26 juni', matches:[{h:'Tunisien', a:'Nederländerna', time:'01.00', tv:'SVT Play', city:'Kansas City', id:'m57'}, {h:'Japan', a:'Sverige', time:'01.00', tv:'SVT Play', city:'Dallas', id:'m58'}, {h:'Turkiet', a:'USA', time:'04.00', tv:'TV4', city:'Los Angeles', id:'m59'}, {h:'Paraguay', a:'Australien', time:'04.00', tv:'TV4', city:'San Francisco', id:'m60'}, {h:'Norge', a:'Frankrike', time:'21.00', tv:'TV4', city:'Boston', id:'m61'}, {h:'Senegal', a:'Irak', time:'21.00', tv:'TV4', city:'Toronto', id:'m62'}]},
   {date:'Lördag 27 juni', matches:[{h:'Kap Verde', a:'Saudiarabien', time:'02.00', tv:'TV4', city:'Houston', id:'m63'}, {h:'Uruguay', a:'Spanien', time:'02.00', tv:'TV4', city:'Guadalajara', id:'m64'}, {h:'Nya Zeeland', a:'Belgien', time:'05.00', tv:'TV4', city:'Vancouver', id:'m65'}, {h:'Egypten', a:'Iran', time:'05.00', tv:'TV4', city:'Seattle', id:'m66'}, {h:'Panama', a:'England', time:'23.00', tv:'SVT Play', city:'New Jersey', id:'m67'}, {h:'Kroatien', a:'Ghana', time:'23.00', tv:'SVT Play', city:'Philadelphia', id:'m68'}]},
   {date:'Söndag 28 juni', matches:[{h:'DR Kongo', a:'Uzbekistan', time:'01.30', tv:'TV4', city:'Atlanta', id:'m69'}, {h:'Colombia', a:'Portugal', time:'01.30', tv:'TV4', city:'Miami', id:'m70'}, {h:'Algeriet', a:'Österrike', time:'04.00', tv:'TV4', city:'Kansas City', id:'m71'}, {h:'Jordanien', a:'Argentina', time:'04.00', tv:'TV4', city:'Dallas', id:'m72'}]}
 ];
 
 let predictions = {};
+let currentAuthMode = 'login';
+let currentUserProfile = null;
 
 function renderGroups() {
   const container = document.getElementById('schedule-grid');
@@ -211,27 +231,90 @@ window.updatePred = (id, side, val) => {
 
 window.saveTips = async () => {
   if(!auth.currentUser) return showToast("Logga in först", true);
+  
+  // Sparar tips samt bifogar användarnamn för enkel spårning
   await setDoc(doc(db, "tips", auth.currentUser.uid), {
-    predictions, username: auth.currentUser.email
+    predictions, 
+    username: currentUserProfile?.username || auth.currentUser.email
   }, {merge: true});
   showToast("Sparat!");
 };
 
-window.doLogin = async () => {
-  const e = document.getElementById('loginEmail').value;
-  const p = document.getElementById('loginPassword').value;
-  try {
-    await signInWithEmailAndPassword(auth, e, p);
-    closeModal('loginModal');
-  } catch(e) { alert("Fel vid inloggning"); }
+// Hanterar växling mellan flikarna Logga in / Registrera
+window.switchAuthTab = (mode) => {
+  currentAuthMode = mode;
+  const loginTab = document.getElementById('tab-login');
+  const registerTab = document.getElementById('tab-register');
+  const registerFields = document.getElementById('auth-register-fields');
+  const submitBtn = document.getElementById('authSubmitBtn');
+  
+  if (mode === 'register') {
+    loginTab.classList.remove('active');
+    registerTab.classList.add('active');
+    registerFields.style.display = 'block';
+    submitBtn.textContent = 'Skapa konto';
+  } else {
+    registerTab.classList.remove('active');
+    loginTab.classList.add('active');
+    registerFields.style.display = 'none';
+    submitBtn.textContent = 'Logga in';
+  }
+};
+
+window.submitAuth = async () => {
+  const email = document.getElementById('authEmail').value;
+  const password = document.getElementById('authPassword').value;
+  
+  if (!email || !password) return alert("Fyll i e-post och lösenord.");
+  
+  if (currentAuthMode === 'login') {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      closeModal('authModal');
+    } catch(e) { alert("Fel vid inloggning: " + e.message); }
+  } else {
+    // Registrering
+    const firstName = document.getElementById('regFirstName').value;
+    const lastName = document.getElementById('regLastName').value;
+    const username = document.getElementById('regUsername').value;
+    
+    if (!firstName || !lastName || !username) {
+      return alert("Fyll i alla profiluppgifter för att registrera dig.");
+    }
+    
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      
+      // Spara de publika användaruppgifterna i en separat 'users'-samling
+      await setDoc(doc(db, "users", user.uid), {
+        firstName,
+        lastName,
+        username,
+        email
+      });
+      
+      closeModal('authModal');
+      showToast("Konto skapat!");
+    } catch(e) { alert("Fel vid registrering: " + e.message); }
+  }
 };
 
 window.doLogout = async () => { await signOut(auth); location.reload(); };
 
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, async (user) => {
   document.getElementById('loading').classList.add('hidden');
   if(user) {
-    document.getElementById('userBadge').textContent = user.email;
+    // Hämta profilen (användarnamn m.m.) från Firestore
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    if (userDoc.exists()) {
+      currentUserProfile = userDoc.data();
+      // Här sätter vi det publika användarnamnet i badgen!
+      document.getElementById('userBadge').textContent = currentUserProfile.username;
+    } else {
+      document.getElementById('userBadge').textContent = user.email;
+    }
+    
     document.getElementById('userBadge').style.display = 'block';
     document.getElementById('loginBtn').style.display = 'none';
     document.getElementById('logoutBtn').style.display = 'block';
@@ -263,7 +346,7 @@ window.showPage = (id) => {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  if (event) event.target.classList.add('active');
 };
 
 window.openModal = (id) => document.getElementById(id).classList.add('open');
