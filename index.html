@@ -261,22 +261,55 @@ window.switchAuthTab = (mode) => {
   }
 };
 
+// Hjälpfunktion för att göra felmeddelanden begripliga och ge tydliga instruktioner
+function getFriendlyErrorMessage(error) {
+  const code = error.code;
+  
+  switch(code) {
+    // Lösenordsfel
+    case 'auth/weak-password':
+      return 'Lösenordet är för svagt. Det måste vara minst 6 tecken långt och bör innehålla en blandning av bokstäver och siffror.';
+    case 'auth/wrong-password':
+      return 'Felaktigt lösenord. Försök igen eller återställ ditt lösenord.';
+      
+    // E-postfel
+    case 'auth/invalid-email':
+      return 'E-postadressen är felaktigt formaterad. Kontrollera att du har skrivit rätt (t.ex. namn@domän.se).';
+    case 'auth/email-already-in-use':
+      return 'Denna e-postadress är redan registrerad. Gå till "Logga in" eller välj en annan e-postadress.';
+      
+    // Användarfel
+    case 'auth/user-not-found':
+      return 'Det finns inget konto registrerat med denna e-postadress.';
+      
+    // Nätverks- och blockeringsfel (Det fel du fick på bilden!)
+    case 'auth/network-request-failed':
+      return 'Kunde inte ansluta till servern. Detta beror oftast på ett tillfälligt nätverksfel eller att en Adblocker blockerar anslutningen. Prova att stänga av eventuella tillägg eller kontrollera ditt internet.';
+      
+    // Standardmeddelande om något annat oväntat händer
+    default:
+      return 'Ett oväntat fel uppstod: ' + error.message;
+  }
+}
+
 window.submitAuth = async () => {
-  const email = document.getElementById('authEmail').value;
+  const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPassword').value;
   
-  if (!email || !password) return alert("Fyll i e-post och lösenord.");
+  if (!email || !password) return alert("Fyll i både e-post och lösenord.");
   
   if (currentAuthMode === 'login') {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       closeModal('authModal');
-    } catch(e) { alert("Fel vid inloggning: " + e.message); }
+    } catch(e) { 
+      alert(getFriendlyErrorMessage(e)); 
+    }
   } else {
     // Registrering
-    const firstName = document.getElementById('regFirstName').value;
-    const lastName = document.getElementById('regLastName').value;
-    const username = document.getElementById('regUsername').value;
+    const firstName = document.getElementById('regFirstName').value.trim();
+    const lastName = document.getElementById('regLastName').value.trim();
+    const username = document.getElementById('regUsername').value.trim();
     
     if (!firstName || !lastName || !username) {
       return alert("Fyll i alla profiluppgifter för att registrera dig.");
@@ -296,10 +329,11 @@ window.submitAuth = async () => {
       
       closeModal('authModal');
       showToast("Konto skapat!");
-    } catch(e) { alert("Fel vid registrering: " + e.message); }
+    } catch(e) { 
+      alert(getFriendlyErrorMessage(e)); 
+    }
   }
 };
-
 window.doLogout = async () => { await signOut(auth); location.reload(); };
 
 onAuthStateChanged(auth, async (user) => {
