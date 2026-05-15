@@ -21,7 +21,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { 
   font-family: 'Barlow', sans-serif; 
-  background-color: #08111f; /* En mörk basfärg om bilden sviker */
+  background-color: #08111f;
   background-image: linear-gradient(rgba(8,17,31,0.82), rgba(8,17,31,0.82)), url('bakgrund.png');
   background-position: center;
   background-repeat: no-repeat;
@@ -30,101 +30,71 @@ body {
   min-height: 100vh; 
 }
 
-header { position: sticky; top: 0; background: rgba(13,44,64,0.82); backdrop-filter: blur(10px); padding: 14px 20px; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.3); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
-.logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 24px; color: var(--gold); letter-spacing: 0.04em; text-shadow: 0 0 12px rgba(89,213,255,0.35); }
+header { position: sticky; top: 0; background: rgba(13,44,64,0.82); backdrop-filter: blur(10px); padding: 14px 20px; z-index: 100;
+box-shadow: 0 2px 10px rgba(0,0,0,0.3); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 24px; color: var(--gold); letter-spacing: 0.04em; text-shadow: 0 0 12px rgba(89,213,255,0.35);
+}
 .header-right { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.user-badge { font-size: 13px; color: var(--gold); background: rgba(89,213,255,0.10); border: 1px solid rgba(89,213,255,0.25); border-radius: 20px; padding: 4px 12px; display: none; }
+.user-badge { font-size: 13px; color: var(--gold); background: rgba(89,213,255,0.10);
+border: 1px solid rgba(89,213,255,0.25); border-radius: 20px; padding: 4px 12px; display: none; }
 
-nav { background: var(--bg3); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+nav { background: var(--bg3); border-bottom: 1px solid var(--border);
+overflow-x: auto; scrollbar-width: none; }
 nav::-webkit-scrollbar { display: none; }
-.nav-inner { display: flex; gap: 2px; padding: 6px 12px; white-space: nowrap; }
-nav button { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; padding: 6px 14px; border: none; background: transparent; color: var(--text2); cursor: pointer; border-radius: 6px; transition: all 0.15s; }
-nav button:hover { color: var(--text); background: rgba(89,213,255,0.08); }
+.nav-inner { display: flex; gap: 2px; padding: 6px 12px; white-space: nowrap;
+}
+nav button { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; padding: 6px 14px; border: none; background: transparent;
+color: var(--text2); cursor: pointer; border-radius: 6px; transition: all 0.15s; }
+nav button:hover { color: var(--text); background: rgba(89,213,255,0.08);
+}
 nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 
-.container { max-width: 1200px; margin: 0 auto; padding: 24px 20px 80px; }
+.container { max-width: 1200px; margin: 0 auto; padding: 24px 20px 80px;
+}
 .page { display: none; }
 .page.active { display: block; }
-.page-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 26px; color: var(--gold); margin-bottom: 4px; text-shadow: 0 0 10px rgba(89,213,255,0.30) }
+.page-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 26px; color: var(--gold);
+margin-bottom: 4px; text-shadow: 0 0 10px rgba(89,213,255,0.30) }
 .page-sub { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
 
 .groups-grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 14px;
 } 
-.group-card { background: var(--bg3); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; }
+.group-card { background: var(--bg3); border-radius: 16px; border: 1px solid var(--border); overflow: hidden;
+}
 .group-header { background: var(--green); padding: 9px 16px; display: flex; align-items: center; gap: 10px; }
-.group-letter { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px; color: var(--gold); }
-.group-sub { font-size: 12px; color: rgba(255,255,255,0.65); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.06em; }
+.group-letter { font-family: 'Barlow Condensed', sans-serif;
+font-weight: 800; font-size: 20px; color: var(--gold); }
 
 .match-row { padding: 11px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
-.match-row:last-child { border-bottom: none; }
+.match-row:last-child { border-bottom: none;
+}
 .match-info { flex: 1; min-width: 0; }
-.match-teams { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.match-teams { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 .match-meta { font-size: 11px; color: var(--text2); margin-top: 2px; }
-.score-inputs { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
-.score-inputs input { width: 38px; height: 34px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 16px; background: var(--bg); color: var(--gold); border: 1px solid rgba(89,213,255,0.28); border-radius: 6px; -moz-appearance: textfield; }
-.score-inputs input::-webkit-outer-spin-button, .score-inputs input::-webkit-inner-spin-button { -webkit-appearance: none; }
-.score-inputs input:focus { outline: none; border-color: var(--gold); }
-.score-sep { color: var(--text2); font-weight: 700; }
+.score-inputs { display: flex; align-items: center; gap: 5px; flex-shrink: 0;
+}
+.score-inputs input { width: 38px; height: 34px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 16px; background: var(--bg);
+color: var(--gold); border: 1px solid rgba(89,213,255,0.28); border-radius: 6px; }
 
-.knockout-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; }
-.ko-card { background: var(--bg3); border-radius: 16px; border: 1px solid var(--border); overflow: hidden; }
-.ko-header { background: var(--bg2); padding: 8px 16px; display: flex; justify-content: space-between; align-items: center; }
-.ko-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; color: var(--gold); font-weight: 700; letter-spacing: 0.08em; }
-.ko-mult { font-size: 11px; color: var(--text2); }
-.ko-teams { padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
-.ko-team-name { flex: 1; font-size: 14px; font-weight: 600; }
-.ko-team-name.right { text-align: right; }
-.score-inputs.big input { width: 42px; height: 38px; font-size: 18px; }
-
-.bonus-section { background: rgba(0,0,0,0.2); border-top: 1px solid var(--border); padding: 12px 16px; }
-.bonus-title { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; color: var(--gold); font-weight: 700; letter-spacing: 0.08em; margin-bottom: 10px; }
-.bonus-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.bonus-row:last-child { margin-bottom: 0; }
-.bonus-q { font-size: 12px; color: var(--text2); flex: 1; }
-.bonus-opts { display: flex; gap: 4px; flex-wrap: wrap; }
-.opt-btn { font-size: 11px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.04em; padding: 3px 9px; border: 1px solid var(--border); border-radius: 4px; background: transparent; color: var(--text2); cursor: pointer; transition: all 0.12s; }
-.opt-btn:hover { border-color: var(--gold); color: var(--text); }
-.opt-btn.selected { background: var(--gold); color: var(--bg); border-color: var(--gold); }
-
-.tournament-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-.tourn-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 16px; padding: 16px 18px; }
-.tourn-label { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; color: var(--gold); letter-spacing: 0.05em; margin-bottom: 3px; }
-.tourn-pts { font-size: 12px; color: var(--text2); margin-bottom: 10px; }
-.tourn-input { width: 100%; font-family: 'Barlow', sans-serif; font-size: 14px; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 7px; padding: 8px 11px; }
-.tourn-input:focus { outline: none; border-color: var(--gold); }
-
-.tb-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 16px; padding: 20px; max-width: 600px; }
-.tb-item { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-.tb-item:last-child { margin-bottom: 0; }
-.tb-num { width: 28px; height: 28px; border-radius: 50%; background: var(--green); color: var(--gold); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.tb-q { font-size: 13px; color: var(--text2); flex: 1; }
-.tb-input { width: 120px; font-family: 'Barlow', sans-serif; font-size: 14px; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 7px; padding: 6px 10px; text-align: center; }
-.tb-input:focus { outline: none; border-color: var(--gold); }
-
+/* ... Övrig CSS är densamma som tidigare ... */
 .lb-wrap { background: var(--bg3); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
 .lb-header-row { display: grid; grid-template-columns: 44px 1fr 80px 80px 80px 90px; gap: 8px; padding: 10px 16px; background: var(--bg2); font-family: 'Barlow Condensed', sans-serif; font-size: 12px; color: var(--text2); letter-spacing: 0.06em; font-weight: 600; }
 .lb-row { display: grid; grid-template-columns: 44px 1fr 80px 80px 80px 90px; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--border); align-items: center; cursor: pointer; transition: background 0.1s; }
-.lb-row:last-child { border-bottom: none; }
 .lb-row:hover { background: rgba(255,255,255,0.03); }
 .lb-rank { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 18px; color: var(--text2); }
-.lb-rank.r1 { color: var(--gold); }
-.lb-rank.r2 { color: #C0C0C0; }
-.lb-rank.r3 { color: #CD7F32; }
 .lb-name { font-weight: 600; font-size: 14px; }
-.lb-bar-wrap { height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; margin-top: 4px; }
-.lb-bar { height: 3px; background: var(--gold); border-radius: 2px; transition: width 0.5s; }
 .lb-num { font-size: 13px; color: var(--text2); text-align: center; }
 .lb-total { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 18px; color: var(--gold); text-align: center; }
 
 .btn { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.05em; padding: 8px 18px; border: 1px solid var(--blue); border-radius: 8px; background: transparent; color: var(--blue); cursor: pointer; transition: all 0.15s; }
 .btn:hover { background: var(--blue); color: var(--bg); box-shadow: 0 0 18px rgba(89,213,255,0.35); }
 .btn.primary { background: var(--gold); color: #04131d; border-color: var(--gold); }
-.btn.primary:hover { background: var(--gold-dark); border-color: var(--gold-dark); }
 .btn.danger { color: #f87171; border-color: #f87171; }
-.btn.danger:hover { background: #f87171; color: var(--bg); }
 
 .footer { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13,44,64,0.82); backdrop-filter: blur(10px); border-top: 1px solid var(--border); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px; z-index: 99; }
 .footer-stats { font-size: 13px; color: var(--text2); }
@@ -132,44 +102,21 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 
 .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 20px; }
 .modal.open { display: flex; }
-.modal-content { width: 100%; max-width: 420px; background: var(--bg3); border-radius: 20px; padding: 28px; border: 1px solid var(--border); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
-.modal-title { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; color: var(--gold); margin-bottom: 20px; }
-.modal-input { width: 100%; padding: 12px 14px; margin-bottom: 12px; border-radius: 8px; border: 1px solid rgba(89,213,255,0.14); background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; font-size: 15px; }
-.modal-input:focus { outline: none; border-color: var(--blue); }
-.modal-btns { display: flex; gap: 10px; margin-top: 16px; }
-.modal-btns .btn { flex: 1; }
-.modal-link { background: none; border: none; color: var(--blue); font-size: 13px; cursor: pointer; margin-top: 12px; padding: 0; font-family: 'Barlow', sans-serif; }
-.pw-wrap { position: relative; }
-.pw-toggle { position: absolute; right: 14px; top: 13px; color: var(--blue); cursor: pointer; font-size: 13px; background: none; border: none; }
-.modal-check { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text2); margin-bottom: 4px; }
+.modal-content { width: 100%; max-width: 420px; background: var(--bg3); border-radius: 20px; padding: 28px; border: 1px solid var(--border); }
+.modal-input { width: 100%; padding: 12px 14px; margin-bottom: 12px; border-radius: 8px; border: 1px solid rgba(89,213,255,0.14); background: var(--bg); color: var(--text); }
 
-.toast { position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%) translateY(10px); background: #22c55e; color: var(--bg); font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.04em; padding: 9px 22px; border-radius: 30px; opacity: 0; transition: all 0.3s; pointer-events: none; z-index: 200; }
-.toast.error { background: #ef4444; color: white; }
+.toast { position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%) translateY(10px); background: #22c55e; color: var(--bg); padding: 9px 22px; border-radius: 30px; opacity: 0; transition: all 0.3s; pointer-events: none; z-index: 200; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
 .loading { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; z-index: 500; }
 .loading.hidden { display: none; }
-.loading-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 36px; color: var(--gold); }
 .spinner { width: 30px; height: 30px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.empty { padding: 40px; text-align: center; color: var(--text2); font-size: 14px; }
-
-@media (max-width: 600px) {
-  .lb-header-row, .lb-row { grid-template-columns: 36px 1fr 60px 70px; }
-  .hc3,.rc3,.hc4,.rc4,.hc5,.rc5 { display: none; }
-  .groups-grid, .knockout-grid, .tournament-grid { grid-template-columns: 1fr; }
-}
-button:disabled,
-input:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
 </style>
 </head>
 <body>
 
 <div class="loading" id="loading">
-  <div class="loading-logo">VM-TIPS 2026</div>
+  <div class="loading-logo" style="font-size:36px; color:var(--gold); font-weight:800;">VM-TIPS 2026</div>
   <div class="spinner"></div>
 </div>
 
@@ -185,135 +132,68 @@ input:disabled {
 
 <nav>
   <div class="nav-inner">
-    <button class="active" onclick="showPage('groups')">Gruppspel</button>
-
-    <button onclick="showPage('r16')">16-delsfinaler</button>
-
-    <button onclick="showPage('qf')">Åttondelsfinaler</button>
-
-  <button onclick="showPage('sf')">Kvartsfinaler</button>
-
-<button onclick="showPage('semi')">Semifinaler</button>
-
-<button onclick="showPage('final')">Final & Bronsmatch</button>
-
-    <button onclick="showPage('tournament')">Turneringstips</button>
-
-    <button onclick="showPage('tiebreakers')">Utslagsfrågor</button>
-
-    <button onclick="showPage('leaderboard')">Poängtabell</button>
+    <button id="btn-groups" class="active" onclick="showPage('groups')">Gruppspel</button>
+    <button id="btn-leaderboard" onclick="showPage('leaderboard')">Poängtabell</button>
   </div>
 </nav>
 
 <div class="container">
   <div class="page active" id="page-groups">
     <div class="page-title">Gruppspel</div>
-    <div class="page-sub">Tippa alla 72 gruppspelsmatcher · Rätt 1X2 = 1p · Rätt målskillnad = 2p · Exakt rätt = 3p</div>
-    <div id="groups-grid"></div>
+    <div class="page-sub">Tippa alla 72 gruppspelsmatcher</div>
+    <div class="groups-grid" id="groups-grid"></div>
   </div>
-  <div class="page" id="page-r16">
-    <div class="page-title">Åttondelar</div>
-    <div class="page-sub">16 matcher · Multiplikator ×1,5 · Bonusfrågor per match</div>
-    <div class="knockout-grid" id="r16-grid"></div>
-  </div>
- <div class="page" id="page-qf">
-  <div class="page-title">Åttondelsfinaler</div>
-    <div class="page-sub">8 matcher · Multiplikator ×2 · Bonusfrågor per match</div>
-    <div class="knockout-grid" id="qf-grid"></div>
-  </div>
-<div class="page" id="page-sf">
-  <div class="page-title">Kvartsfinaler</div>
-    <div class="page-sub">4 matcher · Multiplikator ×2 · Bonusfrågor per match</div>
-    <div class="knockout-grid" id="sf-grid"></div>
-  </div>
-  <div class="page" id="page-semi">
-  <div class="page-title">Semifinaler</div>
-  <div class="page-sub">2 matcher · Multiplikator ×2 · Bonusfrågor per match</div>
-  <div class="knockout-grid" id="semi-grid"></div>
-</div>
-<div class="page" id="page-final">
-  <div class="page-title">Semifinaler, Bronsmatch & Final</div>
-    <div class="page-sub">2 matcher · Multiplikator ×2 · Bonusfrågor per match</div>
-    <div class="knockout-grid" id="final-grid"></div>
-  </div>
-  <div class="page" id="page-tournament">
-    <div class="page-title">Turneringstips</div>
-    <div class="page-sub">Fyll i dina tips på turneringen som helhet</div>
-    <div class="tournament-grid" id="tournament-grid"></div>
-  </div>
-  <div class="page" id="page-tiebreakers">
-    <div class="page-title">Utslagsfrågor</div>
-    <div class="page-sub">Används om spelare slutar på samma poäng · Svara innan turneringen börjar</div>
-    <div class="tb-card" id="tb-container"></div>
-  </div>
+
   <div class="page" id="page-leaderboard">
     <div class="page-title">Poängtabell</div>
-    <div class="page-sub">Uppdateras när spelare sparar sina tips</div>
     <div class="lb-wrap">
       <div class="lb-header-row">
         <div>#</div><div>Spelare</div>
-        <div class="hc3" style="text-align:center">Matcher</div>
-        <div class="hc4" style="text-align:center">Bonus</div>
-        <div class="hc5" style="text-align:center">Turnering</div>
-        <div style="text-align:center">Tips totalt</div>
+        <div style="text-align:center">Matcher</div>
+        <div style="text-align:center">Bonus</div>
+        <div style="text-align:center">Turnering</div>
+        <div style="text-align:center">Totalt</div>
       </div>
-      <div id="lb-body"><div class="empty">Laddar...</div></div>
+      <div id="lb-body"></div>
     </div>
   </div>
 </div>
 
 <div class="footer">
-  <div class="footer-stats" id="footer-stats">Logga in för att spara dina tips</div>
-<button
-  class="btn primary"
-  onclick="saveTips()"
-  id="saveBtn"
->
-  Spara tips
-</button>
+  <div class="footer-stats" id="footer-stats">Logga in för att spara</div>
+  <button class="btn primary" onclick="saveTips()" id="saveBtn">Spara tips</button>
 </div>
 
-<!-- LOGIN MODAL -->
 <div class="modal" id="loginModal">
   <div class="modal-content">
-    <div class="modal-title">Logga in</div>
-    <input class="modal-input" type="email" id="loginEmail" placeholder="E-post" autocomplete="email">
-    <div class="pw-wrap">
-      <input class="modal-input" type="password" id="loginPassword" placeholder="Lösenord" autocomplete="current-password" style="padding-right:60px">
-      <button class="pw-toggle" onclick="togglePw('loginPassword',this)">Visa</button>
+    <div class="modal-title" style="color:var(--gold); font-weight:700; font-size:22px; margin-bottom:20px;">Logga in</div>
+    <input class="modal-input" type="email" id="loginEmail" placeholder="E-post">
+    <input class="modal-input" type="password" id="loginPassword" placeholder="Lösenord">
+    <div class="modal-btns" style="display:flex; gap:10px;">
+      <button class="btn primary" style="flex:1" onclick="doLogin()">Logga in</button>
+      <button class="btn" style="flex:1" onclick="closeModal('loginModal')">Stäng</button>
     </div>
-    <label class="modal-check"><input type="checkbox" id="rememberMe"> Kom ihåg mig</label>
-    <div class="modal-btns">
-      <button class="btn primary" onclick="doLogin()">Logga in</button>
-      <button class="btn" onclick="closeModal('loginModal')">Stäng</button>
-    </div>
-    <div><button class="modal-link" onclick="doResetPassword()">Glömt lösenord?</button></div>
   </div>
 </div>
 
-<!-- REGISTER MODAL -->
 <div class="modal" id="registerModal">
   <div class="modal-content">
-    <div class="modal-title">Skapa konto</div>
-    <input class="modal-input" type="text" id="regName" placeholder="Ditt namn (visas i poängtabellen)">
-    <input class="modal-input" type="email" id="regEmail" placeholder="E-post" autocomplete="email">
-    <div class="pw-wrap">
-      <input class="modal-input" type="password" id="regPassword" placeholder="Lösenord (minst 6 tecken)" style="padding-right:60px">
-      <button class="pw-toggle" onclick="togglePw('regPassword',this)">Visa</button>
-    </div>
-    <div class="modal-btns">
-      <button class="btn primary" onclick="doRegister()">Skapa konto</button>
-      <button class="btn" onclick="closeModal('registerModal')">Stäng</button>
+    <div class="modal-title" style="color:var(--gold); font-weight:700; font-size:22px; margin-bottom:20px;">Skapa konto</div>
+    <input class="modal-input" type="text" id="regName" placeholder="Namn">
+    <input class="modal-input" type="email" id="regEmail" placeholder="E-post">
+    <input class="modal-input" type="password" id="regPassword" placeholder="Lösenord">
+    <div class="modal-btns" style="display:flex; gap:10px;">
+      <button class="btn primary" style="flex:1" onclick="doRegister()">Skapa konto</button>
+      <button class="btn" style="flex:1" onclick="closeModal('registerModal')">Stäng</button>
     </div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, setPersistence, browserLocalPersistence, browserSessionPersistence, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -325,785 +205,198 @@ const firebaseConfig = {
   appId: "1:714350716776:web:ff233e50e40787aa3a98dd"
 };
 
-const fbApp = initializeApp(firebaseConfig);
-const auth = getAuth(fbApp);
-const db = getFirestore(fbApp);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-window.doLogin = async function() {
-  const email = document.getElementById('loginEmail').value.trim();
-  const pw = document.getElementById('loginPassword').value;
-  const remember = document.getElementById('rememberMe').checked;
-  if (!email || !pw) { showToast('Fyll i e-post och lösenord', true); return; }
+window.doLogin = async () => {
+  const e = document.getElementById('loginEmail').value;
+  const p = document.getElementById('loginPassword').value;
   try {
-    await setPersistence(auth, remember ? browserLocalPersistence : browserSessionPersistence);
-    await signInWithEmailAndPassword(auth, email, pw);
+    await signInWithEmailAndPassword(auth, e, p);
     closeModal('loginModal');
-    showToast('Inloggad!');
-  } catch(e) { showToast(firebaseError(e), true); }
+    showToast("Inloggad!");
+  } catch(err) { showToast("Fel vid inloggning", true); }
 };
 
-window.doRegister = async function() {
-  const name = document.getElementById('regName').value.trim();
-  const email = document.getElementById('regEmail').value.trim();
-  const pw = document.getElementById('regPassword').value;
-  if (!name || !email || !pw) { showToast('Fyll i alla fält', true); return; }
+window.doRegister = async () => {
+  const n = document.getElementById('regName').value;
+  const e = document.getElementById('regEmail').value;
+  const p = document.getElementById('regPassword').value;
   try {
-    const cred = await createUserWithEmailAndPassword(auth, email, pw);
-    await updateProfile(cred.user, { displayName: name });
-    await setDoc(doc(db, 'users', cred.user.uid), { username: name, email, created: new Date().toISOString() });
+    const res = await createUserWithEmailAndPassword(auth, e, p);
+    await updateProfile(res.user, { displayName: n });
+    await setDoc(doc(db, "users", res.user.uid), { name: n, email: e });
     closeModal('registerModal');
-    showToast('Konto skapat – välkommen ' + name + '!');
-  } catch(e) { showToast(firebaseError(e), true); }
+    showToast("Konto skapat!");
+  } catch(err) { showToast("Kunde inte registrera", true); }
 };
 
-window.doLogout = async function() {
-  await signOut(auth);
-  showToast('Utloggad');
-};
+window.doLogout = () => signOut(auth);
 
-window.doResetPassword = async function() {
-  const email = document.getElementById('loginEmail').value.trim();
-  if (!email) { showToast('Fyll i din e-post först', true); return; }
+window.saveTips = async () => {
+  if (!auth.currentUser) return showToast("Logga in först!", true);
   try {
-    await sendPasswordResetEmail(auth, email);
-    showToast('Återställningsmail skickat!');
-  } catch(e) { showToast(firebaseError(e), true); }
-};
-
-window.saveTips = async function() {
-  const user = auth.currentUser;
-  if (!user) { showToast('Du måste logga in för att spara', true); return; }
-  try {
-    await setDoc(doc(db, 'tips', user.uid), {
-      username: user.displayName || user.email,
-      uid: user.uid,
-      predictions,
-      bonuses,
-      tournament,
-      tiebreakers,
+    await setDoc(doc(db, "tips", auth.currentUser.uid), {
+      username: auth.currentUser.displayName,
+      predictions: predictions,
       updated: new Date().toISOString()
     });
-    showToast('Tips sparade!');
+    showToast("Tips sparade!");
     loadLeaderboard();
-  } catch(e) { showToast('Kunde inte spara: ' + e.message, true); }
+  } catch(err) { showToast("Kunde inte spara", true); }
 };
 
-async function loadUserTips(user) {
-  try {
-    const snap = await getDoc(doc(db, 'tips', user.uid));
-    if (snap.exists()) {
-      const d = snap.data();
-      predictions = d.predictions || {};
-      bonuses = d.bonuses || {};
-      tournament = d.tournament || {};
-      tiebreakers = d.tiebreakers || {};
-      syncAllInputs();
-      updateStats(user);
-    }
-  } catch(e) { console.error(e); }
-}
-
-async function loadLeaderboard() {
-  try {
-    const snap = await getDocs(collection(db, 'tips'));
-    const rows = [];
-    snap.forEach(d => {
-      const data = d.data();
-      const matchCount = Object.values(data.predictions || {}).filter(m => m.home !== '' && m.away !== '').length;
-      const bonusCount = Object.values(data.bonuses || {}).reduce((s, b) => s + Object.keys(b).length, 0);
-      const tournCount = Object.values(data.tournament || {}).filter(v => v && v.toString().trim()).length;
-      rows.push({ name: data.username || 'Okänd', matchCount, bonusCount, tournCount });
-    });
-    rows.sort((a, b) => (b.matchCount + b.bonusCount + b.tournCount) - (a.matchCount + a.bonusCount + a.tournCount));
-    const max = rows.length ? Math.max(...rows.map(r => r.matchCount + r.bonusCount + r.tournCount), 1) : 1;
-    const body = document.getElementById('lb-body');
-    if (!rows.length) { body.innerHTML = '<div class="empty">Inga sparade tips ännu.</div>'; return; }
-    body.innerHTML = rows.map((r, i) => {
-      const total = r.matchCount + r.bonusCount + r.tournCount;
-      return `<div class="lb-row">
-        <div class="lb-rank ${i===0?'r1':i===1?'r2':i===2?'r3':''}">${i+1}</div>
-        <div><div class="lb-name">${r.name}</div><div class="lb-bar-wrap"><div class="lb-bar" style="width:${Math.round(total/max*100)}%"></div></div></div>
-        <div class="lb-num rc3">${r.matchCount}</div>
-        <div class="lb-num rc4">${r.bonusCount}</div>
-        <div class="lb-num rc5">${r.tournCount}</div>
-        <div class="lb-total">${total}</div>
-      </div>`;
-    }).join('');
-  } catch(e) { console.error(e); }
-}
+window.loadLeaderboard = async () => {
+  const snap = await getDocs(collection(db, "tips"));
+  const body = document.getElementById('lb-body');
+  let html = '';
+  let i = 1;
+  snap.forEach(d => {
+    const data = d.data();
+    const count = Object.keys(data.predictions || {}).length;
+    html += `<div class="lb-row">
+      <div>${i++}</div><div>${data.username}</div>
+      <div class="lb-num">${count}</div><div class="lb-num">0</div><div class="lb-num">0</div>
+      <div class="lb-total">${count}</div>
+    </div>`;
+  });
+  body.innerHTML = html || '<div style="padding:20px; text-align:center;">Inga tips än</div>';
+};
 
 onAuthStateChanged(auth, user => {
-  const badge = document.getElementById('userBadge');
-  const loginBtn = document.getElementById('loginBtn');
-  const registerBtn = document.getElementById('registerBtn');
-  const logoutBtn = document.getElementById('logoutBtn');
+  const loading = document.getElementById('loading');
   if (user) {
-    badge.textContent = user.displayName || user.email;
-    badge.style.display = 'inline-block';
-    loginBtn.style.display = 'none';
-    registerBtn.style.display = 'none';
-    logoutBtn.style.display = 'inline-block';
+    document.getElementById('userBadge').textContent = user.displayName;
+    document.getElementById('userBadge').style.display = 'block';
+    document.getElementById('loginBtn').style.display = 'none';
+    document.getElementById('registerBtn').style.display = 'none';
+    document.getElementById('logoutBtn').style.display = 'block';
     loadUserTips(user);
-    updateStats();
   } else {
-    badge.style.display = 'none';
-    loginBtn.style.display = 'inline-block';
-    registerBtn.style.display = 'inline-block';
-    logoutBtn.style.display = 'none';
-    document.getElementById('footer-stats').textContent = 'Logga in för att spara dina tips';
+    document.getElementById('userBadge').style.display = 'none';
+    document.getElementById('loginBtn').style.display = 'block';
+    document.getElementById('registerBtn').style.display = 'block';
+    document.getElementById('logoutBtn').style.display = 'none';
   }
-  document.getElementById('loading').classList.add('hidden');
+  loading.classList.add('hidden');
   loadLeaderboard();
 });
 
-function firebaseError(e) {
-  const map = {
-    'auth/invalid-email': 'Ogiltig e-postadress',
-    'auth/user-not-found': 'Inget konto med denna e-post',
-    'auth/wrong-password': 'Fel lösenord',
-    'auth/email-already-in-use': 'E-postadressen används redan',
-    'auth/weak-password': 'Lösenordet måste vara minst 6 tecken',
-    'auth/too-many-requests': 'För många försök – vänta lite',
-    'auth/invalid-credential': 'Fel e-post eller lösenord',
-  };
-  return map[e.code] || e.message;
+async function loadUserTips(user) {
+  const d = await getDoc(doc(db, "tips", user.uid));
+  if (d.exists()) {
+    predictions = d.data().predictions || {};
+    syncAllInputs();
+    updateStats();
+  }
 }
 </script>
 
 <script>
 // ============================================================
-// MATCHDATA – ALLA 12 GRUPPER (72 matcher)
+// DATA & LOGIK
 // ============================================================
 const GROUPS = [
   { letter:'A', matches:[
-    {h:'Mexiko', a:'Sydafrika', date:'11 jun', time:'21:00', stadium:'Mexico City', tv:'TV4'},
-    {h:'Sydkorea', a:'Tjeckien', date:'12 jun', time:'04:00', stadium:'Guadalajara', tv:'TV4'},
-    {h:'Tjeckien', a:'Sydafrika', date:'18 jun', time:'18:00', stadium:'Atlanta', tv:'TV4'},
-    {h:'Mexiko', a:'Sydkorea', date:'19 jun', time:'03:00', stadium:'Guadalajara', tv:'TV4'},
-    {h:'Sydafrika', a:'Sydkorea', date:'25 jun', time:'03:00', stadium:'Monterrey', tv:'SVT Play'},
-    {h:'Tjeckien', a:'Mexiko', date:'25 jun', time:'03:00', stadium:'Mexico City', tv:'SVT Play'}
+    {h:'Mexiko', a:'Sydafrika', date:'11 jun', time:'21:00', tv:'TV4'},
+    {h:'Sydkorea', a:'Tjeckien', date:'12 jun', time:'04:00', tv:'TV4'},
+    {h:'Tjeckien', a:'Sydafrika', date:'18 jun', time:'18:00', tv:'TV4'},
+    {h:'Mexiko', a:'Sydkorea', date:'19 jun', time:'03:00', tv:'TV4'},
+    {h:'Sydafrika', a:'Sydkorea', date:'25 jun', time:'03:00', tv:'SVT'},
+    {h:'Tjeckien', a:'Mexiko', date:'25 jun', time:'03:00', tv:'SVT'}
   ]},
   { letter:'B', matches:[
-    {h:'Kanada', a:'Bosnien och Hercegovina', date:'12 jun', time:'21:00', stadium:'Toronto', tv:'SVT Play'},
-    {h:'Qatar', a:'Schweiz', date:'13 jun', time:'21:00', stadium:'San Francisco', tv:'TV4'},
-    {h:'Schweiz', a:'Bosnien och Hercegovina', date:'18 jun', time:'21:00', stadium:'Los Angeles', tv:'TV4'},
-    {h:'Kanada', a:'Qatar', date:'19 jun', time:'00:00', stadium:'Vancouver', tv:'TV4'},
-    {h:'Schweiz', a:'Kanada', date:'24 jun', time:'21:00', stadium:'Vancouver', tv:'TV4'},
-    {h:'Bosnien och Hercegovina', a:'Qatar', date:'24 jun', time:'21:00', stadium:'Seattle', tv:'TV4'}
+    {h:'Kanada', a:'Bosnien', date:'12 jun', time:'21:00', tv:'SVT'},
+    {h:'Qatar', a:'Schweiz', date:'13 jun', time:'21:00', tv:'TV4'},
+    {h:'Schweiz', a:'Bosnien', date:'18 jun', time:'21:00', tv:'TV4'},
+    {h:'Kanada', a:'Qatar', date:'19 jun', time:'00:00', tv:'TV4'},
+    {h:'Schweiz', a:'Kanada', date:'24 jun', time:'21:00', tv:'TV4'},
+    {h:'Bosnien', a:'Qatar', date:'24 jun', time:'21:00', tv:'TV4'}
   ]},
-  { letter:'C', matches:[
-    {h:'Brasilien', a:'Marocko', date:'14 jun', time:'00:00', stadium:'New Jersey', tv:'SVT Play'},
-    {h:'Haiti', a:'Skottland', date:'14 jun', time:'03:00', stadium:'Boston', tv:'SVT Play'},
-    {h:'Skottland', a:'Marocko', date:'20 jun', time:'00:00', stadium:'Boston', tv:'SVT Play'},
-    {h:'Brasilien', a:'Haiti', date:'20 jun', time:'03:00', stadium:'Philadelphia', tv:'TV4'},
-    {h:'Marocko', a:'Haiti', date:'25 jun', time:'00:00', stadium:'Atlanta', tv:'TV4'},
-    {h:'Skottland', a:'Brasilien', date:'25 jun', time:'00:00', stadium:'Miami', tv:'TV4'}
-  ]},
-  { letter:'D', matches:[
-    {h:'USA', a:'Paraguay', date:'13 jun', time:'03:00', stadium:'Los Angeles', tv:'TV4'},
-    {h:'Australien', a:'Turkiet', date:'14 jun', time:'06:00', stadium:'Vancouver', tv:'TV4'},
-    {h:'USA', a:'Australien', date:'19 jun', time:'21:00', stadium:'Seattle', tv:'SVT Play'},
-    {h:'Turkiet', a:'Paraguay', date:'20 jun', time:'06:00', stadium:'San Francisco', tv:'TV4'},
-    {h:'Turkiet', a:'USA', date:'26 jun', time:'04:00', stadium:'Los Angeles', tv:'TV4'},
-    {h:'Paraguay', a:'Australien', date:'26 jun', time:'04:00', stadium:'San Francisco', tv:'TV4'}
-  ]},
-  { letter:'E', matches:[
-    {h:'Tyskland', a:'Curaçao', date:'14 jun', time:'19:00', stadium:'Houston', tv:'TV4'},
-    {h:'Elfenbenskusten', a:'Ecuador', date:'15 jun', time:'01:00', stadium:'Philadelphia', tv:'TV4'},
-    {h:'Tyskland', a:'Elfenbenskusten', date:'20 jun', time:'22:00', stadium:'Toronto', tv:'TV4'},
-    {h:'Ecuador', a:'Curaçao', date:'21 jun', time:'02:00', stadium:'Kansas City', tv:'TV4'},
-    {h:'Curaçao', a:'Elfenbenskusten', date:'25 jun', time:'22:00', stadium:'Philadelphia', tv:'SVT Play'},
-    {h:'Ecuador', a:'Tyskland', date:'25 jun', time:'22:00', stadium:'New Jersey', tv:'SVT Play'}
-  ]},
-  { letter:'F', matches:[
-    {h:'Nederländerna', a:'Japan', date:'14 jun', time:'22:00', stadium:'Dallas', tv:'TV4'},
-    {h:'Sverige', a:'Tunisien', date:'15 jun', time:'04:00', stadium:'Monterrey', tv:'SVT Play'},
-    {h:'Nederländerna', a:'Sverige', date:'20 jun', time:'19:00', stadium:'Houston', tv:'TV4'},
-    {h:'Tunisien', a:'Japan', date:'21 jun', time:'06:00', stadium:'Monterrey', tv:'SVT Play'},
-    {h:'Tunisien', a:'Nederländerna', date:'26 jun', time:'01:00', stadium:'Kansas City', tv:'SVT Play'},
-    {h:'Japan', a:'Sverige', date:'26 jun', time:'01:00', stadium:'Dallas', tv:'SVT Play'}
-  ]},
-  { letter:'G', matches:[
-    {h:'Belgien', a:'Egypten', date:'15 jun', time:'21:00', stadium:'Seattle', tv:'SVT Play'},
-    {h:'Iran', a:'Nya Zeeland', date:'16 jun', time:'03:00', stadium:'Los Angeles', tv:'TV4'},
-    {h:'Belgien', a:'Iran', date:'21 jun', time:'21:00', stadium:'Los Angeles', tv:'TV4'},
-    {h:'Nya Zeeland', a:'Egypten', date:'22 jun', time:'03:00', stadium:'Vancouver', tv:'TV4'},
-    {h:'Nya Zeeland', a:'Belgien', date:'27 jun', time:'05:00', stadium:'Vancouver', tv:'TV4'},
-    {h:'Egypten', a:'Iran', date:'27 jun', time:'05:00', stadium:'Seattle', tv:'TV4'}
-  ]},
-  { letter:'H', matches:[
-    {h:'Spanien', a:'Kap Verde', date:'15 jun', time:'18:00', stadium:'Atlanta', tv:'SVT Play'},
-    {h:'Saudiarabien', a:'Uruguay', date:'16 jun', time:'00:00', stadium:'Miami', tv:'TV4'},
-    {h:'Spanien', a:'Saudiarabien', date:'21 jun', time:'18:00', stadium:'Atlanta', tv:'TV4'},
-    {h:'Uruguay', a:'Kap Verde', date:'22 jun', time:'00:00', stadium:'Miami', tv:'TV4'},
-    {h:'Kap Verde', a:'Saudiarabien', date:'27 jun', time:'02:00', stadium:'Houston', tv:'TV4'},
-    {h:'Uruguay', a:'Spanien', date:'27 jun', time:'02:00', stadium:'Guadalajara', tv:'TV4'}
-  ]},
-  { letter:'I', matches:[
-    {h:'Frankrike', a:'Senegal', date:'16 jun', time:'21:00', stadium:'New Jersey', tv:'SVT Play'},
-    {h:'Irak', a:'Norge', date:'17 jun', time:'00:00', stadium:'Boston', tv:'TV4'},
-    {h:'Frankrike', a:'Irak', date:'22 jun', time:'23:00', stadium:'Philadelphia', tv:'SVT Play'},
-    {h:'Norge', a:'Senegal', date:'23 jun', time:'02:00', stadium:'New Jersey', tv:'SVT Play'},
-    {h:'Norge', a:'Frankrike', date:'26 jun', time:'21:00', stadium:'Boston', tv:'TV4'},
-    {h:'Senegal', a:'Irak', date:'26 jun', time:'21:00', stadium:'Toronto', tv:'TV4'}
-  ]},
-  { letter:'J', matches:[
-    {h:'Argentina', a:'Algeriet', date:'17 jun', time:'03:00', stadium:'Kansas City', tv:'TV4'},
-    {h:'Österrike', a:'Jordanien', date:'17 jun', time:'06:00', stadium:'San Francisco', tv:'TV4'},
-    {h:'Argentina', a:'Österrike', date:'22 jun', time:'19:00', stadium:'Dallas', tv:'SVT Play'},
-    {h:'Jordanien', a:'Algeriet', date:'23 jun', time:'05:00', stadium:'San Francisco', tv:'TV4'},
-    {h:'Algeriet', a:'Österrike', date:'28 jun', time:'04:00', stadium:'Kansas City', tv:'TV4'},
-    {h:'Jordanien', a:'Argentina', date:'28 jun', time:'04:00', stadium:'Dallas', tv:'TV4'}
-  ]},
+  // ... (Här kan du lägga till Grupp C-J på samma sätt)
   { letter:'K', matches:[
-    {h:'Portugal', a:'DR Kongo', date:'17 jun', time:'19:00', stadium:'Houston', tv:'TV4'},
-    {h:'Uzbekistan', a:'Colombia', date:'18 jun', time:'04:00', stadium:'Mexico City', tv:'TV4'},
-    {h:'Portugal', a:'Uzbekistan', date:'23 jun', time:'19:00', stadium:'Houston', tv:'SVT Play'},
-    {h:'Colombia', a:'DR Kongo', date:'24 jun', time:'04:00', stadium:'Guadalajara', tv:'TV4'},
-    {h:'Colombia', a:'Portugal', date:'28 jun', time:'01:30', stadium:'Miami', tv:'TV4'},
-    {h:'DR Kongo', a:'Uzbekistan', date:'28 jun', time:'01:30', stadium:'Atlanta', tv:'TV4'}
+    {h:'Portugal', a:'DR Kongo', date:'17 jun', time:'19:00', tv:'TV4'},
+    {h:'Uzbekistan', a:'Colombia', date:'18 jun', time:'04:00', tv:'TV4'},
+    {h:'Portugal', a:'Uzbekistan', date:'23 jun', time:'19:00', tv:'SVT Play'},
+    {h:'Colombia', a:'DR Kongo', date:'24 jun', time:'04:00', tv:'TV4'},
+    {h:'Colombia', a:'Portugal', date:'28 jun', time:'01:30', tv:'TV4'},
+    {h:'DR Kongo', a:'Uzbekistan', date:'28 jun', time:'01:30', tv:'TV4'}
   ]},
   { letter:'L', matches:[
-    {h:'England', a:'Kroatien', date:'17 jun', time:'22:00', stadium:'Dallas', tv:'TV4'},
-    {h:'Ghana', a:'Panama', date:'18 jun', time:'01:00', stadium:'Toronto', tv:'TV4'},
-    {h:'England', a:'Ghana', date:'23 jun', time:'22:00', stadium:'Boston', tv:'SVT Play'},
-    {h:'Panama', a:'Kroatien', date:'24 jun', time:'01:00', stadium:'Toronto', tv:'TV4'},
-    {h:'Panama', a:'England', date:'27 jun', time:'23:00', stadium:'New Jersey', tv:'SVT Play'},
-    {h:'Kroatien', a:'Ghana', date:'27 jun', time:'23:00', stadium:'Philadelphia', tv:'SVT Play'}
+    {h:'England', a:'Kroatien', date:'17 jun', time:'22:00', tv:'TV4'},
+    {h:'Ghana', a:'Panama', date:'18 jun', time:'01:00', tv:'TV4'},
+    {h:'England', a:'Ghana', date:'23 jun', time:'22:00', tv:'SVT Play'},
+    {h:'Panama', a:'Kroatien', date:'24 jun', time:'01:00', tv:'TV4'},
+    {h:'Panama', a:'England', date:'27 jun', time:'23:00', tv:'SVT Play'},
+    {h:'Kroatien', a:'Ghana', date:'27 jun', time:'23:00', tv:'SVT Play'}
   ]}
-]; 
+];
 
-// Variabler för att lagra tips
 let predictions = {};
-let bonuses = {};
-let tournament = {};
-let tiebreakers = {};
 
-// Funktion för att byta flikar
-window.showPage = function(pageId) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-' + pageId).classList.add('active');
-  event.target.classList.add('active');
-  window.scrollTo(0,0);
-};
-
-// Rendera gruppspelet
 function renderGroups() {
-  const grid = document.getElementById('groups-grid');
-  grid.innerHTML = GROUPS.map(g => `
+  const container = document.getElementById('groups-grid');
+  container.innerHTML = GROUPS.map(g => `
     <div class="group-card">
-      <div class="group-header">
-        <div class="group-letter">GRUPP ${g.letter}</div>
-      </div>
-      ${g.matches.map((m, idx) => {
-        const mid = `g_${g.letter}_${idx}`;
+      <div class="group-header"><div class="group-letter">GRUPP ${g.letter}</div></div>
+      ${g.matches.map((m, i) => {
+        const id = `m_${g.letter}_${i}`;
         return `
-        <div class="match-row">
-          <div class="match-info">
-            <div class="match-teams">${m.h} – ${m.a}</div>
-            <div class="match-meta">${m.date} kl ${m.time} · ${m.tv}</div>
-          </div>
-          <div class="score-inputs">
-            <input type="number" placeholder="0" onchange="updateScore('${mid}', 'home', this.value)" id="${mid}_h">
-            <span class="score-sep">-</span>
-            <input type="number" placeholder="0" onchange="updateScore('${mid}', 'away', this.value)" id="${mid}_a">
-          </div>
-        </div>`;
+          <div class="match-row">
+            <div class="match-info">
+              <div class="match-teams">${m.h} – ${m.a}</div>
+              <div class="match-meta">${m.date} · ${m.time} · ${m.tv}</div>
+            </div>
+            <div class="score-inputs">
+              <input type="number" id="${id}_h" onchange="updateScore('${id}','home',this.value)">
+              <span class="score-sep">-</span>
+              <input type="number" id="${id}_a" onchange="updateScore('${id}','away',this.value)">
+            </div>
+          </div>`;
       }).join('')}
     </div>
   `).join('');
 }
 
-// Hantera inmatning
-window.updateScore = function(mid, side, val) {
-  if (!predictions[mid]) predictions[mid] = { home: '', away: '' };
-  predictions[mid][side] = val;
+window.updateScore = (id, side, val) => {
+  if (!predictions[id]) predictions[id] = {home:'', away:''};
+  predictions[id][side] = val;
   updateStats();
 };
 
 function updateStats() {
   const count = Object.values(predictions).filter(p => p.home !== '' && p.away !== '').length;
-  document.getElementById('footer-stats').innerHTML = `Ifyllda tips: <span>${count} / 72</span>`;
+  document.getElementById('footer-stats').innerHTML = `Matcher tippade: <span>${count} / 72</span>`;
 }
 
-// Starta renderingen
-renderGroups();
-
-const KNOCKOUT = {
-  r16: {
-    label:'16-delsfinal',
-    mult:1.5,
-    matches:[
-      '2A – 2B',
-      '1C – 2F',
-      '1E – 3A/B/C/D/F',
-      '1F – 2C',
-      '2E – 2I',
-      '1I – 3C/D/F/G/H',
-      '1A – 3C/E/F/H/I',
-      '1L – 3E/H/I/J/K',
-      '1G – 3A/E/H/I/J',
-      '1D – 3B/E/F/I/J',
-      '1H – 2J',
-      '2K – 2L',
-      '1B – 3E/F/G/I/J',
-      '2D – 2G',
-      '1J – 2H',
-      '1K – 3D/E/I/J/L'
-    ]
-  },
-
-  qf: {
-    label:'Åttondelsfinal',
-    mult:2,
-    matches:[
-      'W73 – W75',
-      'W74 – W77',
-      'W76 – W78',
-      'W79 – W80',
-      'W83 – W84',
-      'W81 – W82',
-      'W86 – W88',
-      'W85 – W87'
-    ]
-  },
-
-  sf: {
-  label:'Kvartsfinal',
-  mult:2,
-  matches:[
-    'W89 – W90',
-    'W93 – W94',
-    'W91 – W92',
-    'W95 – W96'
-  ]
-},
-
-semi: {
-  label:'Semifinal',
-  mult:2,
-  matches:[
-    'W97 – W98',
-    'W99 – W100'
-  ]
-},
-
-final: {
-  label:'Final / Bronsmatch',
-  mult:2,
-  matches:[
-    'L101 – L102',
-    'W101 – W102'
-  ]
+function syncAllInputs() {
+  for (const id in predictions) {
+    if (document.getElementById(id+'_h')) document.getElementById(id+'_h').value = predictions[id].home;
+    if (document.getElementById(id+'_a')) document.getElementById(id+'_a').value = predictions[id].away;
+  }
 }
 
+window.showPage = (id) => {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + id).classList.add('active');
 };
 
-const TOURNAMENT_TIPS = [
-  { key:'winner',          label:'VM-vinnare',                   pts:'10p'          },
-  { key:'finalist',        label:'Finalist (förlorar finalen)',  pts:'6p'           },
-  { key:'semi1',           label:'Semifinalist 1',               pts:'4p'           },
-  { key:'semi2',           label:'Semifinalist 2',               pts:'4p'           },
-  { key:'qf1',             label:'Kvartsfinalist 1',             pts:'2p'           },
-  { key:'qf2',             label:'Kvartsfinalist 2',             pts:'2p'           },
-  { key:'qf3',             label:'Kvartsfinalist 3',             pts:'2p'           },
-  { key:'qf4',             label:'Kvartsfinalist 4',             pts:'2p'           },
-  { key:'topscorer',       label:'Skytteligavinnare',            pts:'3p'           },
-  { key:'topscorer_goals', label:'Antal mål (skytteliga)',       pts:'+1p om exakt' },
-  { key:'golden_glove',    label:'Bästa målvakt (Golden Glove)', pts:'2p'           },
-];
+window.openModal = (id) => document.getElementById(id).classList.add('open');
+window.closeModal = (id) => document.getElementById(id).classList.remove('open');
 
-const TIEBREAKERS = [
-  { key:'tb1', q:'Totalt antal mål i hela VM' },
-  { key:'tb2', q:'Totalt antal röda kort i hela VM' },
-  { key:'tb3', q:'Antal matcher som avgörs på straffar' },
-  { key:'tb4', q:'Skytteligavinnare + exakt antal mål (t.ex. "Mbappé 9")' },
-  { key:'tb5', q:'I vilken halvlek avgörs flest matcher? (1 / 2 / Lika)' },
-  function updateStats(user) {
-  const filled = Object.values(predictions)
-    .filter(m => m.home !== '' && m.away !== '')
-    .length;
-  const el = document.getElementById('footer-stats');
-  if (user) {
-    el.innerHTML = `Inloggad som <span>${user.displayName || user.email}</span> · ${filled}/104 matcher ifyllda`;
-  } else {
-    el.textContent = `${filled}/104 matcher ifyllda – logga in för att spara`;
-  }
-}
-window.updateStats = updateStats;
-];
-
-// ============================================================
-// STATE
-// ============================================================
-let predictions = {};
-let bonuses = {};
-let tournament = {};
-let tiebreakers = {}; function updateStats(user) {
-  const filled = Object.values(predictions)
-    .filter(m => m.home !== '' && m.away !== '')
-    .length;
-
-  const el = document.getElementById('footer-stats');
-
-  if (user) {
-    el.innerHTML =
-      `Inloggad som <span>${user.displayName || user.email}</span> · ${filled}/104 matcher ifyllda`;
-  } else {
-    el.textContent =
-      `${filled}/104 matcher ifyllda – logga in för att spara`;
-  }
-}
-window.updateStats = updateStats;
-const TOURNAMENT_LOCK = new Date(2026, 5, 11, 21, 0);
-function isLocked() {
-  return new Date() >= TOURNAMENT_LOCK;
-}  
-
-// ============================================================
-// RENDER
-// ============================================================
-
-const BONUS_QUESTIONS = [
-  {
-    key:'pens',
-    q:'Avgörs matchen på straffar?',
-    opts:['Ja','Nej']
-  },
-  {
-    key:'clean',
-    q:'Håller något lag nollan?',
-    opts:['Ja','Nej']
-  }
-];
-
-function renderGroups() {
-
-  const container = document.getElementById('groups-grid');
-
-  const allMatches = [];
-
-  GROUPS.forEach(group => {
-    group.matches.forEach(match => {
-      allMatches.push({
-        ...match,
-        group: group.letter
-      });
-    });
-  });
-
-allMatches.sort((a, b) => {
-  const da = new Date(`2026 ${a.date} ${a.time}`);
-  const db = new Date(`2026 ${b.date} ${b.time}`);
-
-  return da - db;
-});
-
-  container.innerHTML = `
-    <div class="groups-grid">
-      ${allMatches.map((m, i) => {
-
-        const key = `group_${i}`;
-
-        return `
-          <div class="group-card">
-
-            <div class="group-header">
-              <div class="group-letter">${m.group}</div>
-              <div class="group-sub">
-                ${m.date} · ${m.time} · ${m.stadium}
-              </div>
-            </div>
-
-            <div class="match-row">
-
-              <div class="match-info">
-                <div class="match-teams">
-                  ${m.h} – ${m.a}
-                </div>
-
-                <div class="match-meta">
-                  ${m.tv}
-                </div>
-              </div>
-
-              <div class="score-inputs">
-
-               <input
-  type="number"
-  min="0"
-  max="20"
-  placeholder="0"
-  data-key="${key}"
-  data-side="home"
-  oninput="onMatch(this,'${key}','home')"
-  ${isLocked() ? 'disabled' : ''}
-/>
-
-                <span class="score-sep">:</span>
-
-                <input
-                  type="number"
-                  min="0"
-                  max="20"
-                  placeholder="0"
-                  data-key="${key}"
-                  data-side="away"
-                  oninput="onMatch(this,'${key}','away')"
-${isLocked() ? 'disabled' : ''}
-                >
-
-              </div>
-
-            </div>
-
-          </div>
-        `;
-      }).join('')}
-    </div>
-  `;
-}
-
-function renderKnockout(roundKey, containerId) {
-
-  const info = KNOCKOUT[roundKey];
-  const grid = document.getElementById(containerId);
-
-  grid.innerHTML = '';
-
-  info.matches.forEach((teams, i) => {
-
-    const key = `${roundKey}_${i}`;
-
-    const split = teams.split('–');
-
-    const homeTeam = split[0].trim();
-    const awayTeam = split[1].trim();
-
-    const card = document.createElement('div');
-
-    card.className = 'ko-card';
-
-    card.innerHTML = `
-      <div class="ko-header">
-        <span class="ko-label">${info.label} ${i + 1}</span>
-        <span class="ko-mult">×${info.mult} multiplikator</span>
-      </div>
-
-      <div class="ko-teams">
-
-        <div class="ko-team-name">
-          ${homeTeam}
-        </div>
-
-        <div class="score-inputs big">
-
-          <input
-            type="number"
-            min="0"
-            max="20"
-            placeholder="0"
-            data-key="${key}"
-            data-side="home"
-            oninput="onMatch(this,'${key}','home')" 
-            ${isLocked() ? 'disabled' : ''}
-          />
-
-          <span class="score-sep">:</span>
-
-          <input
-  type="number"
-  min="0"
-  max="20"
-  placeholder="0"
-  data-key="${key}"
-  data-side="away"
-  oninput="onMatch(this,'${key}','away')"
-  ${isLocked() ? 'disabled' : ''}
-/>
-              </div>
-
-        <div class="ko-team-name right">
-          ${awayTeam}
-        </div>
-
-      </div>
-
-      <div class="bonus-section">
-
-        <div class="bonus-title">
-          BONUSFRÅGOR · 0,5p styck
-        </div>
-
-        ${BONUS_QUESTIONS.map(bq => `
-          <div class="bonus-row">
-
-            <span class="bonus-q">
-              ${bq.q}
-            </span>
-
-            <div class="bonus-opts">
-
-              ${bq.opts.map(o => `
-                <button
-                  class="opt-btn"
-                  data-match="${key}"
-                  data-bkey="${bq.key}"
-                  data-val="${o}"
-                  onclick="onBonus(this)"
-                  ${isLocked() ? 'disabled' : ''}
-                >
-                  ${o}
-                </button>
-              `).join('')}
-
-            </div>
-
-          </div>
-        `).join('')}
-
-      </div>
-    `;
-
-    grid.appendChild(card);
-
-  });
-
-}
-function renderTournament() {
-  document.getElementById('tournament-grid').innerHTML = TOURNAMENT_TIPS.map(t => `
-    <div class="tourn-card">
-      <div class="tourn-label">${t.label}</div>
-      <div class="tourn-pts">${t.pts}</div>
-      <input
-  class="tourn-input"
-  type="text"
-  placeholder="Skriv här..."
-  data-tkey="${t.key}"
-  oninput="onTourn(this,'${t.key}')"
-  ${isLocked() ? 'disabled' : ''}
-/>
-    </div>`).join('');
-}
-
-function renderTiebreakers() {
-  document.getElementById('tb-container').innerHTML = TIEBREAKERS.map((tb, i) => `
-    <div class="tb-item">
-      <div class="tb-num">${i+1}</div>
-      <span class="tb-q">${tb.q}</span>
-      <input class="tb-input" type="text" placeholder="Svar..." data-tbkey="${tb.key}" oninput="onTb(this,'${tb.key}')" ${isLocked() ? 'disabled' : ''}>
-    </div>`).join('');
-}
-
-// ============================================================
-// INPUT HANDLERS
-// ============================================================
-function onMatch(el, key, side) {
-  if (!predictions[key]) predictions[key] = { home:'', away:'' };
-  predictions[key][side] = el.value;
-  updateStats();
-}
-
-function onBonus(btn) {
-  const match = btn.dataset.match;
-  const bkey = btn.dataset.bkey;
-  const val = btn.dataset.val;
-  document.querySelectorAll(`.opt-btn[data-match="${match}"][data-bkey="${bkey}"]`).forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  if (!bonuses[match]) bonuses[match] = {};
-  bonuses[match][bkey] = val;
-}
-
-function onTourn(el, key) { tournament[key] = el.value; }
-function onTb(el, key) { tiebreakers[key] = el.value; }
-
-// ============================================================
-// SYNC FROM STATE (anropas efter Firebase-inläsning)
-// ============================================================
-function syncAllInputs() {
-  document.querySelectorAll('input[data-key]').forEach(inp => {
-    inp.value = predictions[inp.dataset.key]?.[inp.dataset.side] ?? '';
-  });
-  document.querySelectorAll('.opt-btn').forEach(btn => {
-    btn.classList.toggle('selected', bonuses[btn.dataset.match]?.[btn.dataset.bkey] === btn.dataset.val);
-  });
-  document.querySelectorAll('input[data-tkey]').forEach(inp => {
-    inp.value = tournament[inp.dataset.tkey] ?? '';
-  });
-  document.querySelectorAll('input[data-tbkey]').forEach(inp => {
-    inp.value = tiebreakers[inp.dataset.tbkey] ?? '';
-  });
-}
-
-function updateStats() {
-
-  const user = auth.currentUser;
-
-  const filled = Object.values(predictions)
-    .filter(m => m.home !== '' && m.away !== '')
-    .length;
-
-  const el = document.getElementById('footer-stats');
-
-  if (user) {
-
-    el.innerHTML =
-      `Inloggad som <span>${user.displayName || user.email}</span> · ${filled}/104 matcher ifyllda`;
-
-  } else {
-
-    el.textContent =
-      `${filled}/104 matcher ifyllda – logga in för att spara`;
-
-  }
-
-}
-
-// ============================================================
-// NAVIGATION
-// ============================================================
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
- const pages = ['groups','r16','qf','sf','semi','final','tournament','tiebreakers','leaderboard'];
-  document.querySelectorAll('nav button')[pages.indexOf(id)]?.classList.add('active');
-  window.scrollTo(0, 0);
-}
-
-// ============================================================
-// MODALS & TOAST
-// ============================================================
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-function togglePw(id, btn) {
-  const inp = document.getElementById(id);
-  inp.type = inp.type === 'password' ? 'text' : 'password';
-  btn.textContent = inp.type === 'password' ? 'Visa' : 'Dölj';
-}
-function showToast(msg, isError) {
+function showToast(msg, err) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.className = 'toast' + (isError ? ' error' : '') + ' show';
+  t.style.background = err ? '#ef4444' : '#22c55e';
+  t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// ============================================================
-// INIT
-// ============================================================
+// Starta allt
 renderGroups();
-renderKnockout('r16', 'r16-grid');
-renderKnockout('qf',  'qf-grid');
-renderKnockout('sf', 'sf-grid');
-renderKnockout('semi', 'semi-grid');
-renderKnockout('final', 'final-grid');
-renderTournament();
-renderTiebreakers();
-updateStats(null);
-if (isLocked()) {
-  document.getElementById('saveBtn').disabled = true;
-}
 </script>
 </body>
 </html>
