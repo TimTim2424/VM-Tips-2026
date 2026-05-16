@@ -70,9 +70,16 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .loading { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 500; }
 .loading.hidden { display: none; }
 
-/* Uppdaterad styling för bilden under kortet */
-.final-trophy-wrapper { text-align: center; margin: 30px 0 10px 0; }
-.final-trophy { max-width: 240px; width: 100%; height: auto; border-radius: 14px; border: 1px solid rgba(89,213,255,0.15); box-shadow: 0 0 30px rgba(89,213,255,0.1); }
+/* Förbättrad styling för en maffigare bild på datorer */
+.final-trophy-wrapper { text-align: center; margin: 35px 0 15px 0; }
+.final-trophy { 
+  max-width: 460px; /* Ökad från 240px för att ge mer tyngd på webbsidan */
+  width: 100%; 
+  height: auto; 
+  border-radius: 18px; 
+  border: 1px solid rgba(89,213,255,0.15); 
+  box-shadow: 0 0 35px rgba(89,213,255,0.12); 
+}
 
 .score-inputs input::-webkit-outer-spin-button,
 .score-inputs input::-webkit-inner-spin-button {
