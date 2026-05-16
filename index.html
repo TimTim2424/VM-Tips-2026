@@ -43,7 +43,6 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .page { display: none; }
 .page.active { display: block; }
 
-/* Specialregel för Final-fliken så att bilden kan centreras vertikalt i det tomma utrymmet */
 #page-final.active {
   display: flex;
   flex-direction: column;
@@ -78,13 +77,12 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .loading { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 500; }
 .loading.hidden { display: none; }
 
-/* Centrerad och mjukare styling för VM-pokalen */
 .final-trophy-wrapper { 
   flex: 1; 
   display: flex;
   justify-content: center;  
   align-items: center; 
-  margin: 34px 0 20px 0; /* Marginalen i toppen (34px) ger en förskjutning nedåt på ca 9mm */
+  margin: 34px 0 20px 0;
 }
 .final-trophy { 
   max-width: 460px; 
@@ -172,10 +170,8 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
   <div class="page" id="page-final">
     <div>
       <div class="page-title">VM-Final 2026</div>
-      
       <div id="schedule-final-grid"></div>
     </div>
-
     <div class="final-trophy-wrapper">
       <img src="pokal.png" alt="FIFA World Cup Trophy" class="final-trophy">
     </div>
@@ -276,122 +272,4 @@ const SCHEDULE_R16 = [
   {date:'Lördag 4 juli', matches:[{h:'1J', a:'2H', time:'00.00', tv:'SVT', city:'Monterrey', id:'r16_15'}, {h:'1K', a:'3D/E/I/J/L', time:'03.30', tv:'SVT', city:'Guadalajara', id:'r16_16'}]}
 ];
 
-const SCHEDULE_QF = [
-  {date:'Lördag 4 juli', matches:[
-    {h:'Match 89', a:'–', time:'17.00', tv:'Rapport', city:'Philadelphia', id:'m89'},
-    {h:'Match 90', a:'–', time:'12.00', tv:'Rapport', city:'Houston', id:'m90'}
-  ]},
-  {date:'Söndag 5 juli', matches:[
-    {h:'Match 91', a:'–', time:'16.00', tv:'Rapport', city:'East Rutherford', id:'m91'},
-    {h:'Match 92', a:'–', time:'18.00', tv:'Rapport', city:'Mexico City', id:'m92'}
-  ]},
-  {date:'Måndag 6 juli', matches:[
-    {h:'Match 93', a:'–', time:'14.00', tv:'Rapport', city:'Arlington', id:'m93'},
-    {h:'Match 94', a:'–', time:'17.00', tv:'Rapport', city:'Seattle', id:'m94'}
-  ]},
-  {date:'Tisdag 7 juli', matches:[
-    {h:'Match 95', a:'–', time:'12.00', tv:'Rapport', city:'Atlanta', id:'m95'},
-    {h:'Match 96', a:'–', time:'13.00', tv:'Rapport', city:'Vancouver', id:'m96'}
-  ]}
-];
-
-const SCHEDULE_QF2 = [
-  {date:'Torsdag 9 juli', matches:[
-    {h:'W89', a:'W90', time:'22.00', tv:'TV4', city:'Foxborough', id:'qf2_1'}
-  ]},
-  {date:'Fredag 10 juli', matches:[
-    {h:'W93', a:'W94', time:'21.00', tv:'SVT', city:'Inglewood', id:'qf2_2'}
-  ]},
-  {date:'Lördag 11 juli', matches:[
-    {h:'W91', a:'W92', time:'23.00', tv:'TV4', city:'Miami Gardens', id:'qf2_3'}
-  ]},
-  {date:'Söndag 12 juli', matches:[
-    {h:'W95', a:'W96', time:'03.00', tv:'SVT', city:'Kansas City', id:'qf2_4'}
-  ]}
-];
-
-const SCHEDULE_SEMI = [
-  {date:'Tisdag 14 juli', matches:[
-    {h:'W97', a:'W98', time:'21.00', tv:'SVT', city:'Arlington', id:'semi_1'}
-  ]},
-  {date:'Onsdag 15 juli', matches:[
-    {h:'W99', a:'W100', time:'21.00', tv:'TV4', city:'Atlanta', id:'semi_2'}
-  ]}
-];
-
-const SCHEDULE_BRONZE = [
-  {date:'Lördag 18 juli', matches:[
-    {h:'L101', a:'L102', time:'23.00', tv:'SVT', city:'Miami Gardens', id:'bronze_1'}
-  ]}
-];
-
-const SCHEDULE_FINAL = [
-  {date:'Söndag 19 juli', matches:[
-    {h:'W101', a:'W102', time:'21.00', tv:'TV4', city:'East Rutherford', id:'final_1'}
-  ]}
-];
-
-let predictions = {};
-let currentAuthMode = 'login';
-let currentUserProfile = null;
-
-function renderGroups() {
-  const container = document.getElementById('schedule-grid');
-  container.innerHTML = SCHEDULE.map(day => `
-    <div class="date-divider">${day.date}</div>
-    ${day.matches.map(m => {
-      const valH = predictions[m.id]?.h || '';
-      const valA = predictions[m.id]?.a || '';
-      return `
-      <div class="match-card">
-        <div class="match-row">
-          <div class="match-info">
-            <div class="match-teams">
-              ${flags[m.h] || ''} ${m.h} – ${flags[m.a] || ''} ${m.a}
-            </div>
-            <div class="match-meta">
-              <span class="meta-item">🕒 ${m.time}</span>
-              <span class="meta-item">📺 ${m.tv}</span>
-              <span class="meta-item"><span style="color:#ff4d4d">📍</span> ${m.city}</span>
-            </div>
-          </div>
-          <div class="score-inputs">
-            <input type="number" value="${valH}" onchange="updatePred('${m.id}','h',this.value)">
-            <span>-</span>
-            <input type="number" value="${valA}" onchange="updatePred('${m.id}','a',this.value)">
-          </div>
-        </div>
-      </div>`;
-    }).join('')}
-  `).join('');
-}
-
-function renderGenericSlutspel(scheduleData, containerId) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  
-  container.innerHTML = scheduleData.map(day => `
-    <div class="date-divider">${day.date}</div>
-    ${day.matches.map(m => {
-      const valH = predictions[m.id]?.h || '';
-      const valA = predictions[m.id]?.a || '';
-      const teamH = predictions[m.id]?.teamH || '';
-      const teamA = predictions[m.id]?.teamA || '';
-      
-      return `
-      <div class="match-card">
-        <div class="match-row">
-          <div class="match-info" style="display: flex; flex-direction: column; gap: 8px; flex: 1;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 16px;">🏳️</span>
-              <input type="text" 
-                     value="${teamH}" 
-                     placeholder="${m.h}" 
-                     onchange="updateSlutspelTeam('${m.id}', 'teamH', this.value)"
-                     style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 16px;">🏳️</span>
-              <input type="text" 
-                     value="${teamA}" 
-                     placeholder="${m.a
+const SCHEDULE_QF =
