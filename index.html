@@ -80,17 +80,48 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .final-trophy-wrapper { 
   flex: 1; 
   display: flex;
-  justify-content: center;  
+  flex-direction: column;
+  justify-content: flex-end;
   align-items: center; 
-  margin: 34px 0 20px 0;
+  margin: 20px 0 30px 0;
+  gap: 16px;
 }
+
 .final-trophy { 
-  max-width: 460px; 
+  max-width: 380px; 
   width: 100%; 
   height: auto; 
   border-radius: 24px;      
   border: 1px solid rgba(89,213,255,0.08); 
   box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 0 40px rgba(89,213,255,0.08); 
+}
+
+.winner-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  color: var(--text2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.winner-input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid rgba(89,213,255,0.4);
+  color: var(--gold);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  width: 260px;
+  padding: 4px 8px;
+  letter-spacing: 0.05em;
+}
+
+.winner-input::placeholder {
+  color: rgba(89,213,255,0.3);
 }
 
 .score-inputs input::-webkit-outer-spin-button,
@@ -167,14 +198,19 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
     <div id="schedule-bronze-grid"></div>
   </div>
 
-  <div class="page" id="page-final">
+ <div class="page" id="page-final">
+  <div>
+    <div class="page-title">VM-Final 2026</div>
+    <div id="schedule-final-grid"></div>
+  </div>
+  <div class="final-trophy-wrapper">
     <div>
-      <div class="page-title">VM-Final 2026</div>
-      <div id="schedule-final-grid"></div>
+      <div class="winner-label">🏆 VM-vinnare</div>
+      <input type="text" class="winner-input" id="winnerInput"
+             placeholder="Lag..."
+             onchange="updateSlutspelTeam('winner','teamH',this.value)">
     </div>
-    <div class="final-trophy-wrapper">
-      <img src="pokal.png" alt="FIFA World Cup Trophy" class="final-trophy">
-    </div>
+    <img src="pokal.png" alt="FIFA World Cup Trophy" class="final-trophy">
   </div>
 </div>
 
