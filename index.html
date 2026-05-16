@@ -100,7 +100,7 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
     <button class="active" onclick="showPage('groups', this)">Gruppspel</button>
     <button onclick="showPage('r16', this)">16-delsfinaler</button>
     <button onclick="showPage('qf', this)">Åttondelsfinaler</button>
-    <button onclick="showPage('sf', this)">Kvartsfinaler</button>
+    <button onclick="showPage('qf2', this)">Kvartsfinaler</button>
     <button onclick="showPage('semi', this)">Semifinaler</button>
     <button onclick="showPage('final', this)">Final & Brons</button>
   </div>
@@ -125,13 +125,18 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
     <div id="schedule-qf-grid"></div>
   </div>
 
-  <div class="page" id="page-sf">
+  <div class="page" id="page-qf2">
     <div class="page-title">Kvartsfinaler</div>
     <div class="page-sub">Slutspelsmatcher</div>
-    <div id="schedule-sf-grid"></div>
+    <div id="schedule-qf2-grid"></div>
   </div>
 
-  <div class="page" id="page-semi">Semifinaler kommer inom kort...</div>
+  <div class="page" id="page-semi">
+    <div class="page-title">Semifinaler</div>
+    <div class="page-sub">Slutspelsmatcher (Eventuell match med Sverige sänds i SVT)</div>
+    <div id="schedule-semi-grid"></div>
+  </div>
+  
   <div class="page" id="page-final">Final & Brons kommer inom kort...</div>
 </div>
 
@@ -214,7 +219,7 @@ const SCHEDULE = [
   {date:'Tisdag 23 juni', matches:[{h:'Norge', a:'Senegal', time:'02.00', tv:'SVT Play', city:'New Jersey', id:'m43'}, {h:'Jordanien', a:'Algeriet', time:'05.00', tv:'TV4', city:'San Francisco', id:'m44'}, {h:'Portugal', a:'Uzbekistan', time:'19.00', tv:'SVT Play', city:'Houston', id:'m45'}, {h:'England', a:'Ghana', time:'22.00', tv:'SVT Play', city:'Boston', id:'m46'}]},
   {date:'Onsdag 24 juni', matches:[{h:'Panama', a:'Kroatien', time:'01.00', tv:'TV4', city:'Toronto', id:'m47'}, {h:'Colombia', a:'DR Kongo', time:'04.00', tv:'TV4', city:'Guadalajara', id:'m48'}, {h:'Schweiz', a:'Kanada', time:'21.00', tv:'TV4', city:'Vancouver', id:'m49'}, {h:'Bosnien & Herr.', a:'Qatar', time:'21.00', tv:'TV4', city:'Seattle', id:'m50'}]},
   {date:'Torsdag 25 juni', matches:[{h:'Marocko', a:'Haiti', time:'00.00', tv:'TV4', city:'Atlanta', id:'m51'}, {h:'Skottland', a:'Brasilien', time:'00.00', tv:'TV4', city:'Miami', id:'m52'}, {h:'Sydafrika', a:'Sydkorea', time:'03.00', tv:'SVT Play', city:'Monterrey', id:'m53'}, {h:'Tjeckien', a:'Mexiko', time:'03.00', tv:'SVT Play', city:'Mexico City', id:'m54'}, {h:'Curaçao', a:'Elfenbenskusten', time:'22.00', tv:'SVT Play', city:'Philadelphia', id:'m55'}, {h:'Ecuador', a:'Tyskland', time:'22.00', tv:'SVT Play', city:'New Jersey', id:'m56'}]},
-  {date:'Fredag 26 juni', matches:[{h:'Tunisien', a:'Nederländerna', time:'01.00', tv:'SVT Play', city:'Kansas City', id:'m57'}, {h:'Japan', a:'Sverige', time:'01.00', tv:'SVT Play', city:'Dallas', id:'m58'}, {h:'Turkiet', a:'USA', time:'04.00', tv:'TV4', city:'Los Angeles', id:'m59'}, {h:'Paraguay', a:'Australien', time:'04.00', tv:'TV4', city:'San Francisco', id:'m60'}, {h:'Norge', a:'Frankrike', time:'21.00', tv:'TV4', city:'Boston', id:'m61'}, {h:'Senegal', a:'Irak', time:'21.00', tv:'TV4', city:'Toronto', id:'m62'}]},
+  {date:'Fredag 26 juni', matches:[{h:'Tunisien', a:'Nederländerna', time:'01.00', tv:'SVT Play', city:'Kansas City', id:'m57'}, {h:'Japan', a:'Sverige', time:'01.00', tv:'SVT Play', city:'Dallas', id:'m58'}, {h:'Turkiet', a:'USA', time:'04.00', tv:'Los Angeles', id:'m59'}, {h:'Paraguay', a:'Australien', time:'04.00', tv:'TV4', city:'San Francisco', id:'m60'}, {h:'Norge', a:'Frankrike', time:'21.00', tv:'TV4', city:'Boston', id:'m61'}, {h:'Senegal', a:'Irak', time:'21.00', tv:'TV4', city:'Toronto', id:'m62'}]},
   {date:'Lördag 27 juni', matches:[{h:'Kap Verde', a:'Saudiarabien', time:'02.00', tv:'TV4', city:'Houston', id:'m63'}, {h:'Uruguay', a:'Spanien', time:'02.00', tv:'TV4', city:'Guadalajara', id:'m64'}, {h:'Nya Zeeland', a:'Belgien', time:'05.00', tv:'TV4', city:'Vancouver', id:'m65'}, {h:'Egypten', a:'Iran', time:'05.00', tv:'TV4', city:'Seattle', id:'m66'}, {h:'Panama', a:'England', time:'23.00', tv:'SVT Play', city:'New Jersey', id:'m67'}, {h:'Kroatien', a:'Ghana', time:'23.00', tv:'SVT Play', city:'Philadelphia', id:'m68'}]},
   {date:'Söndag 28 juni', matches:[{h:'DR Kongo', a:'Uzbekistan', time:'01.30', tv:'TV4', city:'Atlanta', id:'m69'}, {h:'Colombia', a:'Portugal', time:'01.30', tv:'TV4', city:'Miami', id:'m70'}, {h:'Algeriet', a:'Österrike', time:'04.00', tv:'TV4', city:'Kansas City', id:'m71'}, {h:'Jordanien', a:'Argentina', time:'04.00', tv:'Dallas', id:'m72'}]}
 ];
@@ -248,18 +253,27 @@ const SCHEDULE_QF = [
   ]}
 ];
 
-const SCHEDULE_SF = [
+const SCHEDULE_QF2 = [
   {date:'Torsdag 9 juli', matches:[
-    {h:'W89', a:'W90', time:'22.00', tv:'TV4', city:'Foxborough', id:'sf_1'}
+    {h:'W89', a:'W90', time:'22.00', tv:'TV4', city:'Foxborough', id:'qf2_1'}
   ]},
   {date:'Fredag 10 juli', matches:[
-    {h:'W93', a:'W94', time:'21.00', tv:'SVT', city:'Inglewood', id:'sf_2'}
+    {h:'W93', a:'W94', time:'21.00', tv:'SVT', city:'Inglewood', id:'qf2_2'}
   ]},
   {date:'Lördag 11 juli', matches:[
-    {h:'W91', a:'W92', time:'23.00', tv:'TV4', city:'Miami Gardens', id:'sf_3'}
+    {h:'W91', a:'W92', time:'23.00', tv:'TV4', city:'Miami Gardens', id:'qf2_3'}
   ]},
   {date:'Söndag 12 juli', matches:[
-    {h:'W95', a:'W96', time:'03.00', tv:'SVT', city:'Kansas City', id:'sf_4'}
+    {h:'W95', a:'W96', time:'03.00', tv:'SVT', city:'Kansas City', id:'qf2_4'}
+  ]}
+];
+
+const SCHEDULE_SEMI = [
+  {date:'Tisdag 14 juli', matches:[
+    {h:'W97', a:'W98', time:'21.00', tv:'SVT', city:'Arlington', id:'semi_1'}
+  ]},
+  {date:'Onsdag 15 juli', matches:[
+    {h:'W99', a:'W100', time:'21.00', tv:'TV4', city:'Atlanta', id:'semi_2'}
   ]}
 ];
 
@@ -298,11 +312,11 @@ function renderGroups() {
   `).join('');
 }
 
-function renderR16() {
-  const container = document.getElementById('schedule-r16-grid');
+function renderGenericSlutspel(scheduleData, containerId) {
+  const container = document.getElementById(containerId);
   if (!container) return;
   
-  container.innerHTML = SCHEDULE_R16.map(day => `
+  container.innerHTML = scheduleData.map(day => `
     <div class="date-divider">${day.date}</div>
     ${day.matches.map(m => {
       const valH = predictions[m.id]?.h || '';
@@ -314,7 +328,6 @@ function renderR16() {
       <div class="match-card">
         <div class="match-row">
           <div class="match-info" style="display: flex; flex-direction: column; gap: 8px; flex: 1;">
-            
             <div style="display: flex; align-items: center; gap: 8px;">
               <span style="font-size: 16px;">🏳️</span>
               <input type="text" 
@@ -323,7 +336,6 @@ function renderR16() {
                      onchange="updateSlutspelTeam('${m.id}', 'teamH', this.value)"
                      style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
             </div>
-            
             <div style="display: flex; align-items: center; gap: 8px;">
               <span style="font-size: 16px;">🏳️</span>
               <input type="text" 
@@ -332,120 +344,12 @@ function renderR16() {
                      onchange="updateSlutspelTeam('${m.id}', 'teamA', this.value)"
                      style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
             </div>
-            
             <div class="match-meta">
               <span class="meta-item">🕒 ${m.time}</span>
               <span class="meta-item">📺 ${m.tv}</span>
               <span class="meta-item"><span style="color:#ff4d4d">📍</span> ${m.city || 'TBD'}</span>
             </div>
           </div>
-          
-          <div class="score-inputs">
-            <input type="number" value="${valH}" onchange="updatePred('${m.id}','h',this.value)">
-            <span>-</span>
-            <input type="number" value="${valA}" onchange="updatePred('${m.id}','a',this.value)">
-          </div>
-        </div>
-      </div>`;
-    }).join('')}
-  `).join('');
-}
-
-function renderQF() {
-  const container = document.getElementById('schedule-qf-grid');
-  if (!container) return;
-  
-  container.innerHTML = SCHEDULE_QF.map(day => `
-    <div class="date-divider">${day.date}</div>
-    ${day.matches.map(m => {
-      const valH = predictions[m.id]?.h || '';
-      const valA = predictions[m.id]?.a || '';
-      const teamH = predictions[m.id]?.teamH || '';
-      const teamA = predictions[m.id]?.teamA || '';
-      
-      return `
-      <div class="match-card">
-        <div class="match-row">
-          <div class="match-info" style="display: flex; flex-direction: column; gap: 8px; flex: 1;">
-            
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 16px;">🏳️</span>
-              <input type="text" 
-                     value="${teamH}" 
-                     placeholder="${m.h}" 
-                     onchange="updateSlutspelTeam('${m.id}', 'teamH', this.value)"
-                     style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
-            </div>
-            
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 16px;">🏳️</span>
-              <input type="text" 
-                     value="${teamA}" 
-                     placeholder="${m.a}" 
-                     onchange="updateSlutspelTeam('${m.id}', 'teamA', this.value)"
-                     style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
-            </div>
-            
-            <div class="match-meta">
-              <span class="meta-item">🕒 ${m.time}</span>
-              <span class="meta-item">📺 ${m.tv}</span>
-              <span class="meta-item"><span style="color:#ff4d4d">📍</span> ${m.city || 'TBD'}</span>
-            </div>
-          </div>
-          
-          <div class="score-inputs">
-            <input type="number" value="${valH}" onchange="updatePred('${m.id}','h',this.value)">
-            <span>-</span>
-            <input type="number" value="${valA}" onchange="updatePred('${m.id}','a',this.value)">
-          </div>
-        </div>
-      </div>`;
-    }).join('')}
-  `).join('');
-}
-
-function renderSF() {
-  const container = document.getElementById('schedule-sf-grid');
-  if (!container) return;
-  
-  container.innerHTML = SCHEDULE_SF.map(day => `
-    <div class="date-divider">${day.date}</div>
-    ${day.matches.map(m => {
-      const valH = predictions[m.id]?.h || '';
-      const valA = predictions[m.id]?.a || '';
-      const teamH = predictions[m.id]?.teamH || '';
-      const teamA = predictions[m.id]?.teamA || '';
-      
-      return `
-      <div class="match-card">
-        <div class="match-row">
-          <div class="match-info" style="display: flex; flex-direction: column; gap: 8px; flex: 1;">
-            
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 16px;">🏳️</span>
-              <input type="text" 
-                     value="${teamH}" 
-                     placeholder="${m.h}" 
-                     onchange="updateSlutspelTeam('${m.id}', 'teamH', this.value)"
-                     style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
-            </div>
-            
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 16px;">🏳️</span>
-              <input type="text" 
-                     value="${teamA}" 
-                     placeholder="${m.a}" 
-                     onchange="updateSlutspelTeam('${m.id}', 'teamA', this.value)"
-                     style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
-            </div>
-            
-            <div class="match-meta">
-              <span class="meta-item">🕒 ${m.time}</span>
-              <span class="meta-item">📺 ${m.tv}</span>
-              <span class="meta-item"><span style="color:#ff4d4d">📍</span> ${m.city || 'TBD'}</span>
-            </div>
-          </div>
-          
           <div class="score-inputs">
             <input type="number" value="${valH}" onchange="updatePred('${m.id}','h',this.value)">
             <span>-</span>
@@ -559,35 +463,23 @@ async function loadUserTips(user) {
   const d = await getDoc(doc(db, "tips", user.uid));
   if(d.exists()) {
     predictions = d.data().predictions || {};
-    renderGroups();
-    renderR16(); 
-    renderQF();
-    renderSF();
-    updateStats();
+    renderAll();
   }
 }
 
 function updateStats() {
   const count = Object.values(predictions).filter(p => p.h !== '' && p.a !== '').length;
-  document.getElementById('footer-stats').textContent = `Tippat: ${count} / 88 matcher`;
+  // Totalt antal matcher nu: 72 (grupp) + 16 + 8 + 4 + 2 = 102 matcher
+  document.getElementById('footer-stats').textContent = `Tippat: ${count} / 102 matcher`;
 }
 
 function showToast(msg, isError = false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  
   t.classList.remove('success', 'error');
-  
-  if (isError) {
-    t.classList.add('error');
-  } else {
-    t.classList.add('success');
-  }
-  
+  if (isError) t.classList.add('error'); else t.classList.add('success');
   t.classList.add('show');
-  setTimeout(() => {
-    t.classList.remove('show', 'success', 'error');
-  }, 3000);
+  setTimeout(() => { t.classList.remove('show', 'success', 'error'); }, 3000);
 }
 
 window.showPage = (id, btn) => {
@@ -598,12 +490,18 @@ window.showPage = (id, btn) => {
 };
 
 window.openModal = (id) => document.getElementById(id).classList.add('open');
-window.closeModal = (id) => document.getElementById(id).classList.remove('remove');
+window.closeModal = (id) => document.getElementById(id).classList.remove('open');
 
-renderGroups();
-renderR16();
-renderQF();
-renderSF();
+function renderAll() {
+  renderGroups();
+  renderGenericSlutspel(SCHEDULE_R16, 'schedule-r16-grid');
+  renderGenericSlutspel(SCHEDULE_QF, 'schedule-qf-grid');
+  renderGenericSlutspel(SCHEDULE_QF2, 'schedule-qf2-grid');
+  renderGenericSlutspel(SCHEDULE_SEMI, 'schedule-semi-grid');
+  updateStats();
+}
+
+renderAll();
 </script>
 </body>
 </html>
