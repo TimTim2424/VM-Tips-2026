@@ -627,6 +627,7 @@ window.showPage = (id, btn) => {
   localStorage.setItem('activeTab', id);
     // Rendera fliken först när användaren klickar på den (gör laddningen supersnabb!)
   renderTabContent(id);
+  if (id === 'topplista') renderTopplista();
 };
 
 // Rendera fliken först när användaren klickar på den (gör laddningen supersnabb!)
@@ -706,7 +707,7 @@ window.saveTips = async () => {
 
 window.applySavedTab = function() {
   const savedTab = localStorage.getItem('activeTab');
-  const validTabs = ['groups', 'r16', 'qf', 'qf2', 'semi', 'bronze', 'final'];
+  const validTabs = ['groups', 'r16', 'qf', 'qf2', 'semi', 'bronze', 'final', 'topplista'];
   if (savedTab && validTabs.includes(savedTab)) {
     window.showPage(savedTab, null);
   } else {
@@ -763,13 +764,6 @@ async function renderTopplista() {
     grid.innerHTML = '<p style="color:var(--text2);">Kunde inte ladda topplistan.</p>';
   }
 }
-
-// Ladda topplistan när fliken visas
-const _origShowPage = window.showPage;
-window.showPage = (id, btn) => {
-  _origShowPage(id, btn);
-  if (id === 'topplista') renderTopplista();
-};  
 </script>
 </body>
 </html>
