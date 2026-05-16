@@ -131,11 +131,11 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 </nav>
 
 <div class="container">
-<div class="page active" id="page-groups">
-<div class="page-title">Gruppspel</div>
-<div class="page-sub">72 matcher </div>
-<div id="schedule-grid"></div>
-</div>
+  <div class="page active" id="page-groups">
+    <div class="page-title">Gruppspel</div>
+    <div class="page-sub">72 matcher </div>
+    <div id="schedule-grid"></div>
+  </div>
   
   <div class="page" id="page-r16">
     <div class="page-title">16-delsfinaler</div>
@@ -334,11 +334,6 @@ let currentUserProfile = null;
 function renderGroups() {
   const container = document.getElementById('schedule-grid');
   if(!container) return;
-
-  // Kolla om klockan har passerat 11 juni 2026 kl. 21:00
-  const deadline = new Date('2026-06-11T21:00:00');
-  const isLocked = new Date() > deadline;
-
   container.innerHTML = SCHEDULE.map(day => `
     <div class="date-divider">${day.date}</div>
     ${day.matches.map(m => {
@@ -358,9 +353,9 @@ function renderGroups() {
             </div>
           </div>
           <div class="score-inputs">
-            <input type="number" value="${valH}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','h',this.value)">
+            <input type="number" value="${valH}" onchange="updatePred('${m.id}','h',this.value)">
             <span>-</span>
-            <input type="number" value="${valA}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','a',this.value)">
+            <input type="number" value="${valA}" onchange="updatePred('${m.id}','a',this.value)">
           </div>
         </div>
       </div>`;
@@ -368,47 +363,52 @@ function renderGroups() {
   `).join('');
 }
 
-function renderGenericSlutspel(scheduleData, containerId) { 
-  const container = document.getElementById(containerId); 
+function renderGenericSlutspel(scheduleData, containerId) {
+  const container = document.getElementById(containerId);
   if (!container) return;
-
-  // Kolla om klockan har passerat 11 juni 2026 kl. 21:00
-  const deadline = new Date('2026-06-11T21:00:00');
-  const isLocked = new Date() > deadline; 
-
-  container.innerHTML = scheduleData.map(day => ` 
-    <div class="date-divider">${day.date}</div> 
-    ${day.matches.map(m => { 
-      const valH = predictions[m.id]?.h || ''; 
-      const valA = predictions[m.id]?.a || ''; 
-      const teamH = predictions[m.id]?.teamH || ''; 
-      const teamA = predictions[m.id]?.teamA || ''; 
-      return ` 
-      <div class="match-card"> 
-        <div class="match-row"> 
-          <div class="match-info" style="display: flex; flex-direction: column; gap: 8px; flex: 1;"> 
-            <div style="display: flex; align-items: center; gap: 8px;"> 
-              <span style="font-size: 16px;"> 🏳️ </span> 
-              <input type="text" value="${teamH}" placeholder="${m.h}" ${isLocked ? 'disabled' : ''} onchange="updateSlutspelTeam('${m.id}', 'teamH', this.value)" style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;"> 
-            </div> 
-            <div style="display: flex; align-items: center; gap: 8px;"> 
-              <span style="font-size: 16px;"> 🏳️ </span> 
-              <input type="text" value="${teamA}" placeholder="${m.a}" ${isLocked ? 'disabled' : ''} onchange="updateSlutspelTeam('${m.id}', 'teamA', this.value)" style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;"> 
-            </div> 
-            <div class="match-meta"> 
-              <span class="meta-item">🕒 ${m.time}</span> 
-              <span class="meta-item">📺 ${m.tv}</span> 
-              <span class="meta-item"><span style="color:#ff4d4d">📍</span> ${m.city || 'TBD'}</span> 
-            </div> 
-          </div> 
-          <div class="score-inputs"> 
-            <input type="number" value="${valH}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','h',this.value)"> 
-            <span>-</span> 
-            <input type="number" value="${valA}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','a',this.value)"> 
-          </div> 
-        </div> 
-      </div>`; 
-    }).join('')} 
+  
+  container.innerHTML = scheduleData.map(day => `
+    <div class="date-divider">${day.date}</div>
+    ${day.matches.map(m => {
+      const valH = predictions[m.id]?.h || '';
+      const valA = predictions[m.id]?.a || '';
+      const teamH = predictions[m.id]?.teamH || '';
+      const teamA = predictions[m.id]?.teamA || '';
+      
+      return `
+      <div class="match-card">
+        <div class="match-row">
+          <div class="match-info" style="display: flex; flex-direction: column; gap: 8px; flex: 1;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">🏳️</span>
+              <input type="text" 
+                     value="${teamH}" 
+                     placeholder="${m.h}" 
+                     onchange="updateSlutspelTeam('${m.id}', 'teamH', this.value)"
+                     style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">🏳️</span>
+              <input type="text" 
+                     value="${teamA}" 
+                     placeholder="${m.a}" 
+                     onchange="updateSlutspelTeam('${m.id}', 'teamA', this.value)"
+                     style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
+            </div>
+            <div class="match-meta">
+              <span class="meta-item">🕒 ${m.time}</span>
+              <span class="meta-item">📺 ${m.tv}</span>
+              <span class="meta-item"><span style="color:#ff4d4d">📍</span> ${m.city || 'TBD'}</span>
+            </div>
+          </div>
+          <div class="score-inputs">
+            <input type="number" value="${valH}" onchange="updatePred('${m.id}','h',this.value)">
+            <span>-</span>
+            <input type="number" value="${valA}" onchange="updatePred('${m.id}','a',this.value)">
+          </div>
+        </div>
+      </div>`;
+    }).join('')}
   `).join('');
 }
 
@@ -424,24 +424,13 @@ window.updateSlutspelTeam = (id, side, val) => {
   updateStats();
 };
 
-window.saveTips = async () => { 
+window.saveTips = async () => {
   if(!auth.currentUser) return showToast("Logga in först", true);
-  
-  // Säkerhetsspärr: Hindra inskickning efter matchstart 11 juni 2026 kl. 21:00
-  const deadline = new Date('2026-06-11T21:00:00');
-  if (new Date() > deadline) {
-    return showToast("Tipsen är låsta! Turneringen har redan startat.", true);
-  }
-
-  try {
-    await setDoc(doc(db, "tips", auth.currentUser.uid), { 
-      predictions, 
-      username: currentUserProfile?.username || auth.currentUser.email 
-    }, {merge: true}); 
-    showToast("Sparat!"); 
-  } catch(e) {
-    showToast("Kunde inte spara: " + e.message, true);
-  }
+  await setDoc(doc(db, "tips", auth.currentUser.uid), {
+    predictions, 
+    username: currentUserProfile?.username || auth.currentUser.email
+  }, {merge: true});
+  showToast("Sparat!");
 };
 
 window.switchAuthTab = (mode) => {
@@ -581,86 +570,15 @@ window.showPage = (id, btn) => {
   }
   
   localStorage.setItem('activeTab', id);
-    // Rendera fliken först när användaren klickar på den (gör laddningen supersnabb!)
+  
+  // Rendera fliken först när användaren klickar på den (gör laddningen supersnabb!)
   renderTabContent(id);
 };
-
-// Rendera fliken först när användaren klickar på den (gör laddningen supersnabb!)
-
-// -------------------------------------------------------------
-// FLYTTA HIT: Alla globala fönsterfunktioner (Utanför onAuthStateChanged)
-// -------------------------------------------------------------
 
 window.openModal = (id) => document.getElementById(id).classList.add('open');
 window.closeModal = (id) => document.getElementById(id).classList.remove('open');
 
-// Gemensam funktion för att rita ut alla slutspelsflikar
-window.renderGenericSlutspel = function(scheduleData, containerId) { 
-  const container = document.getElementById(containerId); 
-  if (!container) return;
-
-  // Låsmekanism: Kolla om klockan har passerat 11 juni 2026 kl. 21:00
-  const deadline = new Date('2026-06-11T21:00:00');
-  const isLocked = new Date() > deadline; 
-
-  container.innerHTML = scheduleData.map(day => ` 
-    <div class="date-divider">${day.date}</div> 
-    ${day.matches.map(m => { 
-      const valH = predictions[m.id]?.h || ''; 
-      const valA = predictions[m.id]?.a || ''; 
-      const teamH = predictions[m.id]?.teamH || ''; 
-      const teamA = predictions[m.id]?.teamA || ''; 
-      return ` 
-      <div class="match-card"> 
-        <div class="match-row"> 
-          <div class="match-info" style="display: flex; flex-direction: column; gap: 8px; flex: 1;"> 
-            <div style="display: flex; align-items: center; gap: 8px;"> 
-              <span style="font-size: 16px;"> 🏳️ </span> 
-              <input type="text" value="${teamH}" placeholder="${m.h}" ${isLocked ? 'disabled' : ''} onchange="updateSlutspelTeam('${m.id}', 'teamH', this.value)" style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;"> 
-            </div> 
-            <div style="display: flex; align-items: center; gap: 8px;"> 
-              <span style="font-size: 16px;"> 🏳️ </span> 
-              <input type="text" value="${teamA}" placeholder="${m.a}" ${isLocked ? 'disabled' : ''} onchange="updateSlutspelTeam('${m.id}', 'teamA', this.value)" style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;"> 
-            </div> 
-            <div class="match-meta"> 
-              <span class="meta-item">🕒 ${m.time}</span> 
-              <span class="meta-item">📺 ${m.tv}</span> 
-              <span class="meta-item"><span style="color:#ff4d4d">📍</span> ${m.city || 'TBD'}</span> 
-            </div> 
-          </div> 
-          <div class="score-inputs"> 
-            <input type="number" value="${valH}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','h',this.value)"> 
-            <span>-</span> 
-            <input type="number" value="${valA}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','a',this.value)"> 
-          </div> 
-        </div> 
-      </div>`; 
-    }).join('')} 
-  `).join('');
-}
-
-// Spara tips med inbyggd tidsspärr
-window.saveTips = async () => { 
-  if(!auth.currentUser) return showToast("Logga in först", true);
-  
-  // Säkerhetsspärr: Hindra inskickning efter turneringen startat
-  const deadline = new Date('2026-06-11T21:00:00');
-  if (new Date() > deadline) {
-    return showToast("Tipsen är låsta! Turneringen har redan startat.", true);
-  }
-
-  try {
-    await setDoc(doc(db, "tips", auth.currentUser.uid), { 
-      predictions, 
-      username: currentUserProfile?.username || auth.currentUser.email 
-    }, {merge: true}); 
-    showToast("Sparat!"); 
-  } catch(e) {
-    showToast("Kunde inte spara: " + e.message, true);
-  }
-};
-
-window.applySavedTab = function() {
+function applySavedTab() {
   const savedTab = localStorage.getItem('activeTab');
   const validTabs = ['groups', 'r16', 'qf', 'qf2', 'semi', 'bronze', 'final'];
   if (savedTab && validTabs.includes(savedTab)) {
@@ -669,7 +587,6 @@ window.applySavedTab = function() {
     window.showPage('groups', null);
   }
 }
-
 // Nödbroms: Om Firebase blockeras av t.ex. AdBlock döljer vi laddningsskärmen efter 3 sekunder ändå
 setTimeout(() => {
   const loadingScreen = document.getElementById('loading');
