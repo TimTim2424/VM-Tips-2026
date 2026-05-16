@@ -47,7 +47,7 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 #page-final.active {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 260px); /* Ungefärlig höjd för att sträcka ut fliken mellan meny och footer */
+  min-height: calc(100vh - 260px); 
 }
 
 .page-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 26px; color: var(--gold); margin-bottom: 4px; text-shadow: 0 0 10px rgba(89,213,255,0.30) }
@@ -80,11 +80,11 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 
 /* Centrerad och mjukare styling för VM-pokalen */
 .final-trophy-wrapper { 
-  flex: 1; /* Detta är nyckeln! Bilden fyller utrymmet vertikalt */
+  flex: 1; 
   display: flex;
   justify-content: center;  
-  align-items: center; /* Centrerar bilden vertikalt i det tomma utrymmet */
-  margin: 20px 0; 
+  align-items: center; 
+  margin: 34px 0 20px 0; /* Marginalen i toppen (34px) ger en förskjutning nedåt på ca 9mm */
 }
 .final-trophy { 
   max-width: 460px; 
