@@ -70,6 +70,10 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .loading { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 500; }
 .loading.hidden { display: none; }
 
+/* Finalbild-styling */
+.final-trophy-wrapper { text-align: center; margin: 15px 0 25px 0; }
+.final-trophy { max-width: 260px; width: 100%; height: auto; border-radius: 14px; border: 1px solid rgba(89,213,255,0.2); box-shadow: 0 0 25px rgba(89,213,255,0.15); }
+
 .score-inputs input::-webkit-outer-spin-button,
 .score-inputs input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -147,6 +151,9 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
   <div class="page" id="page-final">
     <div class="page-title">VM-Final 2026</div>
     <div class="page-sub">Match om världsmästartiteln</div>
+    <div class="final-trophy-wrapper">
+      <img src="pokal.png" alt="FIFA World Cup Trophy" class="final-trophy">
+    </div>
     <div id="schedule-final-grid"></div>
   </div>
 </div>
