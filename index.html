@@ -42,6 +42,14 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px 80px; }
 .page { display: none; }
 .page.active { display: block; }
+
+/* Specialregel för Final-fliken så att bilden kan centreras vertikalt i det tomma utrymmet */
+#page-final.active {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 260px); /* Ungefärlig höjd för att sträcka ut fliken mellan meny och footer */
+}
+
 .page-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 26px; color: var(--gold); margin-bottom: 4px; text-shadow: 0 0 10px rgba(89,213,255,0.30) }
 .page-sub { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
 .match-card { background: var(--bg3); border-radius: 12px; border: 1px solid var(--border); margin-bottom: 8px; overflow: hidden; }
@@ -72,17 +80,19 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 
 /* Centrerad och mjukare styling för VM-pokalen */
 .final-trophy-wrapper { 
+  flex: 1; /* Detta är nyckeln! Bilden fyller utrymmet vertikalt */
   display: flex;
-  justify-content: center;  /* Centrerar bilden horisontellt */
-  margin: 30px 0 15px 0; 
+  justify-content: center;  
+  align-items: center; /* Centrerar bilden vertikalt i det tomma utrymmet */
+  margin: 20px 0; 
 }
 .final-trophy { 
   max-width: 460px; 
   width: 100%; 
   height: auto; 
-  border-radius: 24px;      /* Gjord ännu mjukare för ett modernare utseende */
-  border: 1px solid rgba(89,213,255,0.08); /* Mycket subtilare kantlinje */
-  box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 0 40px rgba(89,213,255,0.08); /* Mjukare skugga med mer djup */
+  border-radius: 24px;      
+  border: 1px solid rgba(89,213,255,0.08); 
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 0 40px rgba(89,213,255,0.08); 
 }
 
 .score-inputs input::-webkit-outer-spin-button,
@@ -160,10 +170,11 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
   </div>
 
   <div class="page" id="page-final">
-    <div class="page-title">VM-Final 2026</div>
-    <div class="page-sub">Match om världsmästartiteln</div>
-    
-    <div id="schedule-final-grid"></div>
+    <div>
+      <div class="page-title">VM-Final 2026</div>
+      <div class="page-sub">Match om världsmästartiteln</div>
+      <div id="schedule-final-grid"></div>
+    </div>
 
     <div class="final-trophy-wrapper">
       <img src="pokal.png" alt="FIFA World Cup Trophy" class="final-trophy">
@@ -229,7 +240,7 @@ const flags = {
   'Elfenbenskusten': '🇨🇮', 'Ecuador': '🇪🇨', 'Sverige': '🇸🇪', 'Tunisien': '🇹🇳', 'Spanien': '🇪🇸',
   'Kap Verde': '🇨🇻', 'Belgien': '🇧🇪', 'Egypten': '🇪🇬', 'Saudiarabien': '🇸🇦', 'Uruguay': '🇺🇾',
   'Iran': '🇮🇷', 'Nya Zeeland': '🇳🇿', 'Frankrike': '🇫🇷', 'Senegal': '🇸🇳', 'Irak': '🇮🇶',
-  'Norge': '🇳🇴', 'Argentina': '🇦🇷', 'Algeriet': '🇩🇿', 'Österrike': '🇦🇹', 'Jordanien': '🇮🇴',
+  'Norge': '🇳🇴', 'Argentina': '🇦🇷', 'Algeriet': '🇩🇿', 'Österrike': '🇦🇹', 'Jordanien': '🇯🇴',
   'Portugal': '🇵🇹', 'DR Kongo': '🇨🇩', 'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'Kroatien': '🇭🇷', 'Ghana': '🇬🇭',
   'Panama': '🇵🇦', 'Uzbekistan': '🇺🇿', 'Colombia': '🇨🇴'
 };
@@ -265,7 +276,6 @@ const SCHEDULE_R16 = [
   {date:'Lördag 4 juli', matches:[{h:'1J', a:'2H', time:'00.00', tv:'SVT', city:'Monterrey', id:'r16_15'}, {h:'1K', a:'3D/E/I/J/L', time:'03.30', tv:'SVT', city:'Guadalajara', id:'r16_16'}]}
 ];
 
-/* Korrigerat utifrån bifogat dokument 90.docx */
 const SCHEDULE_QF = [
   {date:'Lördag 4 juli', matches:[
     {h:'Match 89', a:'–', time:'17.00', tv:'Rapport', city:'Philadelphia', id:'m89'},
@@ -285,7 +295,6 @@ const SCHEDULE_QF = [
   ]}
 ];
 
-/* Korrigerat utifrån bifogat dokument 91.docx */
 const SCHEDULE_QF2 = [
   {date:'Torsdag 9 juli', matches:[
     {h:'W89', a:'W90', time:'22.00', tv:'TV4', city:'Foxborough', id:'qf2_1'}
@@ -301,7 +310,6 @@ const SCHEDULE_QF2 = [
   ]}
 ];
 
-/* Korrigerat utifrån bifogat dokument 92.docx */
 const SCHEDULE_SEMI = [
   {date:'Tisdag 14 juli', matches:[
     {h:'W97', a:'W98', time:'21.00', tv:'SVT', city:'Arlington', id:'semi_1'}
@@ -311,7 +319,6 @@ const SCHEDULE_SEMI = [
   ]}
 ];
 
-/* Korrigerat utifrån bifogat dokument 94.docx */
 const SCHEDULE_BRONZE = [
   {date:'Lördag 18 juli', matches:[
     {h:'L101', a:'L102', time:'23.00', tv:'SVT', city:'Miami Gardens', id:'bronze_1'}
