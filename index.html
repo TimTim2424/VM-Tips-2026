@@ -43,16 +43,17 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .page { display: none; }
 .page.active { display: block; }
 
-/* Specialregel för Final-fliken så att bilden kan centreras vertikalt i det tomma utrymmet */
+/* Specialregel för Final-fliken så att innehållet staplas vertikalt */
 #page-final.active {
   display: flex;
   flex-direction: column;
+  align-items: center;
   min-height: calc(100vh - 260px); 
 }
 
 .page-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 26px; color: var(--gold); margin-bottom: 4px; text-shadow: 0 0 10px rgba(89,213,255,0.30) }
 .page-sub { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
-.match-card { background: var(--bg3); border-radius: 12px; border: 1px solid var(--border); margin-bottom: 8px; overflow: hidden; }
+.match-card { background: var(--bg3); border-radius: 12px; border: 1px solid var(--border); margin-bottom: 8px; overflow: hidden; width: 100%; max-width: 600px; }
 .match-row { padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
 .match-info { flex: 1; min-width: 0; }
 .match-teams { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
@@ -60,7 +61,7 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .meta-item { display: flex; align-items: center; gap: 3px; }
 .score-inputs { display: flex; align-items: center; gap: 5px; }
 .score-inputs input { width: 40px; height: 36px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; background: var(--bg); color: var(--gold); border: 1px solid rgba(89,213,255,0.28); border-radius: 6px; }
-.date-divider { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; color: var(--gold); margin: 20px 0 10px 5px; font-size: 18px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+.date-divider { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; color: var(--gold); margin: 20px 0 10px 5px; font-size: 18px; border-bottom: 1px solid var(--border); padding-bottom: 5px; width: 100%; max-width: 600px; }
 .footer { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13,44,64,0.82); backdrop-filter: blur(10px); border-top: 1px solid var(--border); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 99; }
 .btn { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; padding: 8px 18px; border-radius: 8px; cursor: pointer; border: 1px solid var(--blue); background: transparent; color: var(--blue); }
 .btn.primary { background: var(--gold); color: #04131d; border-color: var(--gold); }
@@ -78,16 +79,29 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .loading { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 500; }
 .loading.hidden { display: none; }
 
-/* Centrerad och mjukare styling för VM-pokalen */
+/* Styling för textytan ovanför pokalen */
+.final-winner-team {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 40px;
+  text-align: center;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Centrerad och ytterligare nedflyttad styling för VM-pokalen */
 .final-trophy-wrapper { 
-  flex: 1; 
   display: flex;
   justify-content: center;  
   align-items: center; 
-  margin: 34px 0 20px 0; /* Marginalen i toppen (34px) ger en förskjutning nedåt på ca 9mm */
+  margin: 115px 0 30px 0; /* Ökat till 115px (ytterligare ~5mm ner) för att skapa mer utrymme från texten ovan */
+  width: 100%;
 }
 .final-trophy { 
-  max-width: 460px; 
+  max-width: 400px; 
   width: 100%; 
   height: auto; 
   border-radius: 24px;      
@@ -135,7 +149,7 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 <div class="container">
   <div class="page active" id="page-groups">
     <div class="page-title">Gruppspel</div>
-    <div class="page-sub">72 matcher </div>
+    <div class="page-sub">Matcher i spelordning</div>
     <div id="schedule-grid"></div>
   </div>
   
@@ -170,10 +184,14 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
   </div>
 
   <div class="page" id="page-final">
-    <div>
+    <div style="width: 100%; max-width: 600px;">
       <div class="page-title">VM-Final 2026</div>
-      
+      <div class="page-sub">Match om världsmästartiteln</div>
       <div id="schedule-final-grid"></div>
+    </div>
+
+    <div class="final-winner-team" id="finalWinner">
+      🏆 VÄRLDSMÄSTARE 2026 🏆
     </div>
 
     <div class="final-trophy-wrapper">
