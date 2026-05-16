@@ -65,18 +65,16 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .input-field { width: 100%; margin: 6px 0; padding: 10px; background: var(--bg); border: 1px solid var(--border); color: #fff; border-radius: 6px; }
 .toast { position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%); color: white; padding: 9px 22px; border-radius: 30px; opacity: 0; transition: 0.3s; z-index: 200; }
 .toast.show { opacity: 1; }
-.toast.success { background: #22c55e; } /* Grön */
-.toast.error { background: #ef4444; }   /* Röd */
+.toast.success { background: #22c55e; } 
+.toast.error { background: #ef4444; }   
 .loading { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 500; }
 .loading.hidden { display: none; }
 
-/* Döljer pilarna i Chrome, Safari, Edge och Opera */
 .score-inputs input::-webkit-outer-spin-button,
 .score-inputs input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-/* Döljer pilarna i Firefox */
 .score-inputs input[type=number] {
   -moz-appearance: textfield;
 } 
@@ -121,7 +119,12 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
     <div id="schedule-r16-grid"></div>
   </div>
 
-  <div class="page" id="page-qf">Åttondelsfinaler kommer inom kort...</div>
+  <div class="page" id="page-qf">
+    <div class="page-title">Åttondelsfinaler</div>
+    <div class="page-sub">Slutspelsmatcher (Ev. match med Sverige sänds i SVT)</div>
+    <div id="schedule-qf-grid"></div>
+  </div>
+
   <div class="page" id="page-sf">Kvartsfinaler kommer inom kort...</div>
   <div class="page" id="page-semi">Semifinaler kommer inom kort...</div>
   <div class="page" id="page-final">Final & Brons kommer inom kort...</div>
@@ -180,7 +183,7 @@ const db = getFirestore(fbApp);
 const flags = {
   'Mexiko': '🇲🇽', 'Sydafrika': '🇿🇦', 'Sydkorea': '🇰🇷', 'Tjeckien': '🇨🇿', 'Kanada': '🇨🇦',
   'Bosnien & Herr.': '🇧🇦', 'USA': '🇺🇸', 'Paraguay': '🇵🇾', 'Qatar': '🇶🇦', 'Schweiz': '🇨🇭',
-  'Brasilien': '🇧🇷', 'Marocko': '🇲🇦', 'Haiti': '🇭🇹', 'Skottland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'Australien': '🇦🇺',
+  'Brasilien': '🇧🇷', 'Marocko': '🇲🇦', 'Haiti': '🇭🇹', 'Skottland': '🏴󠁧󠁢Sbotland󠁿', 'Australien': '🇦🇺',
   'Turkiet': '🇹🇷', 'Tyskland': '🇩🇪', 'Curaçao': '🇨🇼', 'Nederländerna': '🇳🇱', 'Japan': '🇯🇵',
   'Elfenbenskusten': '🇨🇮', 'Ecuador': '🇪🇨', 'Sverige': '🇸🇪', 'Tunisien': '🇹🇳', 'Spanien': '🇪🇸',
   'Kap Verde': '🇨🇻', 'Belgien': '🇧🇪', 'Egypten': '🇪🇬', 'Saudiarabien': '🇸🇦', 'Uruguay': '🇺🇾',
@@ -208,7 +211,7 @@ const SCHEDULE = [
   {date:'Torsdag 25 juni', matches:[{h:'Marocko', a:'Haiti', time:'00.00', tv:'TV4', city:'Atlanta', id:'m51'}, {h:'Skottland', a:'Brasilien', time:'00.00', tv:'TV4', city:'Miami', id:'m52'}, {h:'Sydafrika', a:'Sydkorea', time:'03.00', tv:'SVT Play', city:'Monterrey', id:'m53'}, {h:'Tjeckien', a:'Mexiko', time:'03.00', tv:'SVT Play', city:'Mexico City', id:'m54'}, {h:'Curaçao', a:'Elfenbenskusten', time:'22.00', tv:'SVT Play', city:'Philadelphia', id:'m55'}, {h:'Ecuador', a:'Tyskland', time:'22.00', tv:'SVT Play', city:'New Jersey', id:'m56'}]},
   {date:'Fredag 26 juni', matches:[{h:'Tunisien', a:'Nederländerna', time:'01.00', tv:'SVT Play', city:'Kansas City', id:'m57'}, {h:'Japan', a:'Sverige', time:'01.00', tv:'SVT Play', city:'Dallas', id:'m58'}, {h:'Turkiet', a:'USA', time:'04.00', tv:'TV4', city:'Los Angeles', id:'m59'}, {h:'Paraguay', a:'Australien', time:'04.00', tv:'TV4', city:'San Francisco', id:'m60'}, {h:'Norge', a:'Frankrike', time:'21.00', tv:'TV4', city:'Boston', id:'m61'}, {h:'Senegal', a:'Irak', time:'21.00', tv:'TV4', city:'Toronto', id:'m62'}]},
   {date:'Lördag 27 juni', matches:[{h:'Kap Verde', a:'Saudiarabien', time:'02.00', tv:'TV4', city:'Houston', id:'m63'}, {h:'Uruguay', a:'Spanien', time:'02.00', tv:'TV4', city:'Guadalajara', id:'m64'}, {h:'Nya Zeeland', a:'Belgien', time:'05.00', tv:'TV4', city:'Vancouver', id:'m65'}, {h:'Egypten', a:'Iran', time:'05.00', tv:'TV4', city:'Seattle', id:'m66'}, {h:'Panama', a:'England', time:'23.00', tv:'SVT Play', city:'New Jersey', id:'m67'}, {h:'Kroatien', a:'Ghana', time:'23.00', tv:'SVT Play', city:'Philadelphia', id:'m68'}]},
-  {date:'Söndag 28 juni', matches:[{h:'DR Kongo', a:'Uzbekistan', time:'01.30', tv:'TV4', city:'Atlanta', id:'m69'}, {h:'Colombia', a:'Portugal', time:'01.30', tv:'TV4', city:'Miami', id:'m70'}, {h:'Algeriet', a:'Österrike', time:'04.00', tv:'TV4', city:'Kansas City', id:'m71'}, {h:'Jordanien', a:'Argentina', time:'04.00', tv:'TV4', city:'Dallas', id:'m72'}]}
+  {date:'Söndag 28 juni', matches:[{h:'DR Kongo', a:'Uzbekistan', time:'01.30', tv:'TV4', city:'Atlanta', id:'m69'}, {h:'Colombia', a:'Portugal', time:'01.30', tv:'TV4', city:'Miami', id:'m70'}, {h:'Algeriet', a:'Österrike', time:'04.00', tv:'TV4', city:'Kansas City', id:'m71'}, {h:'Jordanien', a:'Argentina', time:'04.00', tv:'Dallas', id:'m72'}]}
 ];
 
 const SCHEDULE_R16 = [
@@ -219,6 +222,25 @@ const SCHEDULE_R16 = [
   {date:'Torsdag 2 juli', matches:[{h:'1D', a:'3B/E/F/I/J', time:'02.00', tv:'TV4', city:'Seattle', id:'r16_10'}, {h:'1H', a:'2J', time:'21.00', tv:'SVT', city:'New Jersey', id:'r16_11'}]},
   {date:'Fredag 3 juli', matches:[{h:'2K', a:'2L', time:'01.00', tv:'TV4', city:'Kansas City', id:'r16_12'}, {h:'1B', a:'3E/F/G/I/J', time:'05.00', tv:'TV4', city:'Vancouver', id:'r16_13'}, {h:'2D', a:'2G', time:'20.00', tv:'TV4', city:'Philadelphia', id:'r16_14'}]},
   {date:'Lördag 4 juli', matches:[{h:'1J', a:'2H', time:'00.00', tv:'SVT', city:'Monterrey', id:'r16_15'}, {h:'1K', a:'3D/E/I/J/L', time:'03.30', tv:'SVT', city:'Guadalajara', id:'r16_16'}]}
+];
+
+const SCHEDULE_QF = [
+  {date:'Lördag 4 juli', matches:[
+    {h:'W73', a:'W75', time:'19.00', tv:'TV4', city:'Houston', id:'qf_1'},
+    {h:'W74', a:'W77', time:'23.00', tv:'SVT', city:'Philadelphia', id:'qf_2'}
+  ]},
+  {date:'Söndag 5 juli', matches:[
+    {h:'W76', a:'W78', time:'22.00', tv:'TV4', city:'East Rutherford', id:'qf_3'}
+  ]},
+  {date:'Måndag 6 juli', matches:[
+    {h:'W79', a:'W80', time:'02.00', tv:'SVT', city:'Mexico City', id:'qf_4'},
+    {h:'W83', a:'W84', time:'21.00', tv:'TV4', city:'Arlington', id:'qf_5'}
+  ]},
+  {date:'Tisdag 7 juli', matches:[
+    {h:'W81', a:'W82', time:'02.00', tv:'TV4', city:'Seattle', id:'qf_6'},
+    {h:'W86', a:'W88', time:'18.00', tv:'TV4', city:'Atlanta', id:'qf_7'},
+    {h:'W85', a:'W87', time:'22.00', tv:'SVT', city:'Vancouver', id:'qf_8'}
+  ]}
 ];
 
 let predictions = {};
@@ -261,6 +283,59 @@ function renderR16() {
   if (!container) return;
   
   container.innerHTML = SCHEDULE_R16.map(day => `
+    <div class="date-divider">${day.date}</div>
+    ${day.matches.map(m => {
+      const valH = predictions[m.id]?.h || '';
+      const valA = predictions[m.id]?.a || '';
+      const teamH = predictions[m.id]?.teamH || '';
+      const teamA = predictions[m.id]?.teamA || '';
+      
+      return `
+      <div class="match-card">
+        <div class="match-row">
+          <div class="match-info" style="display: flex; flex-direction: column; gap: 8px; flex: 1;">
+            
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">🏳️</span>
+              <input type="text" 
+                     value="${teamH}" 
+                     placeholder="${m.h}" 
+                     onchange="updateSlutspelTeam('${m.id}', 'teamH', this.value)"
+                     style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 16px;">🏳️</span>
+              <input type="text" 
+                     value="${teamA}" 
+                     placeholder="${m.a}" 
+                     onchange="updateSlutspelTeam('${m.id}', 'teamA', this.value)"
+                     style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
+            </div>
+            
+            <div class="match-meta">
+              <span class="meta-item">🕒 ${m.time}</span>
+              <span class="meta-item">📺 ${m.tv}</span>
+              <span class="meta-item"><span style="color:#ff4d4d">📍</span> ${m.city || 'TBD'}</span>
+            </div>
+          </div>
+          
+          <div class="score-inputs">
+            <input type="number" value="${valH}" onchange="updatePred('${m.id}','h',this.value)">
+            <span>-</span>
+            <input type="number" value="${valA}" onchange="updatePred('${m.id}','a',this.value)">
+          </div>
+        </div>
+      </div>`;
+    }).join('')}
+  `).join('');
+}
+
+function renderQF() {
+  const container = document.getElementById('schedule-qf-grid');
+  if (!container) return;
+  
+  container.innerHTML = SCHEDULE_QF.map(day => `
     <div class="date-divider">${day.date}</div>
     ${day.matches.map(m => {
       const valH = predictions[m.id]?.h || '';
@@ -413,6 +488,7 @@ async function loadUserTips(user) {
     predictions = d.data().predictions || {};
     renderGroups();
     renderR16(); 
+    renderQF();
     updateStats();
   }
 }
@@ -426,10 +502,8 @@ function showToast(msg, isError = false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   
-  // Rensa gamla klasser så de inte krockar
   t.classList.remove('success', 'error');
   
-  // Lägg till rätt färgklass
   if (isError) {
     t.classList.add('error');
   } else {
@@ -450,8 +524,11 @@ window.showPage = (id, btn) => {
 };
 
 window.openModal = (id) => document.getElementById(id).classList.add('open');
-window.closeModal = (id) => document.getElementById(id).classList.remove('open');
+window.closeModal = (id) => document.getElementById(id).classList.remove('remove');
 
 renderGroups();
 renderR16();
+renderQF();
 </script>
+</body>
+</html>
