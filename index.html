@@ -132,6 +132,62 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .score-inputs input[type=number] {
   -moz-appearance: textfield;
 } 
+.group-section {
+  margin-bottom: 24px;
+}
+
+.group-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+
+.group-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  background: var(--bg3);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.group-table thead tr {
+  background: rgba(89,213,255,0.08);
+  color: var(--text2);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+.group-table th, .group-table td {
+  padding: 8px 6px;
+  text-align: center;
+}
+
+.group-table th:nth-child(2),
+.group-table td:nth-child(2) {
+  text-align: left;
+  padding-left: 10px;
+  min-width: 110px;
+}
+
+.group-table tbody tr {
+  border-top: 1px solid var(--border);
+  color: var(--text);
+}
+
+.group-table tbody tr:nth-child(-n+2) {
+  border-left: 3px solid var(--gold);
+}
+
+.group-table .pts {
+  font-weight: 700;
+  color: var(--gold);
+}  
 </style>
 </head>
 <body>
@@ -152,6 +208,7 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 <nav>
   <div class="nav-inner">
     <button id="nav-topplista" onclick="showPage('topplista', this)">🏆 Topplista</button>
+    <button id="nav-grupptabell" onclick="showPage('grupptabell', this)">📊 Grupptabell</button>
     <button id="nav-groups" class="active" onclick="showPage('groups', this)">Gruppspelsmatcher</button>
     <button id="nav-r16" onclick="showPage('r16', this)">16-delsfinaler</button>
     <button id="nav-qf" onclick="showPage('qf', this)">Åttondelsfinaler</button>
@@ -199,14 +256,7 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
     <div id="schedule-bronze-grid"></div>
   </div>
 
- <div class="page" id="page-final">
-  <div class="page" id="page-topplista">
-  <div class="page-title">Topplista</div>
-  <div class="page-sub">Deltagarnas resultat</div>
-  <div id="topplista-grid">
-    <p style="color:var(--text2); font-size:14px;">Laddar topplista...</p>
-  </div>
-</div> 
+<div class="page" id="page-final">
   <div>
     <div class="page-title">VM-Final 2026</div>
     <div id="schedule-final-grid"></div>
@@ -219,6 +269,22 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
              onchange="updateSlutspelTeam('winner','teamH',this.value)">
     </div>
     <img src="pokal.png" alt="FIFA World Cup Trophy" class="final-trophy">
+  </div>
+</div>
+
+<div class="page" id="page-topplista">
+  <div class="page-title">Topplista</div>
+  <div class="page-sub">Deltagarnas resultat</div>
+  <div id="topplista-grid">
+    <p style="color:var(--text2); font-size:14px;">Laddar topplista...</p>
+  </div>
+</div>
+
+<div class="page" id="page-grupptabell">
+  <div class="page-title">Grupptabell</div>
+  <div class="page-sub">Uppdateras efter varje spelomgång</div>
+  <div id="grupptabell-grid">
+    <p style="color:var(--text2); font-size:14px;">Laddar grupptabell...</p>
   </div>
 </div>
 
@@ -628,6 +694,7 @@ window.showPage = (id, btn) => {
     // Rendera fliken först när användaren klickar på den (gör laddningen supersnabb!)
   renderTabContent(id);
   if (id === 'topplista') renderTopplista();
+  if (id === 'grupptabell') renderGrupptabell();
 };
 
 // Rendera fliken först när användaren klickar på den (gör laddningen supersnabb!)
@@ -707,7 +774,7 @@ window.saveTips = async () => {
 
 window.applySavedTab = function() {
   const savedTab = localStorage.getItem('activeTab');
-  const validTabs = ['groups', 'r16', 'qf', 'qf2', 'semi', 'bronze', 'final', 'topplista'];
+  const validTabs = ['groups', 'r16', 'qf', 'qf2', 'semi', 'bronze', 'final', 'topplista', 'grupptabell'];
   if (savedTab && validTabs.includes(savedTab)) {
     window.showPage(savedTab, null);
   } else {
@@ -723,6 +790,51 @@ setTimeout(() => {
     showToast("Kunde inte ansluta till Firebase. Inaktivera eventuell AdBlocker.", true);
   }
 }, 3000); 
+async function renderGrupptabell() {
+  const grid = document.getElementById('grupptabell-grid');
+  if (!grid) return;
+
+  try {
+    const snap = await getDoc(doc(db, 'facit', 'grupper'));
+    if (!snap.exists()) {
+      grid.innerHTML = '<p style="color:var(--text2);">Ingen data ännu – turneringen har inte börjat.</p>';
+      return;
+    }
+
+    const data = snap.data();
+    const grupperHTML = Object.entries(data)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([grupp, lag]) => `
+        <div class="group-section">
+          <div class="group-label">Grupp ${grupp}</div>
+          <table class="group-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Lag</th>
+                <th>S</th><th>V</th><th>O</th><th>F</th>
+                <th>GM</th><th>IM</th><th>MS</th>
+                <th class="pts">P</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${lag.map((l, i) => `
+                <tr>
+                  <td style="color:var(--text2)">${i + 1}</td>
+                  <td>${l.lag}</td>
+                  <td>${l.s}</td><td>${l.v}</td><td>${l.o}</td><td>${l.f}</td>
+                  <td>${l.gm}</td><td>${l.im}</td><td>${l.ms}</td>
+                  <td class="pts">${l.p}</td>
+                </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`).join('');
+
+    grid.innerHTML = grupperHTML;
+  } catch (e) {
+    grid.innerHTML = '<p style="color:var(--text2);">Kunde inte ladda grupptabellen.</p>';
+  }
+}  
 async function renderTopplista() {
   const { getDocs, collection } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
   const grid = document.getElementById('topplista-grid');
