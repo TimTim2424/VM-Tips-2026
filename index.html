@@ -70,9 +70,9 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .loading { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 500; }
 .loading.hidden { display: none; }
 
-/* Finalbild-styling */
-.final-trophy-wrapper { text-align: center; margin: 15px 0 25px 0; }
-.final-trophy { max-width: 260px; width: 100%; height: auto; border-radius: 14px; border: 1px solid rgba(89,213,255,0.2); box-shadow: 0 0 25px rgba(89,213,255,0.15); }
+/* Uppdaterad styling för bilden under kortet */
+.final-trophy-wrapper { text-align: center; margin: 30px 0 10px 0; }
+.final-trophy { max-width: 240px; width: 100%; height: auto; border-radius: 14px; border: 1px solid rgba(89,213,255,0.15); box-shadow: 0 0 30px rgba(89,213,255,0.1); }
 
 .score-inputs input::-webkit-outer-spin-button,
 .score-inputs input::-webkit-inner-spin-button {
@@ -151,10 +151,12 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
   <div class="page" id="page-final">
     <div class="page-title">VM-Final 2026</div>
     <div class="page-sub">Match om världsmästartiteln</div>
+    
+    <div id="schedule-final-grid"></div>
+
     <div class="final-trophy-wrapper">
       <img src="pokal.png" alt="FIFA World Cup Trophy" class="final-trophy">
     </div>
-    <div id="schedule-final-grid"></div>
   </div>
 </div>
 
@@ -252,25 +254,27 @@ const SCHEDULE_R16 = [
   {date:'Lördag 4 juli', matches:[{h:'1J', a:'2H', time:'00.00', tv:'SVT', city:'Monterrey', id:'r16_15'}, {h:'1K', a:'3D/E/I/J/L', time:'03.30', tv:'SVT', city:'Guadalajara', id:'r16_16'}]}
 ];
 
+/* Korrigerat utifrån bifogat dokument 90.docx */
 const SCHEDULE_QF = [
   {date:'Lördag 4 juli', matches:[
-    {h:'W73', a:'W75', time:'19.00', tv:'TV4', city:'Houston', id:'qf_1'},
-    {h:'W74', a:'W77', time:'23.00', tv:'SVT', city:'Philadelphia', id:'qf_2'}
+    {h:'Match 89', a:'–', time:'17.00', tv:'Rapport', city:'Philadelphia', id:'m89'},
+    {h:'Match 90', a:'–', time:'12.00', tv:'Rapport', city:'Houston', id:'m90'}
   ]},
   {date:'Söndag 5 juli', matches:[
-    {h:'W76', a:'W78', time:'22.00', tv:'TV4', city:'East Rutherford', id:'qf_3'}
+    {h:'Match 91', a:'–', time:'16.00', tv:'Rapport', city:'East Rutherford', id:'m91'},
+    {h:'Match 92', a:'–', time:'18.00', tv:'Rapport', city:'Mexico City', id:'m92'}
   ]},
   {date:'Måndag 6 juli', matches:[
-    {h:'W79', a:'W80', time:'02.00', tv:'SVT', city:'Mexico City', id:'qf_4'},
-    {h:'W83', a:'W84', time:'21.00', tv:'TV4', city:'Arlington', id:'qf_5'}
+    {h:'Match 93', a:'–', time:'14.00', tv:'Rapport', city:'Arlington', id:'m93'},
+    {h:'Match 94', a:'–', time:'17.00', tv:'Rapport', city:'Seattle', id:'m94'}
   ]},
   {date:'Tisdag 7 juli', matches:[
-    {h:'W81', a:'W82', time:'02.00', tv:'TV4', city:'Seattle', id:'qf_6'},
-    {h:'W86', a:'W88', time:'18.00', tv:'TV4', city:'Atlanta', id:'qf_7'},
-    {h:'W85', a:'W87', time:'22.00', tv:'SVT', city:'Vancouver', id:'qf_8'}
+    {h:'Match 95', a:'–', time:'12.00', tv:'Rapport', city:'Atlanta', id:'m95'},
+    {h:'Match 96', a:'–', time:'13.00', tv:'Rapport', city:'Vancouver', id:'m96'}
   ]}
 ];
 
+/* Korrigerat utifrån bifogat dokument 91.docx */
 const SCHEDULE_QF2 = [
   {date:'Torsdag 9 juli', matches:[
     {h:'W89', a:'W90', time:'22.00', tv:'TV4', city:'Foxborough', id:'qf2_1'}
@@ -286,6 +290,7 @@ const SCHEDULE_QF2 = [
   ]}
 ];
 
+/* Korrigerat utifrån bifogat dokument 92.docx */
 const SCHEDULE_SEMI = [
   {date:'Tisdag 14 juli', matches:[
     {h:'W97', a:'W98', time:'21.00', tv:'SVT', city:'Arlington', id:'semi_1'}
@@ -295,6 +300,7 @@ const SCHEDULE_SEMI = [
   ]}
 ];
 
+/* Korrigerat utifrån bifogat dokument 94.docx */
 const SCHEDULE_BRONZE = [
   {date:'Lördag 18 juli', matches:[
     {h:'L101', a:'L102', time:'23.00', tv:'SVT', city:'Miami Gardens', id:'bronze_1'}
