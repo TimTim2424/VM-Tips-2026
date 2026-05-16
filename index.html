@@ -212,13 +212,13 @@ const SCHEDULE = [
 ];
 
 const SCHEDULE_R16 = [
-  {date:'Söndag 28 juni', matches:[{h:'2A', a:'2B', time:'21.00', tv:'TV4', id:'r16_1'}]},
-  {date:'Måndag 29 juni', matches:[{h:'1C', a:'2F', time:'19.00', tv:'TV4', id:'r16_2'}, {h:'1E', a:'3A/B/C/D/F', time:'22.30', tv:'SVT', id:'r16_3'}]},
-  {date:'Tisdag 30 juni', matches:[{h:'1F', a:'2C', time:'03.00', tv:'SVT', id:'r16_4'}, {h:'2E', a:'2I', time:'19.00', tv:'TV4', id:'r16_5'}, {h:'1I', a:'3C/D/F/G/H', time:'23.00', tv:'TV4', id:'r16_6'}]},
-  {date:'Onsdag 1 juli', matches:[{h:'1A', a:'3C/E/F/H/I', time:'03.00', tv:'TV4', id:'r16_7'}, {h:'1L', a:'3E/H/I/J/K', time:'18.00', tv:'SVT', id:'r16_8'}, {h:'1G', a:'3A/E/H/I/J', time:'22.00', tv:'TV4', id:'r16_9'}]},
-  {date:'Torsdag 2 juli', matches:[{h:'1D', a:'3B/E/F/I/J', time:'02.00', tv:'TV4', id:'r16_10'}, {h:'1H', a:'2J', time:'21.00', tv:'SVT', id:'r16_11'}]},
-  {date:'Fredag 3 juli', matches:[{h:'2K', a:'2L', time:'01.00', tv:'TV4', id:'r16_12'}, {h:'1B', a:'3E/F/G/I/J', time:'05.00', tv:'TV4', id:'r16_13'}, {h:'2D', a:'2G', time:'20.00', tv:'TV4', id:'r16_14'}]},
-  {date:'Lördag 4 juli', matches:[{h:'1J', a:'2H', time:'00.00', tv:'SVT', id:'r16_15'}, {h:'1K', a:'3D/E/I/J/L', time:'03.30', tv:'SVT', id:'r16_16'}]}
+  {date:'Söndag 28 juni', matches:[{h:'2A', a:'2B', time:'21.00', tv:'TV4', city:'Los Angeles', id:'r16_1'}]},
+  {date:'Måndag 29 juni', matches:[{h:'1C', a:'2F', time:'19.00', tv:'TV4', city:'Boston', id:'r16_2'}, {h:'1E', a:'3A/B/C/D/F', time:'22.30', tv:'SVT', city:'Atlanta', id:'r16_3'}]},
+  {date:'Tisdag 30 juni', matches:[{h:'1F', a:'2C', time:'03.00', tv:'SVT', city:'Dallas', id:'r16_4'}, {h:'2E', a:'2I', time:'19.00', tv:'TV4', city:'Miami', id:'r16_5'}, {h:'1I', a:'3C/D/F/G/H', time:'23.00', tv:'TV4', city:'Houston', id:'r16_6'}]},
+  {date:'Onsdag 1 juli', matches:[{h:'1A', a:'3C/E/F/H/I', time:'03.00', tv:'TV4', city:'Mexico City', id:'r16_7'}, {h:'1L', a:'3E/H/I/J/K', time:'18.00', tv:'SVT', city:'Toronto', id:'r16_8'}, {h:'1G', a:'3A/E/H/I/J', time:'22.00', tv:'TV4', city:'San Francisco', id:'r16_9'}]},
+  {date:'Torsdag 2 juli', matches:[{h:'1D', a:'3B/E/F/I/J', time:'02.00', tv:'TV4', city:'Seattle', id:'r16_10'}, {h:'1H', a:'2J', time:'21.00', tv:'SVT', city:'New Jersey', id:'r16_11'}]},
+  {date:'Fredag 3 juli', matches:[{h:'2K', a:'2L', time:'01.00', tv:'TV4', city:'Kansas City', id:'r16_12'}, {h:'1B', a:'3E/F/G/I/J', time:'05.00', tv:'TV4', city:'Vancouver', id:'r16_13'}, {h:'2D', a:'2G', time:'20.00', tv:'TV4', city:'Philadelphia', id:'r16_14'}]},
+  {date:'Lördag 4 juli', matches:[{h:'1J', a:'2H', time:'00.00', tv:'SVT', city:'Monterrey', id:'r16_15'}, {h:'1K', a:'3D/E/I/J/L', time:'03.30', tv:'SVT', city:'Guadalajara', id:'r16_16'}]}
 ];
 
 let predictions = {};
@@ -294,6 +294,7 @@ function renderR16() {
             <div class="match-meta">
               <span class="meta-item">🕒 ${m.time}</span>
               <span class="meta-item">📺 ${m.tv}</span>
+              <span class="meta-item"><span style="color:#ff4d4d">📍</span> ${m.city || 'TBD'}</span>
             </div>
           </div>
           
