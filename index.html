@@ -187,6 +187,68 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .group-table .pts {
   font-weight: 700;
   color: var(--gold);
+} 
+.bonus-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.bonus-row:last-child {
+  margin-bottom: 0;
+}
+
+.bonus-row label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  color: var(--text2);
+}
+
+.bonus-row input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed rgba(89,213,255,0.4);
+  color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  padding: 4px 4px;
+  width: 220px;
+}
+
+.bonus-row input::placeholder {
+  color: rgba(89,213,255,0.3);
+}
+.bonus-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.bonus-row:last-child {
+  margin-bottom: 0;
+}
+
+.bonus-row label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  color: var(--text2);
+}
+
+.bonus-row input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed rgba(89,213,255,0.4);
+  color: #fff;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  padding: 4px 4px;
+  width: 220px;
+}
+
+.bonus-row input::placeholder {
+  color: rgba(89,213,255,0.3);
 }  
 </style>
 </head>
@@ -208,7 +270,7 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 <nav>
   <div class="nav-inner">
     <button id="nav-topplista" onclick="showPage('topplista', this)">🏆 Topplista</button>
-    <button id="nav-grupptabell" onclick="showPage('grupptabell', this)"> Grupptabell</button>
+    <button id="nav-grupptabell" onclick="showPage('grupptabell', this)"> Grupptabeller</button>
     <button id="nav-groups" class="active" onclick="showPage('groups', this)">Gruppspelsmatcher</button>
     <button id="nav-r16" onclick="showPage('r16', this)">16-delsfinaler</button>
     <button id="nav-qf" onclick="showPage('qf', this)">Åttondelsfinaler</button>
@@ -216,6 +278,7 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
     <button id="nav-semi" onclick="showPage('semi', this)">Semifinaler</button>
     <button id="nav-bronze" onclick="showPage('bronze', this)">Bronsmatch</button>
     <button id="nav-final" onclick="showPage('final', this)">VM-Final</button>
+    <button id="nav-bonus" onclick="showPage('bonus', this)">⭐ Bonus & Tiebreak</button>
   </div>
 </nav>
 
@@ -281,13 +344,62 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 </div>
 
 <div class="page" id="page-grupptabell">
-  <div class="page-title">Grupptabell</div>
+  <div class="page-title">Grupptabeller</div>
   <div class="page-sub">Uppdateras efter varje spelomgång</div>
   <div id="grupptabell-grid">
     <p style="color:var(--text2); font-size:14px;">Laddar grupptabell...</p>
   </div>
 </div>
+<div class="page" id="page-bonus">
+  <div class="page-title">Bonus & Tiebreak</div>
+  <div class="page-sub">Låses kl. 21:00 den 11 juni</div>
 
+  <div class="page-title" style="font-size:18px; margin-top:8px;">Bonusfrågor</div>
+
+  <div class="match-card" style="padding:16px;">
+    <div class="bonus-row">
+      <label>🥇 Turneringens skyttekung</label>
+      <input type="text" id="bonus_skyttekung" placeholder="Spelarens namn..."
+             onchange="saveBonus('skyttekung', this.value)">
+    </div>
+    <div class="bonus-row">
+      <label>⚽ Laget med flest mål i gruppspelet</label>
+      <input type="text" id="bonus_flest_mal" placeholder="Lag..."
+             onchange="saveBonus('flest_mal', this.value)">
+    </div>
+    <div class="bonus-row">
+      <label>🟨 Laget med flest gula kort</label>
+      <input type="text" id="bonus_gula_kort" placeholder="Lag..."
+             onchange="saveBonus('gula_kort', this.value)">
+    </div>
+    <div class="bonus-row">
+      <label>🟥 Laget med flest röda kort</label>
+      <input type="text" id="bonus_roda_kort" placeholder="Lag..."
+             onchange="saveBonus('roda_kort', this.value)">
+    </div>
+    <div class="bonus-row">
+      <label>🚨 Laget som släpper in flest mål i gruppspelet</label>
+      <input type="text" id="bonus_flest_inslapp" placeholder="Lag..."
+             onchange="saveBonus('flest_inslapp', this.value)">
+    </div>
+  </div>
+
+  <div class="page-title" style="font-size:18px; margin-top:24px;">Utslagsfrågor</div>
+  <div class="page-sub">Används vid lika poäng i slutet</div>
+
+  <div class="match-card" style="padding:16px;">
+    <div class="bonus-row">
+      <label>⏱️ I vilken minut görs det sista målet i VM-finalen?</label>
+      <input type="number" id="bonus_sista_mal" placeholder="Minut..."
+             onchange="saveBonus('sista_mal', this.value)">
+    </div>
+    <div class="bonus-row">
+      <label>🌍 Hur många mål görs det totalt under hela turneringen?</label>
+      <input type="number" id="bonus_total_mal" placeholder="Antal mål..."
+             onchange="saveBonus('total_mal', this.value)">
+    </div>
+  </div>
+</div>
 <div class="footer">
   <div id="footer-stats">Logga in för att spara</div>
   <button class="btn primary" onclick="saveTips()">Spara tips</button>
@@ -643,6 +755,7 @@ async function loadUserTips(user) {
   const d = await getDoc(doc(db, "tips", user.uid));
   if(d.exists()) {
     predictions = d.data().predictions || {};
+    loadBonus(d.data());
   }
   // Rendera ut enbart den flik som användaren tittar på just nu
   const activeTab = localStorage.getItem('activeTab') || 'groups';
@@ -774,7 +887,7 @@ window.saveTips = async () => {
 
 window.applySavedTab = function() {
   const savedTab = localStorage.getItem('activeTab');
-  const validTabs = ['groups', 'r16', 'qf', 'qf2', 'semi', 'bronze', 'final', 'topplista', 'grupptabell'];
+const validTabs = ['groups', 'r16', 'qf', 'qf2', 'semi', 'bronze', 'final', 'topplista', 'grupptabell', 'bonus'];
   if (savedTab && validTabs.includes(savedTab)) {
     window.showPage(savedTab, null);
   } else {
@@ -876,6 +989,23 @@ async function renderTopplista() {
     grid.innerHTML = '<p style="color:var(--text2);">Kunde inte ladda topplistan.</p>';
   }
 }
+window.saveBonus = function(key, value) {
+  if (!auth.currentUser) return showToast("Logga in först", true);
+  const deadline = new Date('2026-06-11T21:00:00+02:00');
+  if (new Date() > deadline) return showToast("Tipsen är låsta!", true);
+  if (!window.bonusData) window.bonusData = {};
+  window.bonusData[key] = value;
+  setDoc(doc(db, 'tips', auth.currentUser.uid), { bonus: window.bonusData }, { merge: true });
+};
+
+function loadBonus(data) {
+  const bonus = data.bonus || {};
+  ['skyttekung','flest_mal','gula_kort','roda_kort','flest_inslapp','sista_mal','total_mal'].forEach(key => {
+    const el = document.getElementById('bonus_' + key);
+    if (el && bonus[key] !== undefined) el.value = bonus[key];
+  });
+  window.bonusData = bonus;
+}  
 </script>
 </body>
 </html>
