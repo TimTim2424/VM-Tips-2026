@@ -738,7 +738,16 @@ onAuthStateChanged(auth, async (user) => {
     document.getElementById('userBadge').style.display = 'block';
     document.getElementById('loginBtn').style.display = 'none';
     document.getElementById('logoutBtn').style.display = 'block';
-    
+
+    const brytpunkt = new Date('2026-06-12T01:00:00+02:00'); // 12 juni kl. 01:00
+    const nu = new Date();
+
+    if (nu < brytpunkt) {
+      showPage('groups'); // Visar gruppspelsmatcherna direkt så man kan tippa
+    } else {
+      showPage('topplista'); // Efter brytpunkten visas Topplistan direkt
+    }
+
     // Vänta tills tipsen faktiskt laddats klart från databasen
     await loadUserTips(user);
   } else {
