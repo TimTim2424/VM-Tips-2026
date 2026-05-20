@@ -750,7 +750,7 @@ onAuthStateChanged(auth, async (user) => {
 
     // Vänta tills tipsen faktiskt laddats klart från databasen
     await loadUserTips(user);
- } else {
+} else {
     // Om ingen är inloggad, rensa eventuellt gammalt minne
     window.predictions = {};
     window.bonusData = {};
