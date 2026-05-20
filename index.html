@@ -750,8 +750,15 @@ onAuthStateChanged(auth, async (user) => {
 
     // Vänta tills tipsen faktiskt laddats klart från databasen
     await loadUserTips(user);
-  } else {
-    // Om ingen är inloggad, kör bara en grundrendering
+ } else {
+    // Om ingen är inloggad, rensa eventuellt gammalt minne
+    window.predictions = {};
+    window.bonusData = {};
+    
+    // Tvinga appen att ladda och rita ut matcherna för utloggade besökare
+    renderMatches();
+    
+    // Visa den sparade fliken (t.ex. groups för grupptabeller)
     renderTabContent(localStorage.getItem('activeTab') || 'groups');
   }
   
