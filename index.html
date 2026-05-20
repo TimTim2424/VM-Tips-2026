@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VM-Tips 2026</title>	
+<title> Förvaltningsavdelningens VM-Tips 2026</title>	
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -401,6 +401,7 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
   </div>
 </div>
 <div class="footer">
+  
   <div id="footer-stats">Logga in för att spara</div>
   <button class="btn primary" onclick="saveTips()">Spara tips</button>
 </div>
@@ -965,6 +966,170 @@ async function renderGrupptabell() {
     grid.innerHTML = grupperHTML;
   } catch (e) {
     grid.innerHTML = '<p style="color:var(--text2);">Kunde inte ladda grupptabellen.</p>';
+  }
+} 
+// -------------------------------------------------------
+// POÄNGBERÄKNING
+// -------------------------------------------------------
+
+function räknaMatchPoäng(tippH, tippA, facitH, facitA) {
+  if (tippH === '' || tippA === '' || tippH === null || tippA === null) return 0;
+  if (facitH === null || facitA === null) return 0;
+
+  const th = parseInt(tippH), ta = parseInt(tippA);
+  const fh = parseInt(facitH), fa = parseInt(facitA);
+  if (isNaN(th) || isNaN(ta)) return 0;
+
+  // Helt rätt resultat
+  if (th === fh && ta === fa) return 4;
+
+  // Rätt tecken + rätt målskillnad
+  const tippUtfall = th > ta ? 1 : th < ta ? -1 : 0;
+  const facitUtfall = fh > fa ? 1 : fh < fa ? -1 : 0;
+  if (tippUtfall !== facitUtfall) return 0; // Fel tecken
+
+  const tippMS = th - ta;
+  const facitMS = fh - fa;
+  if (tippMS === facitMS && facitUtfall !== 0) return 2; // Rätt målskillnad (ej oavgjort)
+
+  // Rätt tecken
+  return 1;
+}
+
+function räknaSlutspelslagPoäng(predictions, facitResultat) {
+  let poäng = 0;
+
+  // Poäng per runda för rätt lag
+  const rundaPoäng = {
+    r16:    2,
+    qf:     3,
+    qf2:    4,
+    semi:   6,
+    final:  8,
+  };
+
+  // För varje slutspelsmatch – kolla om tippat lag faktiskt spelade matchen
+  const slutspelsMatcher = [
+    ...Array.from({length:16}, (_,i) => ({id:`r16_${i+1}`, runda:'r16'})),
+    ...Array.from({length:8},  (_,i) => ({id:`qf_${i+1}`,  runda:'qf'})),
+    ...Array.from({length:4},  (_,i) => ({id:`qf2_${i+1}`, runda:'qf2'})),
+    {id:'semi_1', runda:'semi'}, {id:'semi_2', runda:'semi'},
+    {id:'final_1', runda:'final'},
+  ];
+
+  for (const match of slutspelsMatcher) {
+    const facit = facitResultat[match.id];
+    const tipp  = predictions[match.id];
+    if (!facit || facit.h === null || !tipp) continue;
+
+    const p = rundaPoäng[match.runda];
+
+    // Rätt hemmalag
+    if (tipp.teamH && facit.winnerH && 
+        tipp.teamH.trim().toLowerCase() === facit.winnerH.trim().toLowerCase()) {
+      poäng += p;
+    }
+    // Rätt bortalag
+    if (tipp.teamA && facit.winnerA && 
+        tipp.teamA.trim().toLowerCase() === facit.winnerA.trim().toLowerCase()) {
+      poäng += p;
+    }
+  }
+
+  // VM-vinnare (16p), silver (10p), brons (6p)
+  const finalFacit  = facitResultat['final_1'];
+  const bronzeFacit = facitResultat['bronze_1'];
+  const winnerTipp  = predictions['winner']?.teamH?.trim().toLowerCase();
+
+  if (finalFacit?.vmVinnare && winnerTipp === finalFacit.vmVinnare.trim().toLowerCase())  poäng += 16;
+  if (finalFacit?.silver    && winnerTipp === finalFacit.silver.trim().toLowerCase())     poäng += 10;
+  if (bronzeFacit?.brons    && winnerTipp === bronzeFacit.brons.trim().toLowerCase())     poäng += 6;
+
+  return poäng;
+}
+
+function räknaBonusPoäng(bonus, bonusFacit) {
+  if (!bonus || !bonusFacit) return 0;
+  let poäng = 0;
+  const jämför = (a, b) => a && b && a.trim().toLowerCase() === b.trim().toLowerCase();
+
+  if (jämför(bonus.skyttekung,    bonusFacit.skyttekung))   poäng += 5;
+  if (jämför(bonus.flest_mal,     bonusFacit.flest_mal))    poäng += 3;
+  if (jämför(bonus.gula_kort,     bonusFacit.gula_kort))    poäng += 3;
+  if (jämför(bonus.roda_kort,     bonusFacit.roda_kort))    poäng += 4;
+  if (jämför(bonus.flest_inslapp, bonusFacit.flest_inslapp)) poäng += 3;
+
+  return poäng;
+}
+
+async function beräknaOchSparaPoäng() {
+  try {
+    const { getDocs, collection, getDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+
+    // Hämta facit
+    const [facitSnap, bonusFacitSnap] = await Promise.all([
+      getDoc(doc(db, 'facit', 'resultat')),
+      getDoc(doc(db, 'facit', 'bonus'))
+    ]);
+
+    if (!facitSnap.exists()) return;
+    const facitResultat = facitSnap.data();
+    const bonusFacit    = bonusFacitSnap.exists() ? bonusFacitSnap.data() : {};
+
+    // Hämta alla deltagares tips
+    const snapshot = await getDocs(collection(db, 'tips'));
+
+    const batch = [];
+
+    snapshot.forEach(docSnap => {
+      const data        = docSnap.data();
+      const predictions = data.predictions || {};
+      const bonus       = data.bonus || {};
+      let totalPoäng    = 0;
+
+      // Gruppspel m1–m72
+      for (let i = 1; i <= 72; i++) {
+        const id    = `m${i}`;
+        const tipp  = predictions[id];
+        const facit = facitResultat[id];
+        if (!tipp || !facit) continue;
+        totalPoäng += räknaMatchPoäng(tipp.h, tipp.a, facit.h, facit.a);
+      }
+
+      // Slutspelsmatcher (samma 1/2/4-skala)
+      const slutspelsIds = [
+        ...Array.from({length:16}, (_,i) => `r16_${i+1}`),
+        ...Array.from({length:8},  (_,i) => `qf_${i+1}`),
+        ...Array.from({length:4},  (_,i) => `qf2_${i+1}`),
+        'semi_1', 'semi_2', 'bronze_1', 'final_1'
+      ];
+
+      for (const id of slutspelsIds) {
+        const tipp  = predictions[id];
+        const facit = facitResultat[id];
+        if (!tipp || !facit) continue;
+        totalPoäng += räknaMatchPoäng(tipp.h, tipp.a, facit.h, facit.a);
+      }
+
+      // Slutspelslag
+      totalPoäng += räknaSlutspelslagPoäng(predictions, facitResultat);
+
+      // Bonusfrågor
+      totalPoäng += räknaBonusPoäng(bonus, bonusFacit);
+
+      batch.push({ uid: docSnap.id, poäng: totalPoäng });
+    });
+
+    // Spara poäng för varje deltagare
+    for (const { uid, poäng } of batch) {
+      await setDoc(doc(db, 'tips', uid), { poäng }, { merge: true });
+    }
+
+    console.log('✅ Poäng beräknade och sparade!');
+    showToast('Poäng uppdaterade!');
+
+  } catch(e) {
+    console.error('Poängberäkning misslyckades:', e);
   }
 }  
 async function renderTopplista() {
