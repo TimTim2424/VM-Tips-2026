@@ -748,16 +748,17 @@ onAuthStateChanged(auth, async (user) => {
       showPage('topplista'); // Efter brytpunkten visas Topplistan direkt
     }
 
-    // Vänta tills tipsen faktiskt laddats klart från databasen
+// Vänta tills tipsen faktiskt laddats klart från databasen
     await loadUserTips(user);
   } else {
-    // Om ingen är inloggad, kör bara en grundrendering
+    // Om ingen är inloggad, rensa eventuella gamla sparade tips i minnet...
+    window.predictions = {};
+    window.bonusData = {};
+    
+    // ...men rita ut alla matcher och tabeller så att de syns!
+    renderMatches();
     renderTabContent(localStorage.getItem('activeTab') || 'groups');
   }
-  
-  // Öppna rätt sparad flik EFTER att all data garanterat är på plats
-  applySavedTab();
-  document.getElementById('loading').classList.add('hidden');
 });
 
 async function loadUserTips(user) {
