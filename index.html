@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VM-Tips 2026</title>
+<title>VM-Tips 2026</title>	
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -748,17 +748,16 @@ onAuthStateChanged(auth, async (user) => {
       showPage('topplista'); // Efter brytpunkten visas Topplistan direkt
     }
 
-// Vänta tills tipsen faktiskt laddats klart från databasen
+    // Vänta tills tipsen faktiskt laddats klart från databasen
     await loadUserTips(user);
   } else {
-    // Om ingen är inloggad, rensa eventuella gamla sparade tips i minnet...
-    window.predictions = {};
-    window.bonusData = {};
-    
-    // ...men rita ut alla matcher och tabeller så att de syns!
-    renderMatches();
+    // Om ingen är inloggad, kör bara en grundrendering
     renderTabContent(localStorage.getItem('activeTab') || 'groups');
   }
+  
+  // Öppna rätt sparad flik EFTER att all data garanterat är på plats
+  applySavedTab();
+  document.getElementById('loading').classList.add('hidden');
 });
 
 async function loadUserTips(user) {
