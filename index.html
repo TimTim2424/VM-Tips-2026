@@ -635,12 +635,22 @@ function renderGenericSlutspel(scheduleData, containerId) {
 }
 
 window.updatePred = (id, side, val) => {
+  if (!auth.currentUser) {
+    showToast("Du måste logga in för att tippa!", true);
+    openModal('authModal');
+    return;
+  }
   if(!predictions[id]) predictions[id] = {h:'', a:''};
   predictions[id][side] = val;
   updateStats();
 };
 
 window.updateSlutspelTeam = (id, side, val) => {
+  if (!auth.currentUser) {
+    showToast("Du måste logga in för att tippa!", true);
+    openModal('authModal');
+    return;
+  }
   if(!predictions[id]) predictions[id] = {h:'', a:'', teamH:'', teamA:''};
   predictions[id][side] = val;
   updateStats();
@@ -999,7 +1009,11 @@ async function renderTopplista() {
   }
 }
 window.saveBonus = function(key, value) {
-  if (!auth.currentUser) return showToast("Logga in först", true);
+  if (!auth.currentUser) {
+    showToast("Du måste logga in för att tippa!", true);
+    openModal('authModal');
+    return;
+  }
   const deadline = new Date('2026-06-11T21:00:00+02:00');
   if (new Date() > deadline) return showToast("Tipsen är låsta!", true);
   if (!window.bonusData) window.bonusData = {};
