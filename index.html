@@ -763,6 +763,22 @@ window.submitAuth = async () => {
 
 window.doLogout = async () => { await signOut(auth); location.reload(); };
 
+window.updateAllScores = async () => {
+
+  try {
+
+    await beräknaOchSparaPoäng();
+
+    showToast("Poäng uppdaterade!");
+
+  } catch (e) {
+
+    console.error(e);
+
+    showToast("Kunde inte uppdatera poäng", true);
+  }
+};
+
 onAuthStateChanged(auth, async (user) => {
   if(user) {
     const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -775,6 +791,20 @@ onAuthStateChanged(auth, async (user) => {
     document.getElementById('userBadge').style.display = 'block';
     document.getElementById('loginBtn').style.display = 'none';
     document.getElementById('logoutBtn').style.display = 'block';
+    if (currentUserProfile?.username?.toLowerCase() === 'knight') {
+
+  const adminBtn = document.createElement('button');
+
+  adminBtn.textContent = '🔧 Uppdatera poäng';
+
+  adminBtn.className = 'btn';
+
+  adminBtn.style.marginLeft = '10px';
+
+  adminBtn.onclick = updateAllScores;
+
+  document.querySelector('.footer').appendChild(adminBtn);
+}
 
     const brytpunkt = new Date('2026-06-12T01:00:00+02:00'); // 12 juni kl. 01:00
     const nu = new Date();
