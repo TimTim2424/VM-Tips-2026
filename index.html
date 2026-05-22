@@ -414,7 +414,7 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
     </div>
     
     <div id="auth-common-fields">
-      <input type="email" id="authEmail" placeholder="E-post" class="input-field">
+      <input type="text" id="authUsername" placeholder="Användarnamn" class="input-field">
       <input type="password" id="authPassword" placeholder="Lösenord" class="input-field">
     </div>
     
@@ -702,36 +702,62 @@ function getFriendlyErrorMessage(error) {
   switch(code) {
     case 'auth/weak-password': return 'Lösenordet är för svagt. Det måste vara minst 6 tecken långt.';
     case 'auth/wrong-password': return 'Felaktigt lösenord. Försök igen.';
-    case 'auth/invalid-email': return 'E-postadressen är felaktigt formaterad.';
-    case 'auth/email-already-in-use': return 'Denna e-postadress är redan registrerad.';
-    case 'auth/user-not-found': return 'Det finns inget konto registrerat med denna e-postadress.';
+   case 'auth/invalid-email': return 'Ogiltigt användarnamn.';
+    case 'auth/email-already-in-use':  return 'Användarnamnet är redan taget.';
+    case 'auth/user-not-found': return 'Användarnamnet finns inte.';
     case 'auth/network-request-failed': return 'Kunde inte ansluta till servern. Kontrollera din anslutning eller adblocker.';
     default: return 'Ett fel uppstod: ' + error.message;
   }
 }
 
 window.submitAuth = async () => {
-  const email = document.getElementById('authEmail').value.trim();
+
+  const loginUsername = document.getElementById('authUsername').value.trim();
+  const email = `${loginUsername}@vmtips.local`;
   const password = document.getElementById('authPassword').value;
-  if (!email || !password) return alert("Fyll i både e-post och lösenord.");
-  
+
+  if (!loginUsername || !password) {
+    return alert("Fyll i användarnamn och lösenord.");
+  }
+
   if (currentAuthMode === 'login') {
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
       closeModal('authModal');
-    } catch(e) { alert(getFriendlyErrorMessage(e)); }
+
+    } catch(e) {
+      alert(getFriendlyErrorMessage(e));
+    }
+
   } else {
+
     const firstName = document.getElementById('regFirstName').value.trim();
     const lastName = document.getElementById('regLastName').value.trim();
     const username = document.getElementById('regUsername').value.trim();
-    if (!firstName || !lastName || !username) return alert("Fyll i alla profiluppgifter.");
-    
+
+    if (!firstName || !lastName || !username) {
+      return alert("Fyll i alla profiluppgifter.");
+    }
+
     try {
+
+      const email = `${username}@vmtips.local`;
+
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(db, "users", userCredential.user.uid), { firstName, lastName, username, email });
+
+      await setDoc(doc(db, "users", userCredential.user.uid), {
+        firstName,
+        lastName,
+        username
+      });
+
       closeModal('authModal');
       showToast("Konto skapat!");
-    } catch(e) { alert(getFriendlyErrorMessage(e)); }
+
+    } catch(e) {
+      alert(getFriendlyErrorMessage(e));
+    }
   }
 };
 
