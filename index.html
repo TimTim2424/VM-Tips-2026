@@ -820,7 +820,7 @@ function showToast(msg, isError = false) {
   t.classList.remove('success', 'error');
   if (isError) t.classList.add('error'); else t.classList.add('success');
   t.classList.add('show');
-  setTimeout(() => { t.classList.remove('show', 'success', 'error'); }, 3000);
+  setTimeout(() => { t.classList.remove('show', 'success', 'error'); }, 7000);
 }
 
 // OPTIMERING: Rendera BARA innehållet för den aktiva fliken istället för alla 104 matcher
@@ -948,7 +948,7 @@ setTimeout(() => {
     loadingScreen.classList.add('hidden');
     showToast("Kunde inte ansluta till Firebase. Inaktivera eventuell AdBlocker.", true);
   }
-}, 3000); 
+}, 7000); 
 async function renderGrupptabell() {
   const grid = document.getElementById('grupptabell-grid');
   if (!grid) return;
