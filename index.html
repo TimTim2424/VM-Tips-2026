@@ -669,7 +669,7 @@ window.saveTips = async () => {
   try {
     await setDoc(doc(db, "tips", auth.currentUser.uid), { 
       predictions, 
-      username: currentUserProfile?.username || auth.currentUser.email 
+      username: currentUserProfile?.username || 'Okänd användare'
     }, {merge: true}); 
     showToast("Sparat!"); 
   } catch(e) {
@@ -923,7 +923,7 @@ window.saveTips = async () => {
   try {
     await setDoc(doc(db, "tips", auth.currentUser.uid), { 
       predictions, 
-      username: currentUserProfile?.username || auth.currentUser.email 
+      username: currentUserProfile?.username || 'Okänd användare'
     }, {merge: true}); 
     showToast("Sparat!"); 
   } catch(e) {
