@@ -172,7 +172,6 @@ min-width: 110px;
 border-top: 1px solid var(--border);
 color: var(--text);
 }
-/* RÄTTAT: Applicera border på första td:n istället för tr för att förhindra förskjutning */
 .group-table tbody tr:nth-child(-n+2) td:first-child {
 border-left: 3px solid var(--gold);
 }
@@ -207,8 +206,6 @@ width: 220px;
 .bonus-row input::placeholder {
 color: rgba(89,213,255,0.3);
 }
-
-/* RÄTTAT: Specifik styling för admin-fälten i grupptabellen så de inte spränger layouten */
 .admin-table-input {
 width: 38px;
 height: 28px;
@@ -246,7 +243,7 @@ margin: 0;
 </header>
 <nav>
 <div class="nav-inner">
-<button id="nav-topplista" onclick="showPage('topplista', this)">  🏆   Topplista</button>
+<button id="nav-topplista" onclick="showPage('topplista', this)">   🏆    Topplista</button>
 <button id="nav-grupptabell" onclick="showPage('grupptabell', this)"> Grupptabeller</button>
 <button id="nav-groups" class="active" onclick="showPage('groups', this)">Gruppspelsmatcher</button>
 <button id="nav-r16" onclick="showPage('r16', this)">16-delsfinaler</button>
@@ -255,7 +252,7 @@ margin: 0;
 <button id="nav-semi" onclick="showPage('semi', this)">Semifinaler</button>
 <button id="nav-bronze" onclick="showPage('bronze', this)">Bronsmatch</button>
 <button id="nav-final" onclick="showPage('final', this)">VM-Final</button>
-<button id="nav-bonus" onclick="showPage('bonus', this)">  ⭐   Bonus & Tiebreak</button>
+<button id="nav-bonus" onclick="showPage('bonus', this)">   ⭐    Bonus & Tiebreak</button>
 </div>
 </nav>
 <div class="container">
@@ -296,7 +293,7 @@ margin: 0;
 </div>
 <div class="final-trophy-wrapper">
 <div>
-<div class="winner-label">  🏆   VM-vinnare</div>
+<div class="winner-label">   🏆    VM-vinnare</div>
 <input type="text" class="winner-input" id="winnerInput"
 placeholder="Din VM-vinnare?"
 onchange="updateSlutspelTeam('winner','teamH',this.value)">
@@ -324,27 +321,27 @@ onchange="updateSlutspelTeam('winner','teamH',this.value)">
 <div class="page-title" style="font-size:18px; margin-top:8px;">Bonusfrågor</div>
 <div class="match-card" style="padding:16px;">
 <div class="bonus-row">
-<label>  🥇   Turneringens skyttekung</label>
+<label>   🥇    Turneringens skyttekung</label>
 <input type="text" id="bonus_skyttekung" placeholder="Spelarens namn..."
 onchange="saveBonus('skyttekung', this.value)">
 </div>
 <div class="bonus-row">
-<label>  ⚽   Laget med flest m  å  l i gruppspelet</label>
+<label>   ⚽    Laget med flest m   å   l i gruppspelet</label>
 <input type="text" id="bonus_flest_mal" placeholder="Lag..."
 onchange="saveBonus('flest_mal', this.value)">
 </div>
 <div class="bonus-row">
-<label>  🟨   Laget med flest gula kort</label>
+<label>   🟨    Laget med flest gula kort</label>
 <input type="text" id="bonus_gula_kort" placeholder="Lag..."
 onchange="saveBonus('gula_kort', this.value)">
 </div>
 <div class="bonus-row">
-<label>  🟥   Laget med flest röda kort</label>
+<label>   🟥    Laget med flest röda kort</label>
 <input type="text" id="bonus_roda_kort" placeholder="Lag..."
 onchange="saveBonus('roda_kort', this.value)">
 </div>
 <div class="bonus-row">
-<label>  🚨   Laget som släpper in flest mål i gruppspelet</label>
+<label>   🚨    Laget som släpper in flest mål i gruppspelet</label>
 <input type="text" id="bonus_flest_inslapp" placeholder="Lag..."
 onchange="saveBonus('flest_inslapp', this.value)">
 </div>
@@ -353,12 +350,12 @@ onchange="saveBonus('flest_inslapp', this.value)">
 <div class="page-sub">Används vid lika poäng i slutet</div>
 <div class="match-card" style="padding:16px;">
 <div class="bonus-row">
-<label>  ⏱️   I vilken minut görs det sista målet i VM-finalen?</label>
+<label>   ⏱️    I vilken minut görs det sista målet i VM-finalen?</label>
 <input type="number" id="bonus_sista_mal" placeholder="Minut..."
 onchange="saveBonus('sista_mal', this.value)">
 </div>
 <div class="bonus-row">
-<label>  🌍   Hur många mål görs det totalt under hela turneringen?</label>
+<label>   🌍    Hur många mål görs det totalt under hela turneringen?</label>
 <input type="number" id="bonus_total_mal" placeholder="Antal mål..."
 onchange="saveBonus('total_mal', this.value)">
 </div>
@@ -406,16 +403,16 @@ const fbApp = initializeApp(firebaseConfig);
 const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
 const flags = {
-'Mexiko': ' 🇲🇽 ', 'Sydafrika': ' 🇿🇦 ', 'Sydkorea': ' 🇰🇷 ', 'Tjeckien': ' 🇨🇿 ', 'Kanada': ' 🇨🇦 ',
-'Bosnien & Herr.': ' 🇧🇦 ', 'USA': ' 🇺🇸 ', 'Paraguay': ' 🇵🇾 ', 'Qatar': ' 🇶🇦 ', 'Schweiz': ' 🇨🇭 ',
-'Brasilien': ' 🇧🇷 ', 'Marocko': ' 🇲🇦 ', 'Haiti': ' 🇭🇹 ', 'Skottland': ' 🏴 󠁧󠁢󠁳󠁣󠁴󠁿 ', 'Australien': ' 🇦🇺 ',
-'Turkiet': ' 🇹🇷 ', 'Tyskland': ' 🇩🇪 ', 'Curaçao': ' 🇨🇼 ', 'Nederländerna': ' 🇳🇱 ', 'Japan': ' 🇯🇵 ',
-'Elfenbenskusten': ' 🇨🇮 ', 'Ecuador': ' 🇪🇨 ', 'Sverige': ' 🇸🇪 ', 'Tunisien': ' 🇹🇳 ', 'Spanien': ' 🇪🇸 ',
-'Kap Verde': ' 🇨🇻 ', 'Belgien': ' 🇧🇪 ', 'Egypten': ' 🇪🇬 ', 'Saudiarabien': ' 🇸🇦 ', 'Uruguay': ' 🇺🇾 ',
-'Iran': ' 🇮🇷 ', 'Nya Zeeland': ' 🇳🇿 ', 'Frankrike': ' 🇫🇷 ', 'Senegal': ' 🇸🇳 ', 'Irak': ' 🇮🇶 ',
-'Norge': ' 🇳🇴 ', 'Argentina': ' 🇦🇷 ', 'Algeriet': ' 🇩🇿 ', 'Österrike': ' 🇦🇹 ', 'Jordanien': ' 🇯🇴 ',
-'Portugal': ' 🇵🇹 ', 'DR Kongo': ' 🇨🇩 ', 'England': ' 🏴 󠁧󠁢󠁥󠁮󠁧󠁿 ', 'Kroatien': ' 🇭🇷 ', 'Ghana': ' 🇬🇭 ',
-'Panama': ' 🇵🇦 ', 'Uzbekistan': ' 🇺🇿 ', 'Colombia': ' 🇨🇴 '
+'Mexiko': '  🇲🇽  ', 'Sydafrika': '  🇿🇦  ', 'Sydkorea': '  🇰🇷  ', 'Tjeckien': '  🇨🇿  ', 'Kanada': '  🇨🇦  ',
+'Bosnien & Herr.': '  🇧🇦  ', 'USA': '  🇺🇸  ', 'Paraguay': '  🇵🇾  ', 'Qatar': '  🇶🇦  ', 'Schweiz': '  🇨🇭  ',
+'Brasilien': '  🇧🇷  ', 'Marocko': '  🇲🇦  ', 'Haiti': '  🇭🇹  ', 'Skottland': '  🏴   󠁧󠁢󠁳󠁣󠁴󠁿  ', 'Australien': '  🇦🇺  ',
+'Turkiet': '  🇹🇷  ', 'Tyskland': '  🇩🇪  ', 'Curaçao': '  🇨🇼  ', 'Nederländerna': '  🇳🇱  ', 'Japan': '  🇯🇵  ',
+'Elfenbenskusten': '  🇨🇮  ', 'Ecuador': '  🇪🇨  ', 'Sverige': '  🇸🇪  ', 'Tunisien': '  🇹🇳  ', 'Spanien': '  🇪🇸  ',
+'Kap Verde': '  🇨🇻  ', 'Belgien': '  🇧🇪  ', 'Egypten': '  🇪🇬  ', 'Saudiarabien': '  🇸🇦  ', 'Uruguay': '  🇺🇾  ',
+'Iran': '  🇮🇷  ', 'Nya Zeeland': '  🇳🇿  ', 'Frankrike': '  🇫🇷  ', 'Senegal': '  🇸🇳  ', 'Irak': '  🇮🇶  ',
+'Norge': '  🇳🇴  ', 'Argentina': '  🇦🇷  ', 'Algeriet': '  🇩🇿  ', 'Österrike': '  🇦🇹  ', 'Jordanien': '  🇯🇴  ',
+'Portugal': '  🇵🇹  ', 'DR Kongo': '  🇨🇩  ', 'England': '  🏴   󠁧󠁢󠁥󠁮󠁧󠁿  ', 'Kroatien': '  🇭🇷  ', 'Ghana': '  🇬🇭  ',
+'Panama': '  🇵🇦  ', 'Uzbekistan': '  🇺🇿  ', 'Colombia': '  🇨🇴  '
 };
 const SCHEDULE = [
 {date:'Torsdag 11 juni', matches:[{h:'Mexiko', a:'Sydafrika', time:'21.00', tv:'TV4', city:'Mexico City', id:'m1'}]},
@@ -521,9 +518,9 @@ return `
 ${flags[m.h] || ''} ${m.h} – ${flags[m.a] || ''} ${m.a}
 </div>
 <div class="match-meta">
-<span class="meta-item">  🕒   ${m.time}</span>
-<span class="meta-item">  📺   ${m.tv}</span>
-<span class="meta-item"><span style="color:#ff4d4d">  📍  </span> ${m.city}</span>
+<span class="meta-item">   🕒    ${m.time}</span>
+<span class="meta-item">   📺    ${m.tv}</span>
+<span class="meta-item"><span style="color:#ff4d4d">   📍   </span> ${m.city}</span>
 </div>
 </div>
 <div class="score-inputs">
@@ -553,17 +550,17 @@ return `
 <div class="match-row">
 <div class="match-info" style="display: flex; flex-direction: column; gap: 8px; flex: 1;">
 <div style="display: flex; align-items: center; gap: 8px;">
-<span style="font-size: 16px;">   🏳️   </span>
+<span style="font-size: 16px;">    🏳️    </span>
 <input type="text" value="${teamH}" placeholder="${m.h}" ${isLocked ? 'disabled' : ''} onchange="updateSlutspelTeam('${m.id}', 'teamH', this.value)" style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
 </div>
 <div style="display: flex; align-items: center; gap: 8px;">
-<span style="font-size: 16px;">   🏳️   </span>
+<span style="font-size: 16px;">    🏳️    </span>
 <input type="text" value="${teamA}" placeholder="${m.a}" ${isLocked ? 'disabled' : ''} onchange="updateSlutspelTeam('${m.id}', 'teamA', this.value)" style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
 </div>
 <div class="match-meta">
-<span class="meta-item">  🕒   ${m.time}</span>
-<span class="meta-item">  📺   ${m.tv}</span>
-<span class="meta-item"><span style="color:#ff4d4d">  📍  </span> ${m.city || 'TBD'}</span>
+<span class="meta-item">   🕒    ${m.time}</span>
+<span class="meta-item">   📺    ${m.tv}</span>
+<span class="meta-item"><span style="color:#ff4d4d">   📍   </span> ${m.city || 'TBD'}</span>
 </div>
 </div>
 <div class="score-inputs">
@@ -688,21 +685,21 @@ console.error(e);
 showToast(e.message || "Kunde inte uppdatera poäng", true);
 }
 };
+
 window.saveGroupTable = async () => {
 if (!isAdmin()) return;
 try {
-// RÄTTAT: Se till att inga minnesreferenser förstörs vid sparandet
 const cleanData = JSON.parse(JSON.stringify(groupTableData));
-await setDoc(
-doc(db, 'facit', 'grupper'),
-cleanData
-);
-showToast('Grupptabellen sparad! Den har nu sorterats för alla.');
+await setDoc(doc(db, 'facit', 'grupper'), cleanData);
+showToast('Grupptabellen sparad! Sorteras nu...');
+// Hämta och rita ut tabellen på nytt för att direkt visa rätt sortering för admin
+await renderGrupptabell(); 
 } catch (e) {
 console.error(e);
 showToast('Kunde inte spara grupptabellen', true);
 }
 };
+
 onAuthStateChanged(auth, async (user) => {
 if(user) {
 const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -717,7 +714,7 @@ document.getElementById('loginBtn').style.display = 'none';
 document.getElementById('logoutBtn').style.display = 'block';
 if (currentUserProfile?.username?.toLowerCase() === 'knight') {
 const adminBtn = document.createElement('button');
-adminBtn.textContent = '  🔧   Uppdatera poäng';
+adminBtn.textContent = '   🔧    Uppdatera poäng';
 adminBtn.className = 'btn';
 adminBtn.style.marginLeft = '10px';
 adminBtn.onclick = updateAllScores;
@@ -787,10 +784,11 @@ if (id === 'grupptabell') renderGrupptabell();
 window.openModal = (id) => document.getElementById(id).classList.add('open');
 window.closeModal = (id) => document.getElementById(id).classList.remove('open');
 
-// RÄTTAT: Funktion för att spara input på ett säkert sätt utan NaN. 
+// Uppdaterad för att enklare hantera och spara värden på rätt sätt
 window.updateGroupValue = (grupp, index, field, value) => {
-if (!groupTableData[grupp]) return;
-groupTableData[grupp][index][field] = value === '' ? 0 : Number(value);
+if (!groupTableData || !groupTableData[grupp]) return;
+const parsed = parseInt(value, 10);
+groupTableData[grupp][index][field] = isNaN(parsed) ? 0 : parsed;
 };
 
 window.applySavedTab = function() {
@@ -810,7 +808,8 @@ showToast("Kunde inte ansluta till Firebase. Inaktivera eventuell AdBlocker.", t
 }
 }, 7000);
 
-async function renderGrupptabell() {
+// Nya stabilare strukturen för att generera hela HTML-koden för tabellen och inputs
+window.renderGrupptabell = async function() {
 const grid = document.getElementById('grupptabell-grid');
 if (!grid) return;
 try {
@@ -820,12 +819,8 @@ grid.innerHTML = '<p style="color:var(--text2);">Ingen data ännu – turneringe
 return;
 }
 const data = snap.data();
-
-// RÄTTAT: Frigör kopplingen till Firestore-objektet för att förhindra oväntade låsningar
 groupTableData = JSON.parse(JSON.stringify(data));
 
-// RÄTTAT: Sortera varje grupp i minnet innan vi ritar ut den 
-// (Poäng först, sedan Målskillnad, sedan Gjorda Mål)
 for (const g in groupTableData) {
 groupTableData[g].sort((a, b) => {
 const pA = Number(a.p) || 0; const pB = Number(b.p) || 0;
@@ -853,19 +848,33 @@ const grupperHTML = Object.entries(groupTableData)
 </tr>
 </thead>
 <tbody>
-${lag.map((l, i) => `
+${lag.map((l, i) => {
+// Hjälpfunktion skapad för att säkerställa att värden och HTML-strängar aldrig krockar
+const makeInput = (field, val) => `<input type="number" class="admin-table-input" value="${val}" oninput="updateGroupValue('${grupp}', ${i}, '${field}', this.value)">`;
+
+const vS = l.s !== undefined && l.s !== '' ? Number(l.s) : 0;
+const vV = l.v !== undefined && l.v !== '' ? Number(l.v) : 0;
+const vO = l.o !== undefined && l.o !== '' ? Number(l.o) : 0;
+const vF = l.f !== undefined && l.f !== '' ? Number(l.f) : 0;
+const vGM = l.gm !== undefined && l.gm !== '' ? Number(l.gm) : 0;
+const vIM = l.im !== undefined && l.im !== '' ? Number(l.im) : 0;
+const vMS = l.ms !== undefined && l.ms !== '' ? Number(l.ms) : 0;
+const vP = l.p !== undefined && l.p !== '' ? Number(l.p) : 0;
+
+return `
 <tr>
 <td style="color:var(--text2)">${i + 1}</td>
 <td>${l.lag}</td>
-<td>${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.s ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 's', this.value)">` : (l.s ?? 0)}</td>
-<td>${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.v ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 'v', this.value)">` : (l.v ?? 0)}</td>
-<td>${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.o ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 'o', this.value)">` : (l.o ?? 0)}</td>
-<td>${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.f ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 'f', this.value)">` : (l.f ?? 0)}</td>
-<td>${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.gm ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 'gm', this.value)">` : (l.gm ?? 0)}</td>
-<td>${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.im ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 'im', this.value)">` : (l.im ?? 0)}</td>
-<td>${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.ms ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 'ms', this.value)">` : (l.ms ?? 0)}</td>
-<td class="pts">${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.p ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 'p', this.value)">` : (l.p ?? 0)}</td>
-</tr>`).join('')}
+<td>${isAdmin() ? makeInput('s', vS) : vS}</td>
+<td>${isAdmin() ? makeInput('v', vV) : vV}</td>
+<td>${isAdmin() ? makeInput('o', vO) : vO}</td>
+<td>${isAdmin() ? makeInput('f', vF) : vF}</td>
+<td>${isAdmin() ? makeInput('gm', vGM) : vGM}</td>
+<td>${isAdmin() ? makeInput('im', vIM) : vIM}</td>
+<td>${isAdmin() ? makeInput('ms', vMS) : vMS}</td>
+<td class="pts">${isAdmin() ? makeInput('p', vP) : vP}</td>
+</tr>`
+}).join('')}
 </tbody>
 </table>
 </div>`).join('');
@@ -883,6 +892,7 @@ isAdmin()
 grid.innerHTML = '<p style="color:var(--text2);">Kunde inte ladda grupptabellen.</p>';
 }
 }
+
 function räknaMatchPoäng(tippH, tippA, facitH, facitA) {
 if (tippH === '' || tippA === '' || tippH === null || tippA === null) return 0;
 if (facitH === null || facitA === null) return 0;
@@ -991,7 +1001,7 @@ batch.push({ uid: docSnap.id, poäng: totalPoäng });
 for (const { uid, poäng } of batch) {
 await setDoc(doc(db, 'tips', uid), { poäng }, { merge: true });
 }
-console.log('  ✅   Po ä ng ber ä knade och sparade!');
+console.log('   ✅    Poäng beräknade och sparade!');
 showToast('Poäng uppdaterade!');
 }
 async function renderTopplista() {
