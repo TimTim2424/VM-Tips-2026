@@ -735,6 +735,7 @@ window.submitAuth = async () => {
     const firstName = document.getElementById('regFirstName').value.trim();
     const lastName = document.getElementById('regLastName').value.trim();
     const username = document.getElementById('regUsername').value.trim().toLowerCase();
+    const password = document.getElementById('regPassword').value;
 
     if (!firstName || !lastName || !username) {
       return alert("Fyll i alla profiluppgifter.");
