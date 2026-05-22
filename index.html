@@ -712,7 +712,7 @@ function getFriendlyErrorMessage(error) {
 
 window.submitAuth = async () => {
 
-  const loginUsername = document.getElementById('authUsername').value.trim();
+  const loginUsername = document.getElementById('authUsername').value.trim().toLowerCase();
   const email = `${loginUsername}@vmtips.local`;
   const password = document.getElementById('authPassword').value;
 
@@ -734,7 +734,7 @@ window.submitAuth = async () => {
 
     const firstName = document.getElementById('regFirstName').value.trim();
     const lastName = document.getElementById('regLastName').value.trim();
-    const username = document.getElementById('regUsername').value.trim();
+    const username = document.getElementById('regUsername').value.trim().toLowerCase();
 
     if (!firstName || !lastName || !username) {
       return alert("Fyll i alla profiluppgifter.");
