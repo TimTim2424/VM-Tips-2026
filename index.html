@@ -3,52 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> VM-Tips 2026</title>	
+<title>VM-Tips 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --gold: #59D5FF;
-  --gold-dark: #1FA9D6;
-  --green: #0E4E63;
-  --bg: #12384d;
-  --bg2: #0d2c40;
-  --bg3: rgba(16, 42, 58, 0.88);
-  --border: rgba(89,213,255,0.12);
-  --text: #fff;
-  --text2: #A9C7D8;
-  --blue: #5da9ff;
+--gold: #59D5FF;
+--gold-dark: #1FA9D6;
+--green: #0E4E63;
+--bg: #12384d;
+--bg2: #0d2c40;
+--bg3: rgba(16, 42, 58, 0.88);
+--border: rgba(89,213,255,0.12);
+--text: #fff;
+--text2: #A9C7D8;
+--blue: #5da9ff;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { 
-  font-family: 'Barlow', sans-serif; 
-  background-color: #08111f; 
-  background-image: linear-gradient(rgba(8,17,31,0.82), rgba(8,17,31,0.82)), url('bakgrund.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: var(--text); 
-  min-height: 100vh; 
+body {
+font-family: 'Barlow', sans-serif;
+background-color: #08111f;
+background-image: linear-gradient(rgba(8,17,31,0.82), rgba(8,17,31,0.82)), url('bakgrund.png');
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+color: var(--text);
+min-height: 100vh;
 }
-header { position: sticky; top: 0; background: rgba(13,44,64,0.82); backdrop-filter: blur(10px); padding: 14px 20px; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.3); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+header { position: sticky; top: 0; background: rgba(13,44,64,0.82); backdrop-filter: blur(10px); padding: 14px 20px; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
 .logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 24px; color: var(--gold); letter-spacing: 0.04em; text-shadow: 0 0 12px rgba(89,213,255,0.35); }
 .header-right { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .user-badge { font-size: 13px; color: var(--gold); background: rgba(89,213,255,0.10); border: 1px solid rgba(89,213,255,0.25); border-radius: 20px; padding: 4px 12px; display: none; }
 nav { background: var(--bg3); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
 nav::-webkit-scrollbar { display: none; }
 .nav-inner { display: flex; gap: 2px; padding: 6px 12px; white-space: nowrap; }
-nav button { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; padding: 6px 14px; border: none; background: transparent; color: var(--text2); cursor: pointer; border-radius: 6px; transition: all 0.15s; }
+nav button { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.05em; padding: 6px 14px; border: none; background: transparent;
+color: var(--text2); cursor: pointer; border-radius: 6px; transition: all 0.15s; }
 nav button:hover { color: var(--text); background: rgba(89,213,255,0.08); }
 nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px 80px; }
 .page { display: none; }
 .page.active { display: block; }
-
 #page-final.active {
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - 260px); 
+display: flex;
+flex-direction: column;
+min-height: calc(100vh - 260px);
 }
-
 .page-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 26px; color: var(--gold); margin-bottom: 4px; text-shadow: 0 0 10px rgba(89,213,255,0.30) }
 .page-sub { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
 .match-card { background: var(--bg3); border-radius: 12px; border: 1px solid var(--border); margin-bottom: 8px; overflow: hidden; }
@@ -58,10 +58,14 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .match-meta { font-size: 11px; color: var(--text2); margin-top: 4px; display: flex; flex-wrap: wrap; gap: 8px; }
 .meta-item { display: flex; align-items: center; gap: 3px; }
 .score-inputs { display: flex; align-items: center; gap: 5px; }
-.score-inputs input { width: 40px; height: 36px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; background: var(--bg); color: var(--gold); border: 1px solid rgba(89,213,255,0.28); border-radius: 6px; }
-.date-divider { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; color: var(--gold); margin: 20px 0 10px 5px; font-size: 18px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
-.footer { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13,44,64,0.82); backdrop-filter: blur(10px); border-top: 1px solid var(--border); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 99; }
-.btn { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; padding: 8px 18px; border-radius: 8px; cursor: pointer; border: 1px solid var(--blue); background: transparent; color: var(--blue); }
+.score-inputs input { width: 40px; height: 36px; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; background: var(--bg); color: var(--gold);
+border: 1px solid rgba(89,213,255,0.28); border-radius: 6px; }
+.date-divider { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; color: var(--gold); margin: 20px 0 10px 5px; font-size: 18px;
+border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+.footer { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13,44,64,0.82); backdrop-filter: blur(10px); border-top: 1px solid var(--border);
+padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 99; }
+.btn { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; padding: 8px 18px; border-radius: 8px; cursor: pointer;
+border: 1px solid var(--blue); background: transparent; color: var(--blue); }
 .btn.primary { background: var(--gold); color: #04131d; border-color: var(--gold); }
 .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 9999; }
 .modal.open { display: flex; }
@@ -70,1188 +74,983 @@ nav button.active { color: var(--gold); background: rgba(89,213,255,0.10); }
 .modal-form-toggle span { cursor: pointer; color: var(--text2); font-weight: 600; }
 .modal-form-toggle span.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
 .input-field { width: 100%; margin: 6px 0; padding: 10px; background: var(--bg); border: 1px solid var(--border); color: #fff; border-radius: 6px; }
-.toast { position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%); color: white; padding: 9px 22px; border-radius: 30px; opacity: 0; transition: 0.3s; z-index: 200; }
+.toast { position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%); color: white; padding: 9px 22px; border-radius: 30px; opacity: 0;
+transition: 0.3s; z-index: 200; }
 .toast.show { opacity: 1; }
-.toast.success { background: #22c55e; } 
-.toast.error { background: #ef4444; }   
+.toast.success { background: #22c55e; }
+.toast.error { background: #ef4444; }
 .loading { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 500; }
 .loading.hidden { display: none; }
-
-.final-trophy-wrapper { 
-  flex: 1; 
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center; 
-  margin: 20px 0 30px 0;
-  gap: 16px;
+.final-trophy-wrapper {
+flex: 1;
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+align-items: center;
+margin: 20px 0 30px 0;
+gap: 16px;
 }
-
-.final-trophy { 
-  max-width: 380px; 
-  width: 100%; 
-  height: auto; 
-  border-radius: 24px;      
-  border: 1px solid rgba(89,213,255,0.08); 
-  box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 0 40px rgba(89,213,255,0.08); 
+.final-trophy {
+max-width: 380px;
+width: 100%;
+height: auto;
+border-radius: 24px;
+border: 1px solid rgba(89,213,255,0.08);
+box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 0 40px rgba(89,213,255,0.08);
 }
-
 .winner-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px;
-  color: var(--text2);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-  text-align: center;
+font-family: 'Barlow Condensed', sans-serif;
+font-size: 13px;
+color: var(--text2);
+letter-spacing: 0.08em;
+text-transform: uppercase;
+margin-bottom: 4px;
+text-align: center;
 }
-
 .winner-input {
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid rgba(89,213,255,0.4);
-  color: var(--gold);
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  text-align: center;
-  width: 260px;
-  padding: 4px 8px;
-  letter-spacing: 0.05em;
+background: transparent;
+border: none;
+border-bottom: 2px solid rgba(89,213,255,0.4);
+color: var(--gold);
+font-family: 'Barlow Condensed', sans-serif;
+font-size: 22px;
+font-weight: 700;
+text-align: center;
+width: 260px;
+padding: 4px 8px;
+letter-spacing: 0.05em;
 }
-
 .winner-input::placeholder {
-  color: rgba(89,213,255,0.3);
+color: rgba(89,213,255,0.3);
 }
-
 .score-inputs input::-webkit-outer-spin-button,
 .score-inputs input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+-webkit-appearance: none;
+margin: 0;
 }
 .score-inputs input[type=number] {
-  -moz-appearance: textfield;
-} 
+-moz-appearance: textfield;
+}
 .group-section {
-  margin-bottom: 24px;
+margin-bottom: 24px;
 }
-
 .group-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--gold);
-  margin-bottom: 8px;
-  letter-spacing: 0.05em;
+font-family: 'Barlow Condensed', sans-serif;
+font-size: 16px;
+font-weight: 700;
+color: var(--gold);
+margin-bottom: 8px;
+letter-spacing: 0.05em;
 }
-
 .group-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 14px;
-  background: var(--bg3);
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid var(--border);
+width: 100%;
+border-collapse: collapse;
+font-family: 'Barlow Condensed', sans-serif;
+font-size: 14px;
+background: var(--bg3);
+border-radius: 10px;
+overflow: hidden;
+border: 1px solid var(--border);
 }
-
 .group-table thead tr {
-  background: rgba(89,213,255,0.08);
-  color: var(--text2);
-  font-size: 12px;
-  letter-spacing: 0.05em;
+background: rgba(89,213,255,0.08);
+color: var(--text2);
+font-size: 12px;
+letter-spacing: 0.05em;
 }
-
 .group-table th, .group-table td {
-  padding: 8px 6px;
-  text-align: center;
+padding: 8px 6px;
+text-align: center;
 }
-
 .group-table th:nth-child(2),
 .group-table td:nth-child(2) {
-  text-align: left;
-  padding-left: 10px;
-  min-width: 110px;
+text-align: left;
+padding-left: 10px;
+min-width: 110px;
 }
-
 .group-table tbody tr {
-  border-top: 1px solid var(--border);
-  color: var(--text);
+border-top: 1px solid var(--border);
+color: var(--text);
 }
-
 .group-table tbody tr:nth-child(-n+2) {
-  border-left: 3px solid var(--gold);
+border-left: 3px solid var(--gold);
 }
-
 .group-table .pts {
-  font-weight: 700;
-  color: var(--gold);
-} 
-.bonus-row {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 20px;
-}
-
-.bonus-row:last-child {
-  margin-bottom: 0;
-}
-
-.bonus-row label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 15px;
-  color: var(--text2);
-}
-
-.bonus-row input {
-  background: transparent;
-  border: none;
-  border-bottom: 1px dashed rgba(89,213,255,0.4);
-  color: #fff;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 16px;
-  padding: 4px 4px;
-  width: 220px;
-}
-
-.bonus-row input::placeholder {
-  color: rgba(89,213,255,0.3);
+font-weight: 700;
+color: var(--gold);
 }
 .bonus-row {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 20px;
+display: flex;
+flex-direction: column;
+gap: 6px;
+margin-bottom: 20px;
 }
-
 .bonus-row:last-child {
-  margin-bottom: 0;
+margin-bottom: 0;
 }
-
 .bonus-row label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 15px;
-  color: var(--text2);
+font-family: 'Barlow Condensed', sans-serif;
+font-size: 15px;
+color: var(--text2);
 }
-
 .bonus-row input {
-  background: transparent;
-  border: none;
-  border-bottom: 1px dashed rgba(89,213,255,0.4);
-  color: #fff;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 16px;
-  padding: 4px 4px;
-  width: 220px;
+background: transparent;
+border: none;
+border-bottom: 1px dashed rgba(89,213,255,0.4);
+color: #fff;
+font-family: 'Barlow Condensed', sans-serif;
+font-size: 16px;
+padding: 4px 4px;
+width: 220px;
 }
-
 .bonus-row input::placeholder {
-  color: rgba(89,213,255,0.3);
-}  
+color: rgba(89,213,255,0.3);
+}
 </style>
 </head>
 <body>
-
 <div class="loading" id="loading">
-  <div style="font-family:'Barlow Condensed'; font-size:36px; color:var(--gold);"> VM-TIPS 2026</div>
+<div style="font-family:'Barlow Condensed'; font-size:36px; color:var(--gold);"> VM-TIPS 2026</div>
 </div>
-
 <header>
-  <div class="logo"> VM-TIPS 2026</div>
-  <div class="header-right">
-    <span class="user-badge" id="userBadge"></span>
-    <button class="btn" id="loginBtn" onclick="openModal('authModal')">Logga in / Registrera</button>
-    <button class="btn danger" id="logoutBtn" onclick="doLogout()" style="display:none">Logga ut</button>
-  </div>
+<div class="logo"> VM-TIPS 2026</div>
+<div class="header-right">
+<span class="user-badge" id="userBadge"></span>
+<button class="btn" id="loginBtn" onclick="openModal('authModal')">Logga in / Registrera</button>
+<button class="btn danger" id="logoutBtn" onclick="doLogout()" style="display:none">Logga ut</button>
+</div>
 </header>
-
 <nav>
-  <div class="nav-inner">
-    <button id="nav-topplista" onclick="showPage('topplista', this)">🏆 Topplista</button>
-    <button id="nav-grupptabell" onclick="showPage('grupptabell', this)"> Grupptabeller</button>
-    <button id="nav-groups" class="active" onclick="showPage('groups', this)">Gruppspelsmatcher</button>
-    <button id="nav-r16" onclick="showPage('r16', this)">16-delsfinaler</button>
-    <button id="nav-qf" onclick="showPage('qf', this)">Åttondelsfinaler</button>
-    <button id="nav-qf2" onclick="showPage('qf2', this)">Kvartsfinaler</button>
-    <button id="nav-semi" onclick="showPage('semi', this)">Semifinaler</button>
-    <button id="nav-bronze" onclick="showPage('bronze', this)">Bronsmatch</button>
-    <button id="nav-final" onclick="showPage('final', this)">VM-Final</button>
-    <button id="nav-bonus" onclick="showPage('bonus', this)">⭐ Bonus & Tiebreak</button>
-  </div>
+<div class="nav-inner">
+<button id="nav-topplista" onclick="showPage('topplista', this)"> 🏆  Topplista</button>
+<button id="nav-grupptabell" onclick="showPage('grupptabell', this)"> Grupptabeller</button>
+<button id="nav-groups" class="active" onclick="showPage('groups', this)">Gruppspelsmatcher</button>
+<button id="nav-r16" onclick="showPage('r16', this)">16-delsfinaler</button>
+<button id="nav-qf" onclick="showPage('qf', this)">Åttondelsfinaler</button>
+<button id="nav-qf2" onclick="showPage('qf2', this)">Kvartsfinaler</button>
+<button id="nav-semi" onclick="showPage('semi', this)">Semifinaler</button>
+<button id="nav-bronze" onclick="showPage('bronze', this)">Bronsmatch</button>
+<button id="nav-final" onclick="showPage('final', this)">VM-Final</button>
+<button id="nav-bonus" onclick="showPage('bonus', this)"> ⭐  Bonus & Tiebreak</button>
+</div>
 </nav>
-
 <div class="container">
 <div class="page active" id="page-groups">
 <div class="page-title">Gruppspelsmatcher</div>
 <div class="page-sub">72 matcher </div>
 <div id="schedule-grid"></div>
 </div>
-  
-  <div class="page" id="page-r16">
-    <div class="page-title">16-delsfinaler</div>
-    <div class="page-sub">Slutspelsmatcher (Ev. match med Sverige sänds i TV4)</div>
-    <div id="schedule-r16-grid"></div>
-  </div>
 
-  <div class="page" id="page-qf">
-    <div class="page-title">Åttondelsfinaler</div>
-    <div class="page-sub">Slutspelsmatcher (Ev. match med Sverige sänds i SVT)</div>
-    <div id="schedule-qf-grid"></div>
-  </div>
-
-  <div class="page" id="page-qf2">
-    <div class="page-title">Kvartsfinaler</div>
-    <div class="page-sub">Slutspelsmatcher</div>
-    <div id="schedule-qf2-grid"></div>
-  </div>
-
-  <div class="page" id="page-semi">
-    <div class="page-title">Semifinaler</div>
-    <div class="page-sub">Slutspelsmatcher (Eventuell match med Sverige sänds i SVT)</div>
-    <div id="schedule-semi-grid"></div>
-  </div>
-
-  <div class="page" id="page-bronze">
-    <div class="page-title">Bronsmatch</div>
-    <div class="page-sub">Match om tredje pris</div>
-    <div id="schedule-bronze-grid"></div>
-  </div>
-
+<div class="page" id="page-r16">
+<div class="page-title">16-delsfinaler</div>
+<div class="page-sub">Slutspelsmatcher (Ev. match med Sverige sänds i TV4)</div>
+<div id="schedule-r16-grid"></div>
+</div>
+<div class="page" id="page-qf">
+<div class="page-title">Åttondelsfinaler</div>
+<div class="page-sub">Slutspelsmatcher (Ev. match med Sverige sänds i SVT)</div>
+<div id="schedule-qf-grid"></div>
+</div>
+<div class="page" id="page-qf2">
+<div class="page-title">Kvartsfinaler</div>
+<div class="page-sub">Slutspelsmatcher</div>
+<div id="schedule-qf2-grid"></div>
+</div>
+<div class="page" id="page-semi">
+<div class="page-title">Semifinaler</div>
+<div class="page-sub">Slutspelsmatcher (Eventuell match med Sverige sänds i SVT)</div>
+<div id="schedule-semi-grid"></div>
+</div>
+<div class="page" id="page-bronze">
+<div class="page-title">Bronsmatch</div>
+<div class="page-sub">Match om tredje pris</div>
+<div id="schedule-bronze-grid"></div>
+</div>
 <div class="page" id="page-final">
-  <div>
-    <div class="page-title">VM-Final 2026</div>
-    <div id="schedule-final-grid"></div>
-  </div>
-  <div class="final-trophy-wrapper">
-    <div>
-      <div class="winner-label">🏆 VM-vinnare</div>
-      <input type="text" class="winner-input" id="winnerInput"
-             placeholder="Din VM-vinnare?"
-             onchange="updateSlutspelTeam('winner','teamH',this.value)">
-    </div>
-    <img src="pokal.png" alt="FIFA World Cup Trophy" class="final-trophy">
-  </div>
+<div>
+<div class="page-title">VM-Final 2026</div>
+<div id="schedule-final-grid"></div>
 </div>
-
+<div class="final-trophy-wrapper">
+<div>
+<div class="winner-label"> 🏆  VM-vinnare</div>
+<input type="text" class="winner-input" id="winnerInput"
+placeholder="Din VM-vinnare?"
+onchange="updateSlutspelTeam('winner','teamH',this.value)">
+</div>
+<img src="pokal.png" alt="FIFA World Cup Trophy" class="final-trophy">
+</div>
+</div>
 <div class="page" id="page-topplista">
-  <div class="page-title">Topplista</div>
-  <div class="page-sub">Deltagarnas resultat</div>
-  <div id="topplista-grid">
-    <p style="color:var(--text2); font-size:14px;">Laddar topplista...</p>
-  </div>
+<div class="page-title">Topplista</div>
+<div class="page-sub">Deltagarnas resultat</div>
+<div id="topplista-grid">
+<p style="color:var(--text2); font-size:14px;">Laddar topplista...</p>
 </div>
-
+</div>
 <div class="page" id="page-grupptabell">
-  <div class="page-title">Grupptabeller</div>
-  <div class="page-sub">Uppdateras efter varje spelomgång</div>
-  <div id="grupptabell-grid">
-    <p style="color:var(--text2); font-size:14px;">Laddar grupptabell...</p>
-  </div>
+<div class="page-title">Grupptabeller</div>
+<div class="page-sub">Uppdateras efter varje spelomgång</div>
+<div id="grupptabell-grid">
+<p style="color:var(--text2); font-size:14px;">Laddar grupptabell...</p>
+</div>
 </div>
 <div class="page" id="page-bonus">
-  <div class="page-title">Bonus & Tiebreak</div>
-  <div class="page-sub">Låses kl. 21:00 den 11 juni</div>
-
-  <div class="page-title" style="font-size:18px; margin-top:8px;">Bonusfrågor</div>
-
-  <div class="match-card" style="padding:16px;">
-    <div class="bonus-row">
-      <label>🥇 Turneringens skyttekung</label>
-      <input type="text" id="bonus_skyttekung" placeholder="Spelarens namn..."
-             onchange="saveBonus('skyttekung', this.value)">
-    </div>
-    <div class="bonus-row">
-      <label>⚽ Laget med flest mål i gruppspelet</label>
-      <input type="text" id="bonus_flest_mal" placeholder="Lag..."
-             onchange="saveBonus('flest_mal', this.value)">
-    </div>
-    <div class="bonus-row">
-      <label>🟨 Laget med flest gula kort</label>
-      <input type="text" id="bonus_gula_kort" placeholder="Lag..."
-             onchange="saveBonus('gula_kort', this.value)">
-    </div>
-    <div class="bonus-row">
-      <label>🟥 Laget med flest röda kort</label>
-      <input type="text" id="bonus_roda_kort" placeholder="Lag..."
-             onchange="saveBonus('roda_kort', this.value)">
-    </div>
-    <div class="bonus-row">
-      <label>🚨 Laget som släpper in flest mål i gruppspelet</label>
-      <input type="text" id="bonus_flest_inslapp" placeholder="Lag..."
-             onchange="saveBonus('flest_inslapp', this.value)">
-    </div>
-  </div>
-
-  <div class="page-title" style="font-size:18px; margin-top:24px;">Utslagsfrågor</div>
-  <div class="page-sub">Används vid lika poäng i slutet</div>
-
-  <div class="match-card" style="padding:16px;">
-    <div class="bonus-row">
-      <label>⏱️ I vilken minut görs det sista målet i VM-finalen?</label>
-      <input type="number" id="bonus_sista_mal" placeholder="Minut..."
-             onchange="saveBonus('sista_mal', this.value)">
-    </div>
-    <div class="bonus-row">
-      <label>🌍 Hur många mål görs det totalt under hela turneringen?</label>
-      <input type="number" id="bonus_total_mal" placeholder="Antal mål..."
-             onchange="saveBonus('total_mal', this.value)">
-    </div>
-  </div>
+<div class="page-title">Bonus & Tiebreak</div>
+<div class="page-sub">Låses kl. 21:00 den 11 juni</div>
+<div class="page-title" style="font-size:18px; margin-top:8px;">Bonusfrågor</div>
+<div class="match-card" style="padding:16px;">
+<div class="bonus-row">
+<label> 🥇  Turneringens skyttekung</label>
+<input type="text" id="bonus_skyttekung" placeholder="Spelarens namn..."
+onchange="saveBonus('skyttekung', this.value)">
+</div>
+<div class="bonus-row">
+<label> ⚽  Laget med flest m å l i gruppspelet</label>
+<input type="text" id="bonus_flest_mal" placeholder="Lag..."
+onchange="saveBonus('flest_mal', this.value)">
+</div>
+<div class="bonus-row">
+<label> 🟨  Laget med flest gula kort</label>
+<input type="text" id="bonus_gula_kort" placeholder="Lag..."
+onchange="saveBonus('gula_kort', this.value)">
+</div>
+<div class="bonus-row">
+<label> 🟥  Laget med flest röda kort</label>
+<input type="text" id="bonus_roda_kort" placeholder="Lag..."
+onchange="saveBonus('roda_kort', this.value)">
+</div>
+<div class="bonus-row">
+<label> 🚨  Laget som släpper in flest mål i gruppspelet</label>
+<input type="text" id="bonus_flest_inslapp" placeholder="Lag..."
+onchange="saveBonus('flest_inslapp', this.value)">
+</div>
+</div>
+<div class="page-title" style="font-size:18px; margin-top:24px;">Utslagsfrågor</div>
+<div class="page-sub">Används vid lika poäng i slutet</div>
+<div class="match-card" style="padding:16px;">
+<div class="bonus-row">
+<label> ⏱️  I vilken minut görs det sista målet i VM-finalen?</label>
+<input type="number" id="bonus_sista_mal" placeholder="Minut..."
+onchange="saveBonus('sista_mal', this.value)">
+</div>
+<div class="bonus-row">
+<label> 🌍  Hur många mål görs det totalt under hela turneringen?</label>
+<input type="number" id="bonus_total_mal" placeholder="Antal mål..."
+onchange="saveBonus('total_mal', this.value)">
+</div>
+</div>
 </div>
 <div class="footer">
-  
-  <div id="footer-stats">Logga in för att spara</div>
-  <button class="btn primary" onclick="saveTips()">Spara tips</button>
+<div id="footer-stats">Logga in för att spara</div>
+<button class="btn primary" onclick="saveTips()">Spara tips</button>
 </div>
-
 <div class="modal" id="authModal">
-  <div class="modal-content">
-    <div class="modal-form-toggle">
-      <span id="tab-login" class="active" onclick="switchAuthTab('login')">Logga in</span>
-      <span id="tab-register" onclick="switchAuthTab('register')">Registrera dig</span>
-    </div>
-    
-    <div id="auth-common-fields">
-      <input type="text" id="authUsername" placeholder="Användarnamn" class="input-field">
-      <input type="password" id="authPassword" placeholder="Lösenord" class="input-field">
-    </div>
-    
-    <div id="auth-register-fields" style="display: none;">
-      <input type="text" id="regFirstName" placeholder="Förnamn" class="input-field">
-      <input type="text" id="regLastName" placeholder="Efternamn" class="input-field">
-      <input type="text" id="regUsername" placeholder="Användarnamn (synligt för alla)" class="input-field">
-    </div>
-    
-    <div style="margin-top: 15px; display:flex; gap:10px;">
-      <button class="btn primary" id="authSubmitBtn" onclick="submitAuth()">Logga in</button>
-      <button class="btn" onclick="closeModal('authModal')">Stäng</button>
-    </div>
-  </div>
+<div class="modal-content">
+<div class="modal-form-toggle">
+<span id="tab-login" class="active" onclick="switchAuthTab('login')">Logga in</span>
+<span id="tab-register" onclick="switchAuthTab('register')">Registrera dig</span>
 </div>
-
+<div id="auth-common-fields">
+<input type="text" id="authUsername" placeholder="Användarnamn" class="input-field">
+<input type="password" id="authPassword" placeholder="Lösenord" class="input-field">
+</div>
+<div id="auth-register-fields" style="display: none;">
+<input type="text" id="regFirstName" placeholder="Förnamn" class="input-field">
+<input type="text" id="regLastName" placeholder="Efternamn" class="input-field">
+<input type="text" id="regUsername" placeholder="Användarnamn (synligt för alla)" class="input-field">
+</div>
+<div style="margin-top: 15px; display:flex; gap:10px;">
+<button class="btn primary" id="authSubmitBtn" onclick="submitAuth()">Logga in</button>
+<button class="btn" onclick="closeModal('authModal')">Stäng</button>
+</div>
+</div>
+</div>
 <div id="toast" class="toast"></div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 const firebaseConfig = {
-  apiKey: "AIzaSyCEDnmGznmY2rMYPlzBNXStjkCGOAXxYh4",
-  authDomain: "vm-tips-2026-fbbd3.firebaseapp.com",
-  projectId: "vm-tips-2026-fbbd3",
-  storageBucket: "vm-tips-2026-fbbd3.firebasestorage.app",
-  messagingSenderId: "714350716776",
-  appId: "1:714350716776:web:ff233e50e40787aa3a98dd"
+apiKey: "AIzaSyCEDnmGznmY2rMYPlzBNXStjkCGOAXxYh4",
+authDomain: "vm-tips-2026-fbbd3.firebaseapp.com",
+projectId: "vm-tips-2026-fbbd3",
+storageBucket: "vm-tips-2026-fbbd3.firebasestorage.app",
+messagingSenderId: "714350716776",
+appId: "1:714350716776:web:ff233e50e40787aa3a98dd"
 };
-
 const fbApp = initializeApp(firebaseConfig);
 const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
-
 const flags = {
-  'Mexiko': '🇲🇽', 'Sydafrika': '🇿🇦', 'Sydkorea': '🇰🇷', 'Tjeckien': '🇨🇿', 'Kanada': '🇨🇦',
-  'Bosnien & Herr.': '🇧🇦', 'USA': '🇺🇸', 'Paraguay': '🇵🇾', 'Qatar': '🇶🇦', 'Schweiz': '🇨🇭',
-  'Brasilien': '🇧🇷', 'Marocko': '🇲🇦', 'Haiti': '🇭🇹', 'Skottland': '🏴󠁧󠁢Sbotland󠁿', 'Australien': '🇦🇺',
-  'Turkiet': '🇹🇷', 'Tyskland': '🇩🇪', 'Curaçao': '🇨🇼', 'Nederländerna': '🇳🇱', 'Japan': '🇯🇵',
-  'Elfenbenskusten': '🇨🇮', 'Ecuador': '🇪🇨', 'Sverige': '🇸🇪', 'Tunisien': '🇹🇳', 'Spanien': '🇪🇸',
-  'Kap Verde': '🇨🇻', 'Belgien': '🇧🇪', 'Egypten': '🇪🇬', 'Saudiarabien': '🇸🇦', 'Uruguay': '🇺🇾',
-  'Iran': '🇮🇷', 'Nya Zeeland': '🇳🇿', 'Frankrike': '🇫🇷', 'Senegal': '🇸🇳', 'Irak': '🇮🇶',
-  'Norge': '🇳🇴', 'Argentina': '🇦🇷', 'Algeriet': '🇩🇿', 'Österrike': '🇦🇹', 'Jordanien': '🇯🇴',
-  'Portugal': '🇵🇹', 'DR Kongo': '🇨🇩', 'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'Kroatien': '🇭🇷', 'Ghana': '🇬🇭',
-  'Panama': '🇵🇦', 'Uzbekistan': '🇺🇿', 'Colombia': '🇨🇴'
+'Mexiko': '🇲🇽', 'Sydafrika': '🇿🇦', 'Sydkorea': '🇰🇷', 'Tjeckien': '🇨🇿', 'Kanada': '🇨🇦',
+'Bosnien & Herr.': '🇧🇦', 'USA': '🇺🇸', 'Paraguay': '🇵🇾', 'Qatar': '🇶🇦', 'Schweiz': '🇨🇭',
+'Brasilien': '🇧🇷', 'Marocko': '🇲🇦', 'Haiti': '🇭🇹', 'Skottland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'Australien': '🇦🇺',
+'Turkiet': '🇹🇷', 'Tyskland': '🇩🇪', 'Curaçao': '🇨🇼', 'Nederländerna': '🇳🇱', 'Japan': '🇯🇵',
+'Elfenbenskusten': '🇨🇮', 'Ecuador': '🇪🇨', 'Sverige': '🇸🇪', 'Tunisien': '🇹🇳', 'Spanien': '🇪🇸',
+'Kap Verde': '🇨🇻', 'Belgien': '🇧🇪', 'Egypten': '🇪🇬', 'Saudiarabien': '🇸🇦', 'Uruguay': '🇺🇾',
+'Iran': '🇮🇷', 'Nya Zeeland': '🇳🇿', 'Frankrike': '🇫🇷', 'Senegal': '🇸🇳', 'Irak': '🇮🇶',
+'Norge': '🇳🇴', 'Argentina': '🇦🇷', 'Algeriet': '🇩🇿', 'Österrike': '🇦🇹', 'Jordanien': '🇯🇴',
+'Portugal': '🇵🇹', 'DR Kongo': '🇨🇩', 'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'Kroatien': '🇭🇷', 'Ghana': '🇬🇭',
+'Panama': '🇵🇦', 'Uzbekistan': '🇺🇿', 'Colombia': '🇨🇴'
 };
-
 const SCHEDULE = [
-  {date:'Torsdag 11 juni', matches:[{h:'Mexiko', a:'Sydafrika', time:'21.00', tv:'TV4', city:'Mexico City', id:'m1'}]},
-  {date:'Fredag 12 juni', matches:[{h:'Sydkorea', a:'Tjeckien', time:'04.00', tv:'TV4', city:'Guadalajara', id:'m2'}, {h:'Kanada', a:'Bosnien & Herr.', time:'21.00', tv:'SVT Play', city:'Toronto', id:'m3'}]},
-  {date:'Lördag 13 juni', matches:[{h:'USA', a:'Paraguay', time:'03.00', tv:'TV4', city:'Los Angeles', id:'m4'}, {h:'Qatar', a:'Schweiz', time:'21.00', tv:'TV4', city:'San Francisco', id:'m5'}]},
-  {date:'Söndag 14 juni', matches:[{h:'Brasilien', a:'Marocko', time:'00.00', tv:'SVT Play', city:'New Jersey', id:'m6'}, {h:'Haiti', a:'Skottland', time:'03.00', tv:'SVT Play', city:'Boston', id:'m7'}, {h:'Australien', a:'Turkiet', time:'06.00', tv:'TV4', city:'Vancouver', id:'m8'}, {h:'Tyskland', a:'Curaçao', time:'19.00', tv:'TV4', city:'Houston', id:'m9'}, {h:'Nederländerna', a:'Japan', time:'22.00', tv:'TV4', city:'Dallas', id:'m10'}]},
-  {date:'Måndag 15 juni', matches:[{h:'Elfenbenskusten', a:'Ecuador', time:'01.00', tv:'TV4', city:'Philadelphia', id:'m11'}, {h:'Sverige', a:'Tunisien', time:'04.00', tv:'SVT Play', city:'Monterrey', id:'m12'}, {h:'Spanien', a:'Kap Verde', time:'18.00', tv:'SVT Play', city:'Atlanta', id:'m13'}, {h:'Belgien', a:'Egypten', time:'21.00', tv:'SVT Play', city:'Seattle', id:'m14'}]},
-  {date:'Tisdag 16 juni', matches:[{h:'Saudiarabien', a:'Uruguay', time:'00.00', tv:'TV4', city:'Miami', id:'m15'}, {h:'Iran', a:'Nya Zeeland', time:'03.00', tv:'TV4', city:'Los Angeles', id:'m16'}, {h:'Frankrike', a:'Senegal', time:'21.00', tv:'SVT Play', city:'New Jersey', id:'m17'}]},
-  {date:'Onsdag 17 juni', matches:[{h:'Irak', a:'Norge', time:'00.00', tv:'TV4', city:'Boston', id:'m18'}, {h:'Argentina', a:'Algeriet', time:'03.00', tv:'TV4', city:'Kansas City', id:'m19'}, {h:'Österrike', a:'Jordanien', time:'06.00', tv:'TV4', city:'San Francisco', id:'m20'}, {h:'Portugal', a:'DR Kongo', time:'19.00', tv:'TV4', city:'Houston', id:'m21'}, {h:'England', a:'Kroatien', time:'22.00', tv:'TV4', city:'Dallas', id:'m22'}]},
-  {date:'Torsdag 18 juni', matches:[{h:'Ghana', a:'Panama', time:'01.00', tv:'TV4', city:'Toronto', id:'m23'}, {h:'Uzbekistan', a:'Colombia', time:'04.00', tv:'TV4', city:'Mexico City', id:'m24'}, {h:'Tjeckien', a:'Sydafrika', time:'18.00', tv:'TV4', city:'Atlanta', id:'m25'}, {h:'Schweiz', a:'Bosnien & Herr.', time:'21.00', tv:'TV4', city:'Los Angeles', id:'m26'}]},
-  {date:'Fredag 19 juni', matches:[{h:'Kanada', a:'Qatar', time:'00.00', tv:'TV4', city:'Vancouver', id:'m27'}, {h:'Mexiko', a:'Sydkorea', time:'03.00', tv:'TV4', city:'Guadalajara', id:'m28'}, {h:'USA', a:'Australien', time:'21.00', tv:'SVT Play', city:'Seattle', id:'m29'}]},
-  {date:'Lördag 20 juni', matches:[{h:'Skottland', a:'Marocko', time:'00.00', tv:'SVT Play', city:'Boston', id:'m30'}, {h:'Brasilien', a:'Haiti', time:'03.00', tv:'TV4', city:'Philadelphia', id:'m31'}, {h:'Turkiet', a:'Paraguay', time:'06.00', tv:'TV4', city:'San Francisco', id:'m32'}, {h:'Nederländerna', a:'Sverige', time:'19.00', tv:'TV4', city:'Houston', id:'m33'}, {h:'Tyskland', a:'Elfenbenskusten', time:'22.00', tv:'TV4', city:'Toronto', id:'m34'}]},
-  {date:'Söndag 21 juni', matches:[{h:'Ecuador', a:'Curaçao', time:'02.00', tv:'Kansas City', id:'m35'}, {h:'Tunisien', a:'Japan', time:'06.00', tv:'SVT Play', city:'Monterrey', id:'m36'}, {h:'Spanien', a:'Saudiarabien', time:'18.00', tv:'TV4', city:'Atlanta', id:'m37'}, {h:'Belgien', a:'Iran', time:'21.00', tv:'TV4', city:'Los Angeles', id:'m38'}]},
-  {date:'Måndag 22 juni', matches:[{h:'Uruguay', a:'Kap Verde', time:'00.00', tv:'TV4', city:'Miami', id:'m39'}, {h:'Nya Zeeland', a:'Egypten', time:'03.00', tv:'TV4', city:'Vancouver', id:'m40'}, {h:'Argentina', a:'Österrike', time:'19.00', tv:'SVT Play', city:'Dallas', id:'m41'}, {h:'Frankrike', a:'Irak', time:'23.00', tv:'SVT Play', city:'Philadelphia', id:'m42'}]},
-  {date:'Tisdag 23 juni', matches:[{h:'Norge', a:'Senegal', time:'02.00', tv:'SVT Play', city:'New Jersey', id:'m43'}, {h:'Jordanien', a:'Algeriet', time:'05.00', tv:'TV4', city:'San Francisco', id:'m44'}, {h:'Portugal', a:'Uzbekistan', time:'19.00', tv:'SVT Play', city:'Houston', id:'m45'}, {h:'England', a:'Ghana', time:'22.00', tv:'SVT Play', city:'Boston', id:'m46'}]},
-  {date:'Onsdag 24 juni', matches:[{h:'Panama', a:'Kroatien', time:'01.00', tv:'TV4', city:'Toronto', id:'m47'}, {h:'Colombia', a:'DR Kongo', time:'04.00', tv:'TV4', city:'Guadalajara', id:'m48'}, {h:'Schweiz', a:'Kanada', time:'21.00', tv:'TV4', city:'Vancouver', id:'m49'}, {h:'Bosnien & Herr.', a:'Qatar', time:'21.00', tv:'TV4', city:'Seattle', id:'m50'}]},
-  {date:'Torsdag 25 juni', matches:[{h:'Marocko', a:'Haiti', time:'00.00', tv:'TV4', city:'Atlanta', id:'m51'}, {h:'Skottland', a:'Brasilien', time:'00.00', tv:'TV4', city:'Miami', id:'m52'}, {h:'Sydafrika', a:'Sydkorea', time:'03.00', tv:'SVT Play', city:'Monterrey', id:'m53'}, {h:'Tjeckien', a:'Mexiko', time:'03.00', tv:'SVT Play', city:'Mexico City', id:'m54'}, {h:'Curaçao', a:'Elfenbenskusten', time:'22.00', tv:'SVT Play', city:'Philadelphia', id:'m55'}, {h:'Ecuador', a:'Tyskland', time:'22.00', tv:'SVT Play', city:'New Jersey', id:'m56'}]},
-  {date:'Fredag 26 juni', matches:[{h:'Tunisien', a:'Nederländerna', time:'01.00', tv:'SVT Play', city:'Kansas City', id:'m57'}, {h:'Japan', a:'Sverige', time:'01.00', tv:'SVT Play', city:'Dallas', id:'m58'}, {h:'Turkiet', a:'USA', time:'04.00', tv:'Los Angeles', id:'m59'}, {h:'Paraguay', a:'Australien', time:'04.00', tv:'TV4', city:'San Francisco', id:'m60'}, {h:'Norge', a:'Frankrike', time:'21.00', tv:'TV4', city:'Boston', id:'m61'}, {h:'Senegal', a:'Irak', time:'21.00', tv:'TV4', city:'Toronto', id:'m62'}]},
-  {date:'Lördag 27 juni', matches:[{h:'Kap Verde', a:'Saudiarabien', time:'02.00', tv:'Houston', id:'m63'}, {h:'Uruguay', a:'Spanien', time:'02.00', tv:'TV4', city:'Guadalajara', id:'m64'}, {h:'Nya Zeeland', a:'Belgien', time:'05.00', tv:'TV4', city:'Vancouver', id:'m65'}, {h:'Egypten', a:'Iran', time:'05.00', tv:'TV4', city:'Seattle', id:'m66'}, {h:'Panama', a:'England', time:'23.00', tv:'SVT Play', city:'New Jersey', id:'m67'}, {h:'Kroatien', a:'Ghana', time:'23.00', tv:'SVT Play', city:'Philadelphia', id:'m68'}]},
-  {date:'Söndag 28 juni', matches:[{h:'DR Kongo', a:'Uzbekistan', time:'01.30', tv:'TV4', city:'Atlanta', id:'m69'}, {h:'Colombia', a:'Portugal', time:'01.30', tv:'TV4', city:'Miami', id:'m70'}, {h:'Algeriet', a:'Österrike', time:'04.00', tv:'TV4', city:'Kansas City', id:'m71'}, {h:'Jordanien', a:'Argentina', time:'04.00', tv:'Dallas', id:'m72'}]}
+{date:'Torsdag 11 juni', matches:[{h:'Mexiko', a:'Sydafrika', time:'21.00', tv:'TV4', city:'Mexico City', id:'m1'}]},
+{date:'Fredag 12 juni', matches:[{h:'Sydkorea', a:'Tjeckien', time:'04.00', tv:'TV4', city:'Guadalajara', id:'m2'}, {h:'Kanada', a:'Bosnien & Herr.', time:'21.00', tv:'SVT Play', city:'Toronto', id:'m3'}]},
+{date:'Lördag 13 juni', matches:[{h:'USA', a:'Paraguay', time:'03.00', tv:'TV4', city:'Los Angeles', id:'m4'}, {h:'Qatar', a:'Schweiz', time:'21.00', tv:'TV4', city:'San Francisco', id:'m5'}]},
+{date:'Söndag 14 juni', matches:[{h:'Brasilien', a:'Marocko', time:'00.00', tv:'SVT Play', city:'New Jersey', id:'m6'}, {h:'Haiti', a:'Skottland', time:'03.00', tv:'SVT Play', city:'Boston', id:'m7'}, {h:'Australien', a:'Turkiet', time:'06.00', tv:'TV4', city:'Vancouver', id:'m8'}, {h:'Tyskland', a:'Curaçao', time:'19.00', tv:'TV4', city:'Houston', id:'m9'}, {h:'Nederländerna', a:'Japan', time:'22.00', tv:'TV4', city:'Dallas', id:'m10'}]},
+{date:'Måndag 15 juni', matches:[{h:'Elfenbenskusten', a:'Ecuador', time:'01.00', tv:'TV4', city:'Philadelphia', id:'m11'}, {h:'Sverige', a:'Tunisien', time:'04.00', tv:'SVT Play', city:'Monterrey', id:'m12'}, {h:'Spanien', a:'Kap Verde', time:'18.00', tv:'SVT Play', city:'Atlanta', id:'m13'}, {h:'Belgien', a:'Egypten', time:'21.00', tv:'SVT Play', city:'Seattle', id:'m14'}]},
+{date:'Tisdag 16 juni', matches:[{h:'Saudiarabien', a:'Uruguay', time:'00.00', tv:'TV4', city:'Miami', id:'m15'}, {h:'Iran', a:'Nya Zeeland', time:'03.00', tv:'TV4', city:'Los Angeles', id:'m16'}, {h:'Frankrike', a:'Senegal', time:'21.00', tv:'SVT Play', city:'New Jersey', id:'m17'}]},
+{date:'Onsdag 17 juni', matches:[{h:'Irak', a:'Norge', time:'00.00', tv:'TV4', city:'Boston', id:'m18'}, {h:'Argentina', a:'Algeriet', time:'03.00', tv:'TV4', city:'Kansas City', id:'m19'}, {h:'Österrike', a:'Jordanien', time:'06.00', tv:'TV4', city:'San Francisco', id:'m20'}, {h:'Portugal', a:'DR Kongo', time:'19.00', tv:'TV4', city:'Houston', id:'m21'}, {h:'England', a:'Kroatien', time:'22.00', tv:'TV4', city:'Dallas', id:'m22'}]},
+{date:'Torsdag 18 juni', matches:[{h:'Ghana', a:'Panama', time:'01.00', tv:'TV4', city:'Toronto', id:'m23'}, {h:'Uzbekistan', a:'Colombia', time:'04.00', tv:'TV4', city:'Mexico City', id:'m24'}, {h:'Tjeckien', a:'Sydafrika', time:'18.00', tv:'TV4', city:'Atlanta', id:'m25'}, {h:'Schweiz', a:'Bosnien & Herr.', time:'21.00', tv:'TV4', city:'Los Angeles', id:'m26'}]},
+{date:'Fredag 19 juni', matches:[{h:'Kanada', a:'Qatar', time:'00.00', tv:'TV4', city:'Vancouver', id:'m27'}, {h:'Mexiko', a:'Sydkorea', time:'03.00', tv:'TV4', city:'Guadalajara', id:'m28'}, {h:'USA', a:'Australien', time:'21.00', tv:'SVT Play', city:'Seattle', id:'m29'}]},
+{date:'Lördag 20 juni', matches:[{h:'Skottland', a:'Marocko', time:'00.00', tv:'SVT Play', city:'Boston', id:'m30'}, {h:'Brasilien', a:'Haiti', time:'03.00', tv:'TV4', city:'Philadelphia', id:'m31'}, {h:'Turkiet', a:'Paraguay', time:'06.00', tv:'TV4', city:'San Francisco', id:'m32'}, {h:'Nederländerna', a:'Sverige', time:'19.00', tv:'TV4', city:'Houston', id:'m33'}, {h:'Tyskland', a:'Elfenbenskusten', time:'22.00', tv:'TV4', city:'Toronto', id:'m34'}]},
+{date:'Söndag 21 juni', matches:[{h:'Ecuador', a:'Curaçao', time:'02.00', tv:'Kansas City', id:'m35'}, {h:'Tunisien', a:'Japan', time:'06.00', tv:'SVT Play', city:'Monterrey', id:'m36'}, {h:'Spanien', a:'Saudiarabien', time:'18.00', tv:'TV4', city:'Atlanta', id:'m37'}, {h:'Belgien', a:'Iran', time:'21.00', tv:'TV4', city:'Los Angeles', id:'m38'}]},
+{date:'Måndag 22 juni', matches:[{h:'Uruguay', a:'Kap Verde', time:'00.00', tv:'TV4', city:'Miami', id:'m39'}, {h:'Nya Zeeland', a:'Egypten', time:'03.00', tv:'TV4', city:'Vancouver', id:'m40'}, {h:'Argentina', a:'Österrike', time:'19.00', tv:'SVT Play', city:'Dallas', id:'m41'}, {h:'Frankrike', a:'Irak', time:'23.00', tv:'SVT Play', city:'Philadelphia', id:'m42'}]},
+{date:'Tisdag 23 juni', matches:[{h:'Norge', a:'Senegal', time:'02.00', tv:'SVT Play', city:'New Jersey', id:'m43'}, {h:'Jordanien', a:'Algeriet', time:'05.00', tv:'TV4', city:'San Francisco', id:'m44'}, {h:'Portugal', a:'Uzbekistan', time:'19.00', tv:'SVT Play', city:'Houston', id:'m45'}, {h:'England', a:'Ghana', time:'22.00', tv:'SVT Play', city:'Boston', id:'m46'}]},
+{date:'Onsdag 24 juni', matches:[{h:'Panama', a:'Kroatien', time:'01.00', tv:'TV4', city:'Toronto', id:'m47'}, {h:'Colombia', a:'DR Kongo', time:'04.00', tv:'TV4', city:'Guadalajara', id:'m48'}, {h:'Schweiz', a:'Kanada', time:'21.00', tv:'TV4', city:'Vancouver', id:'m49'}, {h:'Bosnien & Herr.', a:'Qatar', time:'21.00', tv:'TV4', city:'Seattle', id:'m50'}]},
+{date:'Torsdag 25 juni', matches:[{h:'Marocko', a:'Haiti', time:'00.00', tv:'TV4', city:'Atlanta', id:'m51'}, {h:'Skottland', a:'Brasilien', time:'00.00', tv:'TV4', city:'Miami', id:'m52'}, {h:'Sydafrika', a:'Sydkorea', time:'03.00', tv:'SVT Play', city:'Monterrey', id:'m53'}, {h:'Tjeckien', a:'Mexiko', time:'03.00', tv:'SVT Play', city:'Mexico City', id:'m54'}, {h:'Curaçao', a:'Elfenbenskusten', time:'22.00', tv:'SVT Play', city:'Philadelphia', id:'m55'}, {h:'Ecuador', a:'Tyskland', time:'22.00', tv:'SVT Play', city:'New Jersey', id:'m56'}]},
+{date:'Fredag 26 juni', matches:[{h:'Tunisien', a:'Nederländerna', time:'01.00', tv:'SVT Play', city:'Kansas City', id:'m57'}, {h:'Japan', a:'Sverige', time:'01.00', tv:'SVT Play', city:'Dallas', id:'m58'}, {h:'Turkiet', a:'USA', time:'04.00', tv:'Los Angeles', id:'m59'}, {h:'Paraguay', a:'Australien', time:'04.00', tv:'TV4', city:'San Francisco', id:'m60'}, {h:'Norge', a:'Frankrike', time:'21.00', tv:'TV4', city:'Boston', id:'m61'}, {h:'Senegal', a:'Irak', time:'21.00', tv:'TV4', city:'Toronto', id:'m62'}]},
+{date:'Lördag 27 juni', matches:[{h:'Kap Verde', a:'Saudiarabien', time:'02.00', tv:'Houston', id:'m63'}, {h:'Uruguay', a:'Spanien', time:'02.00', tv:'TV4', city:'Guadalajara', id:'m64'}, {h:'Nya Zeeland', a:'Belgien', time:'05.00', tv:'TV4', city:'Vancouver', id:'m65'}, {h:'Egypten', a:'Iran', time:'05.00', tv:'TV4', city:'Seattle', id:'m66'}, {h:'Panama', a:'England', time:'23.00', tv:'SVT Play', city:'New Jersey', id:'m67'}, {h:'Kroatien', a:'Ghana', time:'23.00', tv:'SVT Play', city:'Philadelphia', id:'m68'}]},
+{date:'Söndag 28 juni', matches:[{h:'DR Kongo', a:'Uzbekistan', time:'01.30', tv:'TV4', city:'Atlanta', id:'m69'}, {h:'Colombia', a:'Portugal', time:'01.30', tv:'TV4', city:'Miami', id:'m70'}, {h:'Algeriet', a:'Österrike', time:'04.00', tv:'TV4', city:'Kansas City', id:'m71'}, {h:'Jordanien', a:'Argentina', time:'04.00', tv:'Dallas', id:'m72'}]}
 ];
-
 const SCHEDULE_R16 = [
-  {date:'Söndag 28 juni', matches:[{h:'2A', a:'2B', time:'21.00', tv:'TV4', city:'Los Angeles', id:'r16_1'}]},
-  {date:'Måndag 29 juni', matches:[{h:'1C', a:'2F', time:'19.00', tv:'TV4', city:'Boston', id:'r16_2'}, {h:'1E', a:'3A/B/C/D/F', time:'22.30', tv:'SVT', city:'Atlanta', id:'r16_3'}]},
-  {date:'Tisdag 30 juni', matches:[{h:'1F', a:'2C', time:'03.00', tv:'SVT', city:'Dallas', id:'r16_4'}, {h:'2E', a:'2I', time:'19.00', tv:'TV4', city:'Miami', id:'r16_5'}, {h:'1I', a:'3C/D/F/G/H', time:'23.00', tv:'TV4', city:'Houston', id:'r16_6'}]},
-  {date:'Onsdag 1 juli', matches:[{h:'1A', a:'3C/E/F/H/I', time:'03.00', tv:'TV4', city:'Mexico City', id:'r16_7'}, {h:'1L', a:'3E/H/I/J/K', time:'18.00', tv:'SVT', city:'Toronto', id:'r16_8'}, {h:'1G', a:'3A/E/H/I/J', time:'22.00', tv:'TV4', city:'San Francisco', id:'r16_9'}]},
-  {date:'Torsdag 2 juli', matches:[{h:'1D', a:'3B/E/F/I/J', time:'02.00', tv:'TV4', city:'Seattle', id:'r16_10'}, {h:'1H', a:'2J', time:'21.00', tv:'SVT', city:'New Jersey', id:'r16_11'}]},
-  {date:'Fredag 3 juli', matches:[{h:'2K', a:'2L', time:'01.00', tv:'TV4', city:'Kansas City', id:'r16_12'}, {h:'1B', a:'3E/F/G/I/J', time:'05.00', tv:'TV4', city:'Vancouver', id:'r16_13'}, {h:'2D', a:'2G', time:'20.00', tv:'TV4', city:'Philadelphia', id:'r16_14'}]},
-  {date:'Lördag 4 juli', matches:[{h:'1J', a:'2H', time:'00.00', tv:'SVT', city:'Monterrey', id:'r16_15'}, {h:'1K', a:'3D/E/I/J/L', time:'03.30', tv:'SVT', city:'Guadalajara', id:'r16_16'}]}
+{date:'Söndag 28 juni', matches:[{h:'2A', a:'2B', time:'21.00', tv:'TV4', city:'Los Angeles', id:'r16_1'}]},
+{date:'Måndag 29 juni', matches:[{h:'1C', a:'2F', time:'19.00', tv:'TV4', city:'Boston', id:'r16_2'}, {h:'1E', a:'3A/B/C/D/F', time:'22.30', tv:'SVT', city:'Atlanta', id:'r16_3'}]},
+{date:'Tisdag 30 juni', matches:[{h:'1F', a:'2C', time:'03.00', tv:'SVT', city:'Dallas', id:'r16_4'}, {h:'2E', a:'2I', time:'19.00', tv:'TV4', city:'Miami', id:'r16_5'}, {h:'1I', a:'3C/D/F/G/H', time:'23.00', tv:'TV4', city:'Houston', id:'r16_6'}]},
+{date:'Onsdag 1 juli', matches:[{h:'1A', a:'3C/E/F/H/I', time:'03.00', tv:'TV4', city:'Mexico City', id:'r16_7'}, {h:'1L', a:'3E/H/I/J/K', time:'18.00', tv:'SVT', city:'Toronto', id:'r16_8'}, {h:'1G', a:'3A/E/H/I/J', time:'22.00', tv:'TV4', city:'San Francisco', id:'r16_9'}]},
+{date:'Torsdag 2 juli', matches:[{h:'1D', a:'3B/E/F/I/J', time:'02.00', tv:'TV4', city:'Seattle', id:'r16_10'}, {h:'1H', a:'2J', time:'21.00', tv:'SVT', city:'New Jersey', id:'r16_11'}]},
+{date:'Fredag 3 juli', matches:[{h:'2K', a:'2L', time:'01.00', tv:'TV4', city:'Kansas City', id:'r16_12'}, {h:'1B', a:'3E/F/G/I/J', time:'05.00', tv:'TV4', city:'Vancouver', id:'r16_13'}, {h:'2D', a:'2G', time:'20.00', tv:'TV4', city:'Philadelphia', id:'r16_14'}]},
+{date:'Lördag 4 juli', matches:[{h:'1J', a:'2H', time:'00.00', tv:'SVT', city:'Monterrey', id:'r16_15'}, {h:'1K', a:'3D/E/I/J/L', time:'03.30', tv:'SVT', city:'Guadalajara', id:'r16_16'}]}
 ];
-
 const SCHEDULE_QF = [
-  {date:'Lördag 4 juli', matches:[
-    {h:'W73', a:'W75', time:'19.00', tv:'TV4', city:'Philadelphia', id:'qf_1'},
-    {h:'W74', a:'W77', time:'23.00', tv:'SVT', city:'Houston', id:'qf_2'}
-  ]},
-  {date:'Söndag 5 juli', matches:[
-    {h:'W76', a:'W78', time:'22.00', tv:'TV4', city:'East Rutherford', id:'qf_3'}
-  ]},
-  {date:'Måndag 6 juli', matches:[
-    {h:'W79', a:'W80', time:'02.00', tv:'SVT', city:'Mexico City', id:'qf_4'},
-    {h:'W83', a:'W84', time:'21.00', tv:'TV4', city:'Arlington', id:'qf_5'}
-  ]},
-  {date:'Tisdag 7 juli', matches:[
-    {h:'W81', a:'W82', time:'02.00', tv:'TV4', city:'Seattle', id:'qf_6'},
-    {h:'W86', a:'W88', time:'18.00', tv:'TV4', city:'Atlanta', id:'qf_7'},
-    {h:'W85', a:'W87', time:'22.00', tv:'SVT', city:'Vancouver', id:'qf_8'}
-  ]}
+{date:'Lördag 4 juli', matches:[
+{h:'W73', a:'W75', time:'19.00', tv:'TV4', city:'Philadelphia', id:'qf_1'},
+{h:'W74', a:'W77', time:'23.00', tv:'SVT', city:'Houston', id:'qf_2'}
+]},
+{date:'Söndag 5 juli', matches:[
+{h:'W76', a:'W78', time:'22.00', tv:'TV4', city:'East Rutherford', id:'qf_3'}
+]},
+{date:'Måndag 6 juli', matches:[
+{h:'W79', a:'W80', time:'02.00', tv:'SVT', city:'Mexico City', id:'qf_4'},
+{h:'W83', a:'W84', time:'21.00', tv:'TV4', city:'Arlington', id:'qf_5'}
+]},
+{date:'Tisdag 7 juli', matches:[
+{h:'W81', a:'W82', time:'02.00', tv:'TV4', city:'Seattle', id:'qf_6'},
+{h:'W86', a:'W88', time:'18.00', tv:'TV4', city:'Atlanta', id:'qf_7'},
+{h:'W85', a:'W87', time:'22.00', tv:'SVT', city:'Vancouver', id:'qf_8'}
+]}
 ];
-
 const SCHEDULE_QF2 = [
-  {date:'Torsdag 9 juli', matches:[
-    {h:'W89', a:'W90', time:'22.00', tv:'TV4', city:'Foxborough', id:'qf2_1'}
-  ]},
-  {date:'Fredag 10 juli', matches:[
-    {h:'W93', a:'W94', time:'21.00', tv:'SVT', city:'Inglewood', id:'qf2_2'}
-  ]},
-  {date:'Lördag 11 juli', matches:[
-    {h:'W91', a:'W92', time:'23.00', tv:'TV4', city:'Miami Gardens', id:'qf2_3'}
-  ]},
-  {date:'Söndag 12 juli', matches:[
-    {h:'W95', a:'W96', time:'03.00', tv:'SVT', city:'Kansas City', id:'qf2_4'}
-  ]}
+{date:'Torsdag 9 juli', matches:[
+{h:'W89', a:'W90', time:'22.00', tv:'TV4', city:'Foxborough', id:'qf2_1'}
+]},
+{date:'Fredag 10 juli', matches:[
+{h:'W93', a:'W94', time:'21.00', tv:'SVT', city:'Inglewood', id:'qf2_2'}
+]},
+{date:'Lördag 11 juli', matches:[
+{h:'W91', a:'W92', time:'23.00', tv:'TV4', city:'Miami Gardens', id:'qf2_3'}
+]},
+{date:'Söndag 12 juli', matches:[
+{h:'W95', a:'W96', time:'03.00', tv:'SVT', city:'Kansas City', id:'qf2_4'}
+]}
 ];
-
 const SCHEDULE_SEMI = [
-  {date:'Tisdag 14 juli', matches:[
-    {h:'W97', a:'W98', time:'21.00', tv:'SVT', city:'Arlington', id:'semi_1'}
-  ]},
-  {date:'Onsdag 15 juli', matches:[
-    {h:'W99', a:'W100', time:'21.00', tv:'TV4', city:'Atlanta', id:'semi_2'}
-  ]}
+{date:'Tisdag 14 juli', matches:[
+{h:'W97', a:'W98', time:'21.00', tv:'SVT', city:'Arlington', id:'semi_1'}
+]},
+{date:'Onsdag 15 juli', matches:[
+{h:'W99', a:'W100', time:'21.00', tv:'TV4', city:'Atlanta', id:'semi_2'}
+]}
 ];
-
 const SCHEDULE_BRONZE = [
-  {date:'Lördag 18 juli', matches:[
-    {h:'L101', a:'L102', time:'23.00', tv:'SVT', city:'Miami Gardens', id:'bronze_1'}
-  ]}
+{date:'Lördag 18 juli', matches:[
+{h:'L101', a:'L102', time:'23.00', tv:'SVT', city:'Miami Gardens', id:'bronze_1'}
+]}
 ];
-
 const SCHEDULE_FINAL = [
-  {date:'Söndag 19 juli', matches:[
-    {h:'W101', a:'W102', time:'21.00', tv:'TV4', city:'East Rutherford', id:'final_1'}
-  ]}
+{date:'Söndag 19 juli', matches:[
+{h:'W101', a:'W102', time:'21.00', tv:'TV4', city:'East Rutherford', id:'final_1'}
+]}
 ];
-
 let predictions = {};
+let groupTableData = {};
+function isAdmin() {
+return currentUserProfile?.username?.toLowerCase() === 'knight';
+}
 let currentAuthMode = 'login';
 let currentUserProfile = null;
-
 function renderGroups() {
-  const container = document.getElementById('schedule-grid');
-  if(!container) return;
-
-  // Kolla om klockan har passerat 11 juni 2026 kl. 21:00
-  const deadline = new Date('2026-06-11T21:00:00');
-  const isLocked = false;
-
-  container.innerHTML = SCHEDULE.map(day => `
-    <div class="date-divider">${day.date}</div>
-    ${day.matches.map(m => {
-      const valH = predictions[m.id]?.h || '';
-      const valA = predictions[m.id]?.a || '';
-      return `
-      <div class="match-card">
-        <div class="match-row">
-          <div class="match-info">
-            <div class="match-teams">
-              ${flags[m.h] || ''} ${m.h} – ${flags[m.a] || ''} ${m.a}
-            </div>
-            <div class="match-meta">
-              <span class="meta-item">🕒 ${m.time}</span>
-              <span class="meta-item">📺 ${m.tv}</span>
-              <span class="meta-item"><span style="color:#ff4d4d">📍</span> ${m.city}</span>
-            </div>
-          </div>
-          <div class="score-inputs">
-            <input type="number" value="${valH}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','h',this.value)">
-            <span>-</span>
-            <input type="number" value="${valA}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','a',this.value)">
-          </div>
-        </div>
-      </div>`;
-    }).join('')}
-  `).join('');
+const container = document.getElementById('schedule-grid');
+if(!container) return;
+const deadline = new Date('2026-06-11T21:00:00');
+const isLocked = new Date() > deadline;
+container.innerHTML = SCHEDULE.map(day => `
+<div class="date-divider">${day.date}</div>
+${day.matches.map(m => {
+const valH = predictions[m.id]?.h || '';
+const valA = predictions[m.id]?.a || '';
+return `
+<div class="match-card">
+<div class="match-row">
+<div class="match-info">
+<div class="match-teams">
+${flags[m.h] || ''} ${m.h} – ${flags[m.a] || ''} ${m.a}
+</div>
+<div class="match-meta">
+<span class="meta-item"> 🕒  ${m.time}</span>
+<span class="meta-item"> 📺  ${m.tv}</span>
+<span class="meta-item"><span style="color:#ff4d4d"> 📍 </span> ${m.city}</span>
+</div>
+</div>
+<div class="score-inputs">
+<input type="number" value="${valH}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','h',this.value)">
+<span>-</span>
+<input type="number" value="${valA}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','a',this.value)">
+</div>
+</div>
+</div>`;
+}).join('')}
+`).join('');
 }
-
-function renderGenericSlutspel(scheduleData, containerId) { 
-  const container = document.getElementById(containerId); 
-  if (!container) return;
-
-  // Kolla om klockan har passerat 11 juni 2026 kl. 21:00
-  const deadline = new Date('2026-06-11T21:00:00');
-  const isLocked = false;
-
-  container.innerHTML = scheduleData.map(day => ` 
-    <div class="date-divider">${day.date}</div> 
-    ${day.matches.map(m => { 
-      const valH = predictions[m.id]?.h || ''; 
-      const valA = predictions[m.id]?.a || ''; 
-      const teamH = predictions[m.id]?.teamH || ''; 
-      const teamA = predictions[m.id]?.teamA || ''; 
-      return ` 
-      <div class="match-card"> 
-        <div class="match-row"> 
-          <div class="match-info" style="display: flex; flex-direction: column; gap: 8px; flex: 1;"> 
-            <div style="display: flex; align-items: center; gap: 8px;"> 
-              <span style="font-size: 16px;"> 🏳️ </span> 
-              <input type="text" value="${teamH}" placeholder="${m.h}" ${isLocked ? 'disabled' : ''} onchange="updateSlutspelTeam('${m.id}', 'teamH', this.value)" style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;"> 
-            </div> 
-            <div style="display: flex; align-items: center; gap: 8px;"> 
-              <span style="font-size: 16px;"> 🏳️ </span> 
-              <input type="text" value="${teamA}" placeholder="${m.a}" ${isLocked ? 'disabled' : ''} onchange="updateSlutspelTeam('${m.id}', 'teamA', this.value)" style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;"> 
-            </div> 
-            <div class="match-meta"> 
-              <span class="meta-item">🕒 ${m.time}</span> 
-              <span class="meta-item">📺 ${m.tv}</span> 
-              <span class="meta-item"><span style="color:#ff4d4d">📍</span> ${m.city || 'TBD'}</span> 
-            </div> 
-          </div> 
-          <div class="score-inputs"> 
-            <input type="number" value="${valH}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','h',this.value)"> 
-            <span>-</span> 
-            <input type="number" value="${valA}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','a',this.value)"> 
-          </div> 
-        </div> 
-      </div>`; 
-    }).join('')} 
-  `).join('');
+function renderGenericSlutspel(scheduleData, containerId) {
+const container = document.getElementById(containerId);
+if (!container) return;
+const deadline = new Date('2026-06-11T21:00:00');
+const isLocked = new Date() > deadline;
+container.innerHTML = scheduleData.map(day => `
+<div class="date-divider">${day.date}</div>
+${day.matches.map(m => {
+const valH = predictions[m.id]?.h || '';
+const valA = predictions[m.id]?.a || '';
+const teamH = predictions[m.id]?.teamH || '';
+const teamA = predictions[m.id]?.teamA || '';
+return `
+<div class="match-card">
+<div class="match-row">
+<div class="match-info" style="display: flex; flex-direction: column; gap: 8px; flex: 1;">
+<div style="display: flex; align-items: center; gap: 8px;">
+<span style="font-size: 16px;">  🏳️  </span>
+<input type="text" value="${teamH}" placeholder="${m.h}" ${isLocked ? 'disabled' : ''} onchange="updateSlutspelTeam('${m.id}', 'teamH', this.value)" style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
+</div>
+<div style="display: flex; align-items: center; gap: 8px;">
+<span style="font-size: 16px;">  🏳️  </span>
+<input type="text" value="${teamA}" placeholder="${m.a}" ${isLocked ? 'disabled' : ''} onchange="updateSlutspelTeam('${m.id}', 'teamA', this.value)" style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
+</div>
+<div class="match-meta">
+<span class="meta-item"> 🕒  ${m.time}</span>
+<span class="meta-item"> 📺  ${m.tv}</span>
+<span class="meta-item"><span style="color:#ff4d4d"> 📍 </span> ${m.city || 'TBD'}</span>
+</div>
+</div>
+<div class="score-inputs">
+<input type="number" value="${valH}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','h',this.value)">
+<span>-</span>
+<input type="number" value="${valA}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','a',this.value)">
+</div>
+</div>
+</div>`;
+}).join('')}
+`).join('');
 }
-
 window.updatePred = (id, side, val) => {
-  if (!auth.currentUser) {
-    showToast("Du måste logga in för att tippa!", true);
-    openModal('authModal');
-    return;
-  }
-  if(!predictions[id]) predictions[id] = {h:'', a:''};
-  predictions[id][side] = val;
-  updateStats();
+if (!auth.currentUser) {
+showToast("Du måste logga in för att tippa!", true);
+openModal('authModal');
+return;
+}
+if(!predictions[id]) predictions[id] = {h:'', a:''};
+predictions[id][side] = val;
+updateStats();
 };
-
 window.updateSlutspelTeam = (id, side, val) => {
-  if (!auth.currentUser) {
-    showToast("Du måste logga in för att tippa!", true);
-    openModal('authModal');
-    return;
-  }
-  if(!predictions[id]) predictions[id] = {h:'', a:'', teamH:'', teamA:''};
-  predictions[id][side] = val;
-  updateStats();
+if (!auth.currentUser) {
+showToast("Du måste logga in för att tippa!", true);
+openModal('authModal');
+return;
+}
+if(!predictions[id]) predictions[id] = {h:'', a:'', teamH:'', teamA:''};
+predictions[id][side] = val;
+updateStats();
 };
-
-window.saveTips = async () => { 
-  if(!auth.currentUser) return showToast("Logga in först", true);
-  
-  // Säkerhetsspärr: Hindra inskickning efter matchstart 11 juni 2026 kl. 21:00
-  const deadline = new Date('2026-06-11T21:00:00');
-  if (new Date() > deadline) {
-    return showToast("Tipsen är låsta! Turneringen har redan startat.", true);
-  }
-
-  try {
-    await setDoc(doc(db, "tips", auth.currentUser.uid), { 
-      predictions, 
-      username: currentUserProfile?.username || 'Okänd användare'
-    }, {merge: true}); 
-    showToast("Sparat!"); 
-  } catch(e) {
-    showToast("Kunde inte spara: " + e.message, true);
-  }
+window.saveTips = async () => {
+if(!auth.currentUser) return showToast("Logga in först", true);
+const deadline = new Date('2026-06-11T21:00:00');
+if (new Date() > deadline) {
+return showToast("Tipsen är låsta! Turneringen har redan startat.", true);
+}
+try {
+await setDoc(doc(db, "tips", auth.currentUser.uid), {
+predictions,
+username: currentUserProfile?.username || 'Okänd användare'
+}, {merge: true});
+showToast("Sparat!");
+} catch(e) {
+showToast("Kunde inte spara: " + e.message, true);
+}
 };
-
 window.switchAuthTab = (mode) => {
-  currentAuthMode = mode;
-  const loginTab = document.getElementById('tab-login');
-  const registerTab = document.getElementById('tab-register');
-  const registerFields = document.getElementById('auth-register-fields');
-  const submitBtn = document.getElementById('authSubmitBtn');
-  
-  if (mode === 'register') {
-    loginTab.classList.remove('active');
-    registerTab.classList.add('active');
-    registerFields.style.display = 'block';
-    submitBtn.textContent = 'Skapa konto';
-  } else {
-    registerTab.classList.remove('active');
-    loginTab.classList.add('active');
-    registerFields.style.display = 'none';
-    submitBtn.textContent = 'Logga in';
-  }
-};
+currentAuthMode = mode;
+const loginTab = document.getElementById('tab-login');
+const registerTab = document.getElementById('tab-register');
+const registerFields = document.getElementById('auth-register-fields');
+const submitBtn = document.getElementById('authSubmitBtn');
 
+if (mode === 'register') {
+loginTab.classList.remove('active');
+registerTab.classList.add('active');
+registerFields.style.display = 'block';
+submitBtn.textContent = 'Skapa konto';
+} else {
+registerTab.classList.remove('active');
+loginTab.classList.add('active');
+registerFields.style.display = 'none';
+submitBtn.textContent = 'Logga in';
+}
+};
 function getFriendlyErrorMessage(error) {
-  const code = error.code;
-  switch(code) {
-    case 'auth/weak-password': return 'Lösenordet är för svagt. Det måste vara minst 6 tecken långt.';
-    case 'auth/wrong-password': return 'Felaktigt lösenord. Försök igen.';
-   case 'auth/invalid-email': return 'Ogiltigt användarnamn.';
-    case 'auth/email-already-in-use':  return 'Användarnamnet är redan taget.';
-    case 'auth/user-not-found': return 'Användarnamnet finns inte.';
-    case 'auth/network-request-failed': return 'Kunde inte ansluta till servern. Kontrollera din anslutning eller adblocker.';
-    default: return 'Ett fel uppstod: ' + error.message;
-  }
+const code = error.code;
+switch(code) {
+case 'auth/weak-password': return 'Lösenordet är för svagt. Det måste vara minst 6 tecken långt.';
+case 'auth/wrong-password': return 'Felaktigt lösenord. Försök igen.';
+case 'auth/invalid-email': return 'Ogiltigt användarnamn.';
+case 'auth/email-already-in-use':  return 'Användarnamnet är redan taget.';
+case 'auth/user-not-found': return 'Användarnamnet finns inte.';
+case 'auth/network-request-failed': return 'Kunde inte ansluta till servern. Kontrollera din anslutning eller adblocker.';
+default: return 'Ett fel uppstod: ' + error.message;
 }
-
+}
 window.submitAuth = async () => {
-
-  const loginUsername = document.getElementById('authUsername').value.trim().toLowerCase();
-  const email = `${loginUsername}@vmtips.local`;
-  const password = document.getElementById('authPassword').value;
-
-  if (!loginUsername || !password) {
-    return alert("Fyll i användarnamn och lösenord.");
-  }
-
-  if (currentAuthMode === 'login') {
-
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      closeModal('authModal');
-
-    } catch(e) {
-      alert(getFriendlyErrorMessage(e));
-    }
-
-  } else {
-
-    const firstName = document.getElementById('regFirstName').value.trim();
-    const lastName = document.getElementById('regLastName').value.trim();
-    const username = document.getElementById('regUsername').value.trim().toLowerCase();
-    const password = document.getElementById('regPassword').value;
-
-    if (!firstName || !lastName || !username) {
-      return alert("Fyll i alla profiluppgifter.");
-    }
-
-    try {
-
-      const email = `${username}@vmtips.local`;
-
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-      await setDoc(doc(db, "users", userCredential.user.uid), {
-        firstName,
-        lastName,
-        username
-      });
-
-      closeModal('authModal');
-      showToast("Konto skapat!");
-
-    } catch(e) {
-      alert(getFriendlyErrorMessage(e));
-    }
-  }
-};
-
-window.doLogout = async () => { await signOut(auth); location.reload(); };
-
-window.updateAllScores = async () => {
-
-  try {
-
-    await beräknaOchSparaPoäng();
-
-    showToast("Poäng uppdaterade!");
-
-  } catch (e) {
-
-    console.error(e);
-
-    showToast("Kunde inte uppdatera poäng", true);
-  }
-};
-
-onAuthStateChanged(auth, async (user) => {
-  if(user) {
-    const userDoc = await getDoc(doc(db, "users", user.uid));
-    if (userDoc.exists()) {
-      currentUserProfile = userDoc.data();
-      document.getElementById('userBadge').textContent = currentUserProfile.username;
-    } else {
-      document.getElementById('userBadge').textContent = user.email;
-    }
-    document.getElementById('userBadge').style.display = 'block';
-    document.getElementById('loginBtn').style.display = 'none';
-    document.getElementById('logoutBtn').style.display = 'block';
-    if (currentUserProfile?.username?.toLowerCase() === 'knight') {
-
-  const adminBtn = document.createElement('button');
-
-  adminBtn.textContent = '🔧 Uppdatera poäng';
-
-  adminBtn.className = 'btn';
-
-  adminBtn.style.marginLeft = '10px';
-
-  adminBtn.onclick = updateAllScores;
-
-  document.querySelector('.footer').appendChild(adminBtn);
+const loginUsername = document.getElementById('authUsername').value.trim().toLowerCase();
+const email = `${loginUsername}@vmtips.local`;
+const password = document.getElementById('authPassword').value;
+if (!loginUsername || !password) {
+return alert("Fyll i användarnamn och lösenord.");
 }
-
-    const brytpunkt = new Date('2026-06-12T01:00:00+02:00'); // 12 juni kl. 01:00
-    const nu = new Date();
-
-    if (nu < brytpunkt) {
-      showPage('groups'); // Visar gruppspelsmatcherna direkt så man kan tippa
-    } else {
-      showPage('topplista'); // Efter brytpunkten visas Topplistan direkt
-    }
-
-    // Vänta tills tipsen faktiskt laddats klart från databasen
-    await loadUserTips(user);
-  } else {
-    // Om ingen är inloggad, kör bara en grundrendering
-    renderTabContent(localStorage.getItem('activeTab') || 'groups');
-  }
-  
-  // Öppna rätt sparad flik EFTER att all data garanterat är på plats
-  applySavedTab();
-  document.getElementById('loading').classList.add('hidden');
+if (currentAuthMode === 'login') {
+try {
+await signInWithEmailAndPassword(auth, email, password);
+closeModal('authModal');
+} catch(e) {
+alert(getFriendlyErrorMessage(e));
+}
+} else {
+const firstName = document.getElementById('regFirstName').value.trim();
+const lastName = document.getElementById('regLastName').value.trim();
+const username = document.getElementById('regUsername').value.trim().toLowerCase();
+const password = document.getElementById('authPassword').value; // UPDATE: regPassword var odefinierad
+if (!firstName || !lastName || !username) {
+return alert("Fyll i alla profiluppgifter.");
+}
+try {
+const email = `${username}@vmtips.local`;
+const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+await setDoc(doc(db, "users", userCredential.user.uid), {
+firstName,
+lastName,
+username
 });
-
-async function loadUserTips(user) {
-  const d = await getDoc(doc(db, "tips", user.uid));
-  if(d.exists()) {
-    predictions = d.data().predictions || {};
-    loadBonus(d.data());
-  }
-  // Rendera ut enbart den flik som användaren tittar på just nu
-  const activeTab = localStorage.getItem('activeTab') || 'groups';
-  renderTabContent(activeTab);
-  updateStats();
+closeModal('authModal');
+showToast("Konto skapat!");
+} catch(e) {
+alert(getFriendlyErrorMessage(e));
 }
-
-function updateStats() {
-  const count = Object.values(predictions).filter(p => p.h !== '' && p.a !== '').length;
-  document.getElementById('footer-stats').textContent = `Tippat: ${count} / 104 matcher`;
 }
-
-function showToast(msg, isError = false) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.remove('success', 'error');
-  if (isError) t.classList.add('error'); else t.classList.add('success');
-  t.classList.add('show');
-  setTimeout(() => { t.classList.remove('show', 'success', 'error'); }, 7000);
-}
-
-// OPTIMERING: Rendera BARA innehållet för den aktiva fliken istället för alla 104 matcher
-function renderTabContent(tabId) {
-  if (tabId === 'groups') renderGroups();
-  else if (tabId === 'r16') renderGenericSlutspel(SCHEDULE_R16, 'schedule-r16-grid');
-  else if (tabId === 'qf') renderGenericSlutspel(SCHEDULE_QF, 'schedule-qf-grid');
-  else if (tabId === 'qf2') renderGenericSlutspel(SCHEDULE_QF2, 'schedule-qf2-grid');
-  else if (tabId === 'semi') renderGenericSlutspel(SCHEDULE_SEMI, 'schedule-semi-grid');
-  else if (tabId === 'bronze') renderGenericSlutspel(SCHEDULE_BRONZE, 'schedule-bronze-grid');
-  else if (tabId === 'final') renderGenericSlutspel(SCHEDULE_FINAL, 'schedule-final-grid');
-}
-
-window.showPage = (id, btn) => {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  
-  const targetPage = document.getElementById('page-' + id);
-  if (targetPage) targetPage.classList.add('active');
-  
-  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  
-  if (btn) {
-    btn.classList.add('active');
-  } else {
-    const fallbackBtn = document.getElementById('nav-' + id);
-    if (fallbackBtn) fallbackBtn.classList.add('active');
-  }
-  
-  localStorage.setItem('activeTab', id);
-    // Rendera fliken först när användaren klickar på den (gör laddningen supersnabb!)
-  renderTabContent(id);
-  if (id === 'topplista') renderTopplista();
-  if (id === 'grupptabell') renderGrupptabell();
 };
+window.doLogout = async () => { await signOut(auth); location.reload(); };
+window.updateAllScores = async () => {
+try {
+await beräknaOchSparaPoäng();
+// showToast("Poäng uppdaterade!"); // Flyttad in i beräknaOchSparaPoäng för att inte trigga vid fail
+} catch (e) {
+console.error(e);
+showToast(e.message || "Kunde inte uppdatera poäng", true);
+}
+};
+window.saveGroupTable = async () => {
+if (!isAdmin()) return;
+try {
+await setDoc(
+doc(db, 'facit', 'grupper'),
+groupTableData
+);
+showToast('Grupptabellen sparad!');
+} catch (e) {
+console.error(e);
+showToast('Kunde inte spara grupptabellen', true);
+}
+};
+onAuthStateChanged(auth, async (user) => {
+if(user) {
+const userDoc = await getDoc(doc(db, "users", user.uid));
+if (userDoc.exists()) {
+currentUserProfile = userDoc.data();
+document.getElementById('userBadge').textContent = currentUserProfile.username;
+} else {
+document.getElementById('userBadge').textContent = user.email;
+}
+document.getElementById('userBadge').style.display = 'block';
+document.getElementById('loginBtn').style.display = 'none';
+document.getElementById('logoutBtn').style.display = 'block';
+if (currentUserProfile?.username?.toLowerCase() === 'knight') {
+const adminBtn = document.createElement('button');
+adminBtn.textContent = ' 🔧  Uppdatera poäng';
+adminBtn.className = 'btn';
+adminBtn.style.marginLeft = '10px';
+adminBtn.onclick = updateAllScores;
+document.querySelector('.footer').appendChild(adminBtn);
+}
+const brytpunkt = new Date('2026-06-12T01:00:00+02:00'); 
+const nu = new Date();
+if (nu < brytpunkt) {
+showPage('groups');
+} else {
+showPage('topplista');
+}
+await loadUserTips(user);
+} else {
+renderTabContent(localStorage.getItem('activeTab') || 'groups');
+}
+applySavedTab();
+document.getElementById('loading').classList.add('hidden');
+});
+async function loadUserTips(user) {
+const d = await getDoc(doc(db, "tips", user.uid));
+if(d.exists()) {
+predictions = d.data().predictions || {};
+loadBonus(d.data());
+}
+const activeTab = localStorage.getItem('activeTab') || 'groups';
+renderTabContent(activeTab);
+updateStats();
+}
+function updateStats() {
+const count = Object.values(predictions).filter(p => p.h !== '' && p.a !== '').length;
+document.getElementById('footer-stats').textContent = `Tippat: ${count} / 104 matcher`;
+}
+function showToast(msg, isError = false) {
+const t = document.getElementById('toast');
+t.textContent = msg;
+t.classList.remove('success', 'error');
+if (isError) t.classList.add('error'); else t.classList.add('success');
+t.classList.add('show');
+setTimeout(() => { t.classList.remove('show', 'success', 'error'); }, 7000);
+}
+function renderTabContent(tabId) {
+if (tabId === 'groups') renderGroups();
+else if (tabId === 'r16') renderGenericSlutspel(SCHEDULE_R16, 'schedule-r16-grid');
+else if (tabId === 'qf') renderGenericSlutspel(SCHEDULE_QF, 'schedule-qf-grid');
+else if (tabId === 'qf2') renderGenericSlutspel(SCHEDULE_QF2, 'schedule-qf2-grid');
+else if (tabId === 'semi') renderGenericSlutspel(SCHEDULE_SEMI, 'schedule-semi-grid');
+else if (tabId === 'bronze') renderGenericSlutspel(SCHEDULE_BRONZE, 'schedule-bronze-grid');
+else if (tabId === 'final') renderGenericSlutspel(SCHEDULE_FINAL, 'schedule-final-grid');
+}
+window.showPage = (id, btn) => {
+document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
 
-// Rendera fliken först när användaren klickar på den (gör laddningen supersnabb!)
+const targetPage = document.getElementById('page-' + id);
+if (targetPage) targetPage.classList.add('active');
 
-// -------------------------------------------------------------
-// FLYTTA HIT: Alla globala fönsterfunktioner (Utanför onAuthStateChanged)
-// -------------------------------------------------------------
+document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
 
+if (btn) {
+btn.classList.add('active');
+} else {
+const fallbackBtn = document.getElementById('nav-' + id);
+if (fallbackBtn) fallbackBtn.classList.add('active');
+}
+
+localStorage.setItem('activeTab', id);
+renderTabContent(id);
+if (id === 'topplista') renderTopplista();
+if (id === 'grupptabell') renderGrupptabell();
+};
 window.openModal = (id) => document.getElementById(id).classList.add('open');
 window.closeModal = (id) => document.getElementById(id).classList.remove('open');
-
-// Gemensam funktion för att rita ut alla slutspelsflikar
-window.renderGenericSlutspel = function(scheduleData, containerId) { 
-  const container = document.getElementById(containerId); 
-  if (!container) return;
-
-  // Låsmekanism: Kolla om klockan har passerat 11 juni 2026 kl. 21:00
-  const deadline = new Date('2026-06-11T21:00:00');
-  const isLocked = false; 
-
-  container.innerHTML = scheduleData.map(day => ` 
-    <div class="date-divider">${day.date}</div> 
-    ${day.matches.map(m => { 
-      const valH = predictions[m.id]?.h || ''; 
-      const valA = predictions[m.id]?.a || ''; 
-      const teamH = predictions[m.id]?.teamH || ''; 
-      const teamA = predictions[m.id]?.teamA || ''; 
-      return ` 
-      <div class="match-card"> 
-        <div class="match-row"> 
-          <div class="match-info" style="display: flex; flex-direction: column; gap: 8px; flex: 1;"> 
-            <div style="display: flex; align-items: center; gap: 8px;"> 
-              <span style="font-size: 16px;"> 🏳️ </span> 
-              <input type="text" value="${teamH}" placeholder="${m.h}" ${isLocked ? 'disabled' : ''} onchange="updateSlutspelTeam('${m.id}', 'teamH', this.value)" style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;"> 
-            </div> 
-            <div style="display: flex; align-items: center; gap: 8px;"> 
-              <span style="font-size: 16px;"> 🏳️ </span> 
-              <input type="text" value="${teamA}" placeholder="${m.a}" ${isLocked ? 'disabled' : ''} onchange="updateSlutspelTeam('${m.id}', 'teamA', this.value)" style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;"> 
-            </div> 
-            <div class="match-meta"> 
-              <span class="meta-item">🕒 ${m.time}</span> 
-              <span class="meta-item">📺 ${m.tv}</span> 
-              <span class="meta-item"><span style="color:#ff4d4d">📍</span> ${m.city || 'TBD'}</span> 
-            </div> 
-          </div> 
-          <div class="score-inputs"> 
-            <input type="number" value="${valH}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','h',this.value)"> 
-            <span>-</span> 
-            <input type="number" value="${valA}" ${isLocked ? 'disabled' : ''} onchange="updatePred('${m.id}','a',this.value)"> 
-          </div> 
-        </div> 
-      </div>`; 
-    }).join('')} 
-  `).join('');
-}
-
-// Spara tips med inbyggd tidsspärr
-window.saveTips = async () => { 
-  if(!auth.currentUser) return showToast("Logga in först", true);
-  
-  // Säkerhetsspärr: Hindra inskickning efter turneringen startat
-  const deadline = new Date('2026-06-11T21:00:00');
-  if (new Date() > deadline) {
-    return showToast("Tipsen är låsta! Turneringen har redan startat.", true);
-  }
-
-  try {
-    await setDoc(doc(db, "tips", auth.currentUser.uid), { 
-      predictions, 
-      username: currentUserProfile?.username || 'Okänd användare'
-    }, {merge: true}); 
-    showToast("Sparat!"); 
-  } catch(e) {
-    showToast("Kunde inte spara: " + e.message, true);
-  }
+window.updateGroupValue = (grupp, index, field, value) => {
+if (!groupTableData[grupp]) return;
+groupTableData[grupp][index][field] = parseInt(value) || 0;
 };
-
 window.applySavedTab = function() {
-  const savedTab = localStorage.getItem('activeTab');
+const savedTab = localStorage.getItem('activeTab');
 const validTabs = ['groups', 'r16', 'qf', 'qf2', 'semi', 'bronze', 'final', 'topplista', 'grupptabell', 'bonus'];
-  if (savedTab && validTabs.includes(savedTab)) {
-    window.showPage(savedTab, null);
-  } else {
-    window.showPage('groups', null);
-  }
+if (savedTab && validTabs.includes(savedTab)) {
+window.showPage(savedTab, null);
+} else {
+window.showPage('groups', null);
 }
-
-// Nödbroms: Om Firebase blockeras av t.ex. AdBlock döljer vi laddningsskärmen efter 3 sekunder ändå
+}
 setTimeout(() => {
-  const loadingScreen = document.getElementById('loading');
-  if (loadingScreen && !loadingScreen.classList.contains('hidden')) {
-    loadingScreen.classList.add('hidden');
-    showToast("Kunde inte ansluta till Firebase. Inaktivera eventuell AdBlocker.", true);
-  }
-}, 7000); 
+const loadingScreen = document.getElementById('loading');
+if (loadingScreen && !loadingScreen.classList.contains('hidden')) {
+loadingScreen.classList.add('hidden');
+showToast("Kunde inte ansluta till Firebase. Inaktivera eventuell AdBlocker.", true);
+}
+}, 7000);
 async function renderGrupptabell() {
-  const grid = document.getElementById('grupptabell-grid');
-  if (!grid) return;
-
-  try {
-    const snap = await getDoc(doc(db, 'facit', 'grupper'));
-    if (!snap.exists()) {
-      grid.innerHTML = '<p style="color:var(--text2);">Ingen data ännu – turneringen har inte börjat.</p>';
-      return;
-    }
-
-    const data = snap.data();
-    const grupperHTML = Object.entries(data)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([grupp, lag]) => `
-        <div class="group-section">
-          <div class="group-label">Grupp ${grupp}</div>
-          <table class="group-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Lag</th>
-                <th>S</th><th>V</th><th>O</th><th>F</th>
-                <th>GM</th><th>IM</th><th>MS</th>
-                <th class="pts">P</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${lag.map((l, i) => `
-                <tr>
-                  <td style="color:var(--text2)">${i + 1}</td>
-                  <td>${l.lag}</td>
-                  <td>${l.s}</td><td>${l.v}</td><td>${l.o}</td><td>${l.f}</td>
-                  <td>${l.gm}</td><td>${l.im}</td><td>${l.ms}</td>
-                  <td class="pts">${l.p}</td>
-                </tr>`).join('')}
-            </tbody>
-          </table>
-        </div>`).join('');
-
-    grid.innerHTML = grupperHTML;
-  } catch (e) {
-    grid.innerHTML = '<p style="color:var(--text2);">Kunde inte ladda grupptabellen.</p>';
-  }
-} 
-// -------------------------------------------------------
-// POÄNGBERÄKNING
-// -------------------------------------------------------
-
+const grid = document.getElementById('grupptabell-grid');
+if (!grid) return;
+try {
+const snap = await getDoc(doc(db, 'facit', 'grupper'));
+if (!snap.exists()) {
+grid.innerHTML = '<p style="color:var(--text2);">Ingen data ännu – turneringen har inte börjat.</p>';
+return;
+}
+const data = snap.data();
+groupTableData = data;
+const grupperHTML = Object.entries(data)
+.sort(([a], [b]) => a.localeCompare(b))
+.map(([grupp, lag]) => `
+<div class="group-section">
+<div class="group-label">Grupp ${grupp}</div>
+<table class="group-table">
+<thead>
+<tr>
+<th>#</th>
+<th>Lag</th>
+<th>S</th><th>V</th><th>O</th><th>F</th>
+<th>GM</th><th>IM</th><th>MS</th>
+<th class="pts">P</th>
+</tr>
+</thead>
+<tbody>
+${lag.map((l, i) => `
+<tr>
+<td style="color:var(--text2)">${i + 1}</td>
+<td>${l.lag}</td>
+<td>
+${isAdmin()
+? `<input type="number" value="${l.s}" onchange="updateGroupValue('${grupp}', ${i}, 's', this.value)">`
+: l.s}
+</td>
+<td>
+${isAdmin()
+? `<input type="number" value="${l.v}" onchange="updateGroupValue('${grupp}', ${i}, 'v', this.value)">`
+: l.v}
+</td>
+<td>
+${isAdmin()
+? `<input type="number" value="${l.o}" onchange="updateGroupValue('${grupp}', ${i}, 'o', this.value)">`
+: l.o}
+</td>
+<td>
+${isAdmin()
+? `<input type="number" value="${l.f}" onchange="updateGroupValue('${grupp}', ${i}, 'f', this.value)">`
+: l.f}
+</td>
+<td>
+${isAdmin()
+? `<input type="number" value="${l.gm}" onchange="updateGroupValue('${grupp}', ${i}, 'gm', this.value)">`
+: l.gm}
+</td>
+<td>
+${isAdmin()
+? `<input type="number" value="${l.im}" onchange="updateGroupValue('${grupp}', ${i}, 'im', this.value)">`
+: l.im}
+</td>
+<td>
+${isAdmin()
+? `<input type="number" value="${l.ms}" onchange="updateGroupValue('${grupp}', ${i}, 'ms', this.value)">`
+: l.ms}
+</td>
+<td class="pts">
+${isAdmin()
+? `<input type="number" value="${l.p}" onchange="updateGroupValue('${grupp}', ${i}, 'p', this.value)">`
+: l.p}
+</td>                </tr>`).join('')}
+</tbody>
+</table>
+</div>`).join('');
+grid.innerHTML = grupperHTML + (
+isAdmin()
+? `<div style="margin-top:20px;">
+<button class="btn" onclick="saveGroupTable()">
+💾  Spara grupptabell
+</button>
+</div>`
+: ''
+);
+} catch (e) {
+grid.innerHTML = '<p style="color:var(--text2);">Kunde inte ladda grupptabellen.</p>';
+}
+}
 function räknaMatchPoäng(tippH, tippA, facitH, facitA) {
-  if (tippH === '' || tippA === '' || tippH === null || tippA === null) return 0;
-  if (facitH === null || facitA === null) return 0;
+if (tippH === '' || tippA === '' || tippH === null || tippA === null) return 0;
+if (facitH === null || facitA === null) return 0;
+const th = parseInt(tippH), ta = parseInt(tippA);
+const fh = parseInt(facitH), fa = parseInt(facitA);
 
-  const th = parseInt(tippH), ta = parseInt(tippA);
-  const fh = parseInt(facitH), fa = parseInt(facitA);
-  if (isNaN(th) || isNaN(ta)) return 0;
+// RÄTTAT: Kollar även NaN på facit
+if (isNaN(th) || isNaN(ta) || isNaN(fh) || isNaN(fa)) return 0;
 
-  // Helt rätt resultat
-  if (th === fh && ta === fa) return 4;
-
-  // Rätt tecken + rätt målskillnad
-  const tippUtfall = th > ta ? 1 : th < ta ? -1 : 0;
-  const facitUtfall = fh > fa ? 1 : fh < fa ? -1 : 0;
-  if (tippUtfall !== facitUtfall) return 0; // Fel tecken
-
-  const tippMS = th - ta;
-  const facitMS = fh - fa;
-  if (tippMS === facitMS && facitUtfall !== 0) return 2; // Rätt målskillnad (ej oavgjort)
-
-  // Rätt tecken
-  return 1;
+if (th === fh && ta === fa) return 4;
+const tippUtfall = th > ta ? 1 : th < ta ? -1 : 0;
+const facitUtfall = fh > fa ? 1 : fh < fa ? -1 : 0;
+if (tippUtfall !== facitUtfall) return 0; 
+const tippMS = th - ta;
+const facitMS = fh - fa;
+if (tippMS === facitMS && facitUtfall !== 0) return 2; 
+return 1;
 }
-
 function räknaSlutspelslagPoäng(predictions, facitResultat) {
-  let poäng = 0;
+let poäng = 0;
+const rundaPoäng = {
+r16:    2,
+qf:     3,
+qf2:    4,
+semi:   6,
+final:  8,
+};
+const slutspelsMatcher = [
+...Array.from({length:16}, (_,i) => ({id:`r16_${i+1}`, runda:'r16'})),
+...Array.from({length:8},  (_,i) => ({id:`qf_${i+1}`,  runda:'qf'})),
+...Array.from({length:4},  (_,i) => ({id:`qf2_${i+1}`, runda:'qf2'})),
+{id:'semi_1', runda:'semi'}, {id:'semi_2', runda:'semi'},
+{id:'final_1', runda:'final'},
+];
+for (const match of slutspelsMatcher) {
+const facit = facitResultat[match.id];
+const tipp  = predictions[match.id];
 
-  // Poäng per runda för rätt lag
-  const rundaPoäng = {
-    r16:    2,
-    qf:     3,
-    qf2:    4,
-    semi:   6,
-    final:  8,
-  };
+// RÄTTAT: Tog bort kravet på matchresultat (facit.h === null)
+if (!facit || !tipp) continue;
 
-  // För varje slutspelsmatch – kolla om tippat lag faktiskt spelade matchen
-  const slutspelsMatcher = [
-    ...Array.from({length:16}, (_,i) => ({id:`r16_${i+1}`, runda:'r16'})),
-    ...Array.from({length:8},  (_,i) => ({id:`qf_${i+1}`,  runda:'qf'})),
-    ...Array.from({length:4},  (_,i) => ({id:`qf2_${i+1}`, runda:'qf2'})),
-    {id:'semi_1', runda:'semi'}, {id:'semi_2', runda:'semi'},
-    {id:'final_1', runda:'final'},
-  ];
-
-  for (const match of slutspelsMatcher) {
-    const facit = facitResultat[match.id];
-    const tipp  = predictions[match.id];
-    if (!facit || facit.h === null || !tipp) continue;
-
-    const p = rundaPoäng[match.runda];
-
-    // Rätt hemmalag
-    if (tipp.teamH && facit.winnerH && 
-        tipp.teamH.trim().toLowerCase() === facit.winnerH.trim().toLowerCase()) {
-      poäng += p;
-    }
-    // Rätt bortalag
-    if (tipp.teamA && facit.winnerA && 
-        tipp.teamA.trim().toLowerCase() === facit.winnerA.trim().toLowerCase()) {
-      poäng += p;
-    }
-  }
-
-  // VM-vinnare (16p), silver (10p), brons (6p)
-  const finalFacit  = facitResultat['final_1'];
-  const bronzeFacit = facitResultat['bronze_1'];
-  const winnerTipp  = predictions['winner']?.teamH?.trim().toLowerCase();
-
-  if (finalFacit?.vmVinnare && winnerTipp === finalFacit.vmVinnare.trim().toLowerCase())  poäng += 16;
-  if (finalFacit?.silver    && winnerTipp === finalFacit.silver.trim().toLowerCase())     poäng += 10;
-  if (bronzeFacit?.brons    && winnerTipp === bronzeFacit.brons.trim().toLowerCase())     poäng += 6;
-
-  return poäng;
+const p = rundaPoäng[match.runda];
+if (tipp.teamH && facit.winnerH &&
+tipp.teamH.trim().toLowerCase() === facit.winnerH.trim().toLowerCase()) {
+poäng += p;
 }
-
+if (tipp.teamA && facit.winnerA &&
+tipp.teamA.trim().toLowerCase() === facit.winnerA.trim().toLowerCase()) {
+poäng += p;
+}
+}
+const finalFacit  = facitResultat['final_1'];
+const bronzeFacit = facitResultat['bronze_1'];
+const winnerTipp  = predictions['winner']?.teamH?.trim().toLowerCase();
+if (finalFacit?.vmVinnare && winnerTipp === finalFacit.vmVinnare.trim().toLowerCase())  poäng += 16;
+if (finalFacit?.silver    && winnerTipp === finalFacit.silver.trim().toLowerCase())     poäng += 10;
+if (bronzeFacit?.brons    && winnerTipp === bronzeFacit.brons.trim().toLowerCase())     poäng += 6;
+return poäng;
+}
 function räknaBonusPoäng(bonus, bonusFacit) {
-  if (!bonus || !bonusFacit) return 0;
-  let poäng = 0;
-  const jämför = (a, b) => a && b && a.trim().toLowerCase() === b.trim().toLowerCase();
+if (!bonus || !bonusFacit) return 0;
+let poäng = 0;
+const jämför = (a, b) => a && b && a.trim().toLowerCase() === b.trim().toLowerCase();
+if (jämför(bonus.skyttekung,    bonusFacit.skyttekung))   poäng += 5;
+if (jämför(bonus.flest_mal,     bonusFacit.flest_mal))    poäng += 3;
+if (jämför(bonus.gula_kort,     bonusFacit.gula_kort))    poäng += 3;
+if (jämför(bonus.roda_kort,     bonusFacit.roda_kort))    poäng += 4;
+if (jämför(bonus.flest_inslapp, bonusFacit.flest_inslapp)) poäng += 3;
+return poäng;
+}
+async function beräknaOchSparaPoäng() {
+const { getDocs, collection, getDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+const [facitSnap, bonusFacitSnap] = await Promise.all([
+getDoc(doc(db, 'facit', 'resultat')),
+getDoc(doc(db, 'facit', 'bonus'))
+]);
 
-  if (jämför(bonus.skyttekung,    bonusFacit.skyttekung))   poäng += 5;
-  if (jämför(bonus.flest_mal,     bonusFacit.flest_mal))    poäng += 3;
-  if (jämför(bonus.gula_kort,     bonusFacit.gula_kort))    poäng += 3;
-  if (jämför(bonus.roda_kort,     bonusFacit.roda_kort))    poäng += 4;
-  if (jämför(bonus.flest_inslapp, bonusFacit.flest_inslapp)) poäng += 3;
-
-  return poäng;
+// RÄTTAT: Throwa istället för en silent return
+if (!facitSnap.exists()) {
+throw new Error("Facit saknas i databasen.");
 }
 
-async function beräknaOchSparaPoäng() {
-  try {
-    const { getDocs, collection, getDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
-
-    // Hämta facit
-    const [facitSnap, bonusFacitSnap] = await Promise.all([
-      getDoc(doc(db, 'facit', 'resultat')),
-      getDoc(doc(db, 'facit', 'bonus'))
-    ]);
-
-    if (!facitSnap.exists()) return;
-    const facitResultat = facitSnap.data();
-    const bonusFacit    = bonusFacitSnap.exists() ? bonusFacitSnap.data() : {};
-
-    // Hämta alla deltagares tips
-    const snapshot = await getDocs(collection(db, 'tips'));
-
-    const batch = [];
-
-    snapshot.forEach(docSnap => {
-      const data        = docSnap.data();
-      const predictions = data.predictions || {};
-      const bonus       = data.bonus || {};
-      let totalPoäng    = 0;
-
-      // Gruppspel m1–m72
-      for (let i = 1; i <= 72; i++) {
-        const id    = `m${i}`;
-        const tipp  = predictions[id];
-        const facit = facitResultat[id];
-        if (!tipp || !facit) continue;
-        totalPoäng += räknaMatchPoäng(tipp.h, tipp.a, facit.h, facit.a);
-      }
-
-      // Slutspelsmatcher (samma 1/2/4-skala)
-      const slutspelsIds = [
-        ...Array.from({length:16}, (_,i) => `r16_${i+1}`),
-        ...Array.from({length:8},  (_,i) => `qf_${i+1}`),
-        ...Array.from({length:4},  (_,i) => `qf2_${i+1}`),
-        'semi_1', 'semi_2', 'bronze_1', 'final_1'
-      ];
-
-      for (const id of slutspelsIds) {
-        const tipp  = predictions[id];
-        const facit = facitResultat[id];
-        if (!tipp || !facit) continue;
-        totalPoäng += räknaMatchPoäng(tipp.h, tipp.a, facit.h, facit.a);
-      }
-
-      // Slutspelslag
-      totalPoäng += räknaSlutspelslagPoäng(predictions, facitResultat);
-
-      // Bonusfrågor
-      totalPoäng += räknaBonusPoäng(bonus, bonusFacit);
-
-      batch.push({ uid: docSnap.id, poäng: totalPoäng });
-    });
-
-    // Spara poäng för varje deltagare
-    for (const { uid, poäng } of batch) {
-      await setDoc(doc(db, 'tips', uid), { poäng }, { merge: true });
-    }
-
-    console.log('✅ Poäng beräknade och sparade!');
-    showToast('Poäng uppdaterade!');
-
-  } catch(e) {
-    console.error('Poängberäkning misslyckades:', e);
-  }
-}  
+const facitResultat = facitSnap.data();
+const bonusFacit    = bonusFacitSnap.exists() ? bonusFacitSnap.data() : {};
+const snapshot = await getDocs(collection(db, 'tips'));
+const batch = [];
+snapshot.forEach(docSnap => {
+const data        = docSnap.data();
+const predictions = data.predictions || {};
+const bonus       = data.bonus || {};
+let totalPoäng    = 0;
+for (let i = 1; i <= 72; i++) {
+const id    = `m${i}`;
+const tipp  = predictions[id];
+const facit = facitResultat[id];
+if (!tipp || !facit) continue;
+totalPoäng += räknaMatchPoäng(tipp.h, tipp.a, facit.h, facit.a);
+}
+const slutspelsIds = [
+...Array.from({length:16}, (_,i) => `r16_${i+1}`),
+...Array.from({length:8},  (_,i) => `qf_${i+1}`),
+...Array.from({length:4},  (_,i) => `qf2_${i+1}`),
+'semi_1', 'semi_2', 'bronze_1', 'final_1'
+];
+for (const id of slutspelsIds) {
+const tipp  = predictions[id];
+const facit = facitResultat[id];
+if (!tipp || !facit) continue;
+totalPoäng += räknaMatchPoäng(tipp.h, tipp.a, facit.h, facit.a);
+}
+totalPoäng += räknaSlutspelslagPoäng(predictions, facitResultat);
+totalPoäng += räknaBonusPoäng(bonus, bonusFacit);
+batch.push({ uid: docSnap.id, poäng: totalPoäng });
+});
+for (const { uid, poäng } of batch) {
+await setDoc(doc(db, 'tips', uid), { poäng }, { merge: true });
+}
+console.log(' ✅  Poäng beräknade och sparade!');
+showToast('Poäng uppdaterade!');
+}
 async function renderTopplista() {
-  const { getDocs, collection } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
-  const grid = document.getElementById('topplista-grid');
-  if (!grid) return;
-
-  try {
-    const snapshot = await getDocs(collection(db, 'tips'));
-    const rows = [];
-
-    snapshot.forEach(docSnap => {
-      const data = docSnap.data();
-      rows.push({
-        namn: data.username || data.firstName || 'Okänd',
-        poäng: data.poäng ?? 0
-      });
-    });
-
-    rows.sort((a, b) => b.poäng - a.poäng);
-
-    grid.innerHTML = `
-      <table style="width:100%; border-collapse:collapse; font-family:'Barlow Condensed',sans-serif;">
-        <thead>
-          <tr style="color:var(--gold); font-size:15px; border-bottom:1px solid var(--border);">
-            <th style="text-align:left; padding:8px 4px;">#</th>
-            <th style="text-align:left; padding:8px 4px;">Namn</th>
-            <th style="text-align:right; padding:8px 4px;">Poäng</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${rows.map((r, i) => `
-            <tr style="border-bottom:1px solid rgba(89,213,255,0.08); font-size:16px;">
-              <td style="padding:8px 4px; color:var(--text2);">${i + 1}</td>
-              <td style="padding:8px 4px; color:var(--text);">${r.namn}</td>
-              <td style="padding:8px 4px; text-align:right; color:var(--gold);">${r.poäng}</td>
-            </tr>`).join('')}
-        </tbody>
-      </table>`;
-  } catch (e) {
-    grid.innerHTML = `<p style="color:red; font-weight:bold; padding:10px;">Fel vid laddning: ${e.message}</p>`;
-    console.error("Topplista-fel:", e);
-  }
+const { getDocs, collection } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+const grid = document.getElementById('topplista-grid');
+if (!grid) return;
+try {
+const snapshot = await getDocs(collection(db, 'tips'));
+const rows = [];
+snapshot.forEach(docSnap => {
+const data = docSnap.data();
+rows.push({
+namn: data.username || data.firstName || 'Okänd',
+poäng: data.poäng ?? 0
+});
+});
+rows.sort((a, b) => b.poäng - a.poäng);
+grid.innerHTML = `
+<table style="width:100%; border-collapse:collapse; font-family:'Barlow Condensed',sans-serif;">
+<thead>
+<tr style="color:var(--gold); font-size:15px; border-bottom:1px solid var(--border);">
+<th style="text-align:left; padding:8px 4px;">#</th>
+<th style="text-align:left; padding:8px 4px;">Namn</th>
+<th style="text-align:right; padding:8px 4px;">Poäng</th>
+</tr>
+</thead>
+<tbody>
+${rows.map((r, i) => `
+<tr style="border-bottom:1px solid rgba(89,213,255,0.08); font-size:16px;">
+<td style="padding:8px 4px; color:var(--text2);">${i + 1}</td>
+<td style="padding:8px 4px; color:var(--text);">${r.namn}</td>
+<td style="padding:8px 4px; text-align:right; color:var(--gold);">${r.poäng}</td>
+</tr>`).join('')}
+</tbody>
+</table>`;
+} catch (e) {
+grid.innerHTML = '<p style="color:var(--text2);"> Topplistan aktiveras efter första matchens slut.</p>';
+}
 }
 window.saveBonus = function(key, value) {
-  if (!auth.currentUser) {
-    showToast("Du måste logga in för att tippa!", true);
-    openModal('authModal');
-    return;
-  }
-  const deadline = new Date('2026-06-11T21:00:00+02:00');
-  if (new Date() > deadline) return showToast("Tipsen är låsta!", true);
-  if (!window.bonusData) window.bonusData = {};
-  window.bonusData[key] = value;
-  setDoc(doc(db, 'tips', auth.currentUser.uid), { bonus: window.bonusData }, { merge: true });
+if (!auth.currentUser) {
+showToast("Du måste logga in för att tippa!", true);
+openModal('authModal');
+return;
+}
+const deadline = new Date('2026-06-11T21:00:00+02:00');
+if (new Date() > deadline) return showToast("Tipsen är låsta!", true);
+if (!window.bonusData) window.bonusData = {};
+window.bonusData[key] = value;
+setDoc(doc(db, 'tips', auth.currentUser.uid), { bonus: window.bonusData }, { merge: true });
 };
-
 function loadBonus(data) {
-  const bonus = data.bonus || {};
-  ['skyttekung','flest_mal','gula_kort','roda_kort','flest_inslapp','sista_mal','total_mal'].forEach(key => {
-    const el = document.getElementById('bonus_' + key);
-    if (el && bonus[key] !== undefined) el.value = bonus[key];
-  });
-  window.bonusData = bonus;
-}  
+const bonus = data.bonus || {};
+['skyttekung','flest_mal','gula_kort','roda_kort','flest_inslapp','sista_mal','total_mal'].forEach(key => {
+const el = document.getElementById('bonus_' + key);
+if (el && bonus[key] !== undefined) el.value = bonus[key];
+});
+window.bonusData = bonus;
+}
 </script>
 </body>
 </html>
