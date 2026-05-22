@@ -689,11 +689,25 @@ showToast(e.message || "Kunde inte uppdatera poäng", true);
 window.saveGroupTable = async () => {
 if (!isAdmin()) return;
 try {
+// DUBBEL SÄKERHET: Vi skannar DOM direkt för att plocka upp alla fält 
+// på skärmen så att inga uppdateringar tappas bort i JavaScripts minne
+const inputs = document.querySelectorAll('.admin-table-input');
+inputs.forEach(input => {
+const grupp = input.getAttribute('data-grupp');
+const index = input.getAttribute('data-index');
+const field = input.getAttribute('data-field');
+if (grupp && index !== null && field && groupTableData[grupp]) {
+    const val = input.value;
+    groupTableData[grupp][Number(index)][field] = val === '' ? 0 : Number(val);
+}
+});
+
 const cleanData = JSON.parse(JSON.stringify(groupTableData));
 await setDoc(doc(db, 'facit', 'grupper'), cleanData);
-showToast('Grupptabellen sparad! Sorteras nu...');
-// Hämta och rita ut tabellen på nytt för att direkt visa rätt sortering för admin
-await renderGrupptabell(); 
+showToast('Grupptabellen sparad! Synlig för alla nu.');
+
+// Tvinga tabellen att ladda om datan från servern så vi direkt ser sorteringen
+await window.renderGrupptabell();
 } catch (e) {
 console.error(e);
 showToast('Kunde inte spara grupptabellen', true);
@@ -734,6 +748,7 @@ renderTabContent(localStorage.getItem('activeTab') || 'groups');
 applySavedTab();
 document.getElementById('loading').classList.add('hidden');
 });
+
 async function loadUserTips(user) {
 const d = await getDoc(doc(db, "tips", user.uid));
 if(d.exists()) {
@@ -744,10 +759,12 @@ const activeTab = localStorage.getItem('activeTab') || 'groups';
 renderTabContent(activeTab);
 updateStats();
 }
+
 function updateStats() {
 const count = Object.values(predictions).filter(p => p.h !== '' && p.a !== '').length;
 document.getElementById('footer-stats').textContent = `Tippat: ${count} / 104 matcher`;
 }
+
 function showToast(msg, isError = false) {
 const t = document.getElementById('toast');
 t.textContent = msg;
@@ -756,6 +773,7 @@ if (isError) t.classList.add('error'); else t.classList.add('success');
 t.classList.add('show');
 setTimeout(() => { t.classList.remove('show', 'success', 'error'); }, 7000);
 }
+
 function renderTabContent(tabId) {
 if (tabId === 'groups') renderGroups();
 else if (tabId === 'r16') renderGenericSlutspel(SCHEDULE_R16, 'schedule-r16-grid');
@@ -765,6 +783,7 @@ else if (tabId === 'semi') renderGenericSlutspel(SCHEDULE_SEMI, 'schedule-semi-g
 else if (tabId === 'bronze') renderGenericSlutspel(SCHEDULE_BRONZE, 'schedule-bronze-grid');
 else if (tabId === 'final') renderGenericSlutspel(SCHEDULE_FINAL, 'schedule-final-grid');
 }
+
 window.showPage = (id, btn) => {
 document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
 const targetPage = document.getElementById('page-' + id);
@@ -779,16 +798,16 @@ if (fallbackBtn) fallbackBtn.classList.add('active');
 localStorage.setItem('activeTab', id);
 renderTabContent(id);
 if (id === 'topplista') renderTopplista();
-if (id === 'grupptabell') renderGrupptabell();
+if (id === 'grupptabell') window.renderGrupptabell();
 };
+
 window.openModal = (id) => document.getElementById(id).classList.add('open');
 window.closeModal = (id) => document.getElementById(id).classList.remove('open');
 
-// Uppdaterad för att enklare hantera och spara värden på rätt sätt
 window.updateGroupValue = (grupp, index, field, value) => {
 if (!groupTableData || !groupTableData[grupp]) return;
 const parsed = parseInt(value, 10);
-groupTableData[grupp][index][field] = isNaN(parsed) ? 0 : parsed;
+groupTableData[grupp][Number(index)][field] = isNaN(parsed) ? 0 : parsed;
 };
 
 window.applySavedTab = function() {
@@ -808,7 +827,7 @@ showToast("Kunde inte ansluta till Firebase. Inaktivera eventuell AdBlocker.", t
 }
 }, 7000);
 
-// Nya stabilare strukturen för att generera hela HTML-koden för tabellen och inputs
+// Expanderad till global så att moduler och event handlers alltid hittar den
 window.renderGrupptabell = async function() {
 const grid = document.getElementById('grupptabell-grid');
 if (!grid) return;
@@ -849,8 +868,8 @@ const grupperHTML = Object.entries(groupTableData)
 </thead>
 <tbody>
 ${lag.map((l, i) => {
-// Hjälpfunktion skapad för att säkerställa att värden och HTML-strängar aldrig krockar
-const makeInput = (field, val) => `<input type="number" class="admin-table-input" value="${val}" oninput="updateGroupValue('${grupp}', ${i}, '${field}', this.value)">`;
+// Hjälpfunktion skapad för att säkerställa att variabler skickas vidare 100% säkert
+const makeInput = (field, val) => `<input type="number" class="admin-table-input" data-grupp="${grupp}" data-index="${i}" data-field="${field}" value="${val}" onchange="window.updateGroupValue('${grupp}', ${i}, '${field}', this.value)">`;
 
 const vS = l.s !== undefined && l.s !== '' ? Number(l.s) : 0;
 const vV = l.v !== undefined && l.v !== '' ? Number(l.v) : 0;
@@ -879,11 +898,12 @@ return `
 </table>
 </div>`).join('');
 
+// Knappen som sparar
 grid.innerHTML = grupperHTML + (
 isAdmin()
 ? `<div style="margin-top:20px;">
-<button class="btn" onclick="saveGroupTable()">
-💾   Spara grupptabell
+<button class="btn" onclick="window.saveGroupTable()">
+💾    Spara grupptabell
 </button>
 </div>`
 : ''
@@ -908,6 +928,7 @@ const facitMS = fh - fa;
 if (tippMS === facitMS && facitUtfall !== 0) return 2;
 return 1;
 }
+
 function räknaSlutspelslagPoäng(predictions, facitResultat) {
 let poäng = 0;
 const rundaPoäng = {
@@ -946,6 +967,7 @@ if (finalFacit?.silver    && winnerTipp === finalFacit.silver.trim().toLowerCase
 if (bronzeFacit?.brons    && winnerTipp === bronzeFacit.brons.trim().toLowerCase())     poäng += 6;
 return poäng;
 }
+
 function räknaBonusPoäng(bonus, bonusFacit) {
 if (!bonus || !bonusFacit) return 0;
 let poäng = 0;
@@ -957,6 +979,7 @@ if (jämför(bonus.roda_kort,     bonusFacit.roda_kort))    poäng += 4;
 if (jämför(bonus.flest_inslapp, bonusFacit.flest_inslapp)) poäng += 3;
 return poäng;
 }
+
 async function beräknaOchSparaPoäng() {
 const { getDocs, collection, getDoc } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
 const [facitSnap, bonusFacitSnap] = await Promise.all([
@@ -1001,9 +1024,10 @@ batch.push({ uid: docSnap.id, poäng: totalPoäng });
 for (const { uid, poäng } of batch) {
 await setDoc(doc(db, 'tips', uid), { poäng }, { merge: true });
 }
-console.log('   ✅    Poäng beräknade och sparade!');
+console.log('   ✅    Po  ä  ng ber  ä  knade och sparade!');
 showToast('Poäng uppdaterade!');
 }
+
 async function renderTopplista() {
 const { getDocs, collection } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
 const grid = document.getElementById('topplista-grid');
@@ -1041,6 +1065,7 @@ ${rows.map((r, i) => `
 grid.innerHTML = '<p style="color:var(--text2);"> Topplistan aktiveras efter första matchens slut.</p>';
 }
 }
+
 window.saveBonus = function(key, value) {
 if (!auth.currentUser) {
 showToast("Du måste logga in för att tippa!", true);
@@ -1053,6 +1078,7 @@ if (!window.bonusData) window.bonusData = {};
 window.bonusData[key] = value;
 setDoc(doc(db, 'tips', auth.currentUser.uid), { bonus: window.bonusData }, { merge: true });
 };
+
 function loadBonus(data) {
 const bonus = data.bonus || {};
 ['skyttekung','flest_mal','gula_kort','roda_kort','flest_inslapp','sista_mal','total_mal'].forEach(key => {
