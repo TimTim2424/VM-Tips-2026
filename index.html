@@ -560,7 +560,7 @@ function renderGroups() {
 
   // Kolla om klockan har passerat 11 juni 2026 kl. 21:00
   const deadline = new Date('2026-06-11T21:00:00');
-  const isLocked = new Date() > deadline;
+  const isLocked = false;
 
   container.innerHTML = SCHEDULE.map(day => `
     <div class="date-divider">${day.date}</div>
@@ -597,7 +597,7 @@ function renderGenericSlutspel(scheduleData, containerId) {
 
   // Kolla om klockan har passerat 11 juni 2026 kl. 21:00
   const deadline = new Date('2026-06-11T21:00:00');
-  const isLocked = new Date() > deadline; 
+  const isLocked = false;
 
   container.innerHTML = scheduleData.map(day => ` 
     <div class="date-divider">${day.date}</div> 
@@ -903,7 +903,7 @@ window.renderGenericSlutspel = function(scheduleData, containerId) {
 
   // Låsmekanism: Kolla om klockan har passerat 11 juni 2026 kl. 21:00
   const deadline = new Date('2026-06-11T21:00:00');
-  const isLocked = new Date() > deadline; 
+  const isLocked = false; 
 
   container.innerHTML = scheduleData.map(day => ` 
     <div class="date-divider">${day.date}</div> 
