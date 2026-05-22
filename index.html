@@ -172,7 +172,8 @@ min-width: 110px;
 border-top: 1px solid var(--border);
 color: var(--text);
 }
-.group-table tbody tr:nth-child(-n+2) {
+/* RÄTTAT: Applicera border på första td:n istället för tr för att förhindra förskjutning */
+.group-table tbody tr:nth-child(-n+2) td:first-child {
 border-left: 3px solid var(--gold);
 }
 .group-table .pts {
@@ -206,6 +207,29 @@ width: 220px;
 .bonus-row input::placeholder {
 color: rgba(89,213,255,0.3);
 }
+
+/* RÄTTAT: Specifik styling för admin-fälten i grupptabellen så de inte spränger layouten */
+.admin-table-input {
+width: 38px;
+height: 28px;
+background: rgba(89,213,255,0.05);
+border: 1px solid rgba(89,213,255,0.25);
+color: var(--gold);
+text-align: center;
+font-family: 'Barlow Condensed', sans-serif;
+font-size: 15px;
+font-weight: 700;
+border-radius: 4px;
+padding: 0;
+}
+.admin-table-input::-webkit-outer-spin-button,
+.admin-table-input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+.admin-table-input[type=number] {
+-moz-appearance: textfield;
+}
 </style>
 </head>
 <body>
@@ -222,7 +246,7 @@ color: rgba(89,213,255,0.3);
 </header>
 <nav>
 <div class="nav-inner">
-<button id="nav-topplista" onclick="showPage('topplista', this)"> 🏆  Topplista</button>
+<button id="nav-topplista" onclick="showPage('topplista', this)">  🏆   Topplista</button>
 <button id="nav-grupptabell" onclick="showPage('grupptabell', this)"> Grupptabeller</button>
 <button id="nav-groups" class="active" onclick="showPage('groups', this)">Gruppspelsmatcher</button>
 <button id="nav-r16" onclick="showPage('r16', this)">16-delsfinaler</button>
@@ -231,7 +255,7 @@ color: rgba(89,213,255,0.3);
 <button id="nav-semi" onclick="showPage('semi', this)">Semifinaler</button>
 <button id="nav-bronze" onclick="showPage('bronze', this)">Bronsmatch</button>
 <button id="nav-final" onclick="showPage('final', this)">VM-Final</button>
-<button id="nav-bonus" onclick="showPage('bonus', this)"> ⭐  Bonus & Tiebreak</button>
+<button id="nav-bonus" onclick="showPage('bonus', this)">  ⭐   Bonus & Tiebreak</button>
 </div>
 </nav>
 <div class="container">
@@ -240,7 +264,6 @@ color: rgba(89,213,255,0.3);
 <div class="page-sub">72 matcher </div>
 <div id="schedule-grid"></div>
 </div>
-
 <div class="page" id="page-r16">
 <div class="page-title">16-delsfinaler</div>
 <div class="page-sub">Slutspelsmatcher (Ev. match med Sverige sänds i TV4)</div>
@@ -273,7 +296,7 @@ color: rgba(89,213,255,0.3);
 </div>
 <div class="final-trophy-wrapper">
 <div>
-<div class="winner-label"> 🏆  VM-vinnare</div>
+<div class="winner-label">  🏆   VM-vinnare</div>
 <input type="text" class="winner-input" id="winnerInput"
 placeholder="Din VM-vinnare?"
 onchange="updateSlutspelTeam('winner','teamH',this.value)">
@@ -301,27 +324,27 @@ onchange="updateSlutspelTeam('winner','teamH',this.value)">
 <div class="page-title" style="font-size:18px; margin-top:8px;">Bonusfrågor</div>
 <div class="match-card" style="padding:16px;">
 <div class="bonus-row">
-<label> 🥇  Turneringens skyttekung</label>
+<label>  🥇   Turneringens skyttekung</label>
 <input type="text" id="bonus_skyttekung" placeholder="Spelarens namn..."
 onchange="saveBonus('skyttekung', this.value)">
 </div>
 <div class="bonus-row">
-<label> ⚽  Laget med flest m å l i gruppspelet</label>
+<label>  ⚽   Laget med flest m  å  l i gruppspelet</label>
 <input type="text" id="bonus_flest_mal" placeholder="Lag..."
 onchange="saveBonus('flest_mal', this.value)">
 </div>
 <div class="bonus-row">
-<label> 🟨  Laget med flest gula kort</label>
+<label>  🟨   Laget med flest gula kort</label>
 <input type="text" id="bonus_gula_kort" placeholder="Lag..."
 onchange="saveBonus('gula_kort', this.value)">
 </div>
 <div class="bonus-row">
-<label> 🟥  Laget med flest röda kort</label>
+<label>  🟥   Laget med flest röda kort</label>
 <input type="text" id="bonus_roda_kort" placeholder="Lag..."
 onchange="saveBonus('roda_kort', this.value)">
 </div>
 <div class="bonus-row">
-<label> 🚨  Laget som släpper in flest mål i gruppspelet</label>
+<label>  🚨   Laget som släpper in flest mål i gruppspelet</label>
 <input type="text" id="bonus_flest_inslapp" placeholder="Lag..."
 onchange="saveBonus('flest_inslapp', this.value)">
 </div>
@@ -330,12 +353,12 @@ onchange="saveBonus('flest_inslapp', this.value)">
 <div class="page-sub">Används vid lika poäng i slutet</div>
 <div class="match-card" style="padding:16px;">
 <div class="bonus-row">
-<label> ⏱️  I vilken minut görs det sista målet i VM-finalen?</label>
+<label>  ⏱️   I vilken minut görs det sista målet i VM-finalen?</label>
 <input type="number" id="bonus_sista_mal" placeholder="Minut..."
 onchange="saveBonus('sista_mal', this.value)">
 </div>
 <div class="bonus-row">
-<label> 🌍  Hur många mål görs det totalt under hela turneringen?</label>
+<label>  🌍   Hur många mål görs det totalt under hela turneringen?</label>
 <input type="number" id="bonus_total_mal" placeholder="Antal mål..."
 onchange="saveBonus('total_mal', this.value)">
 </div>
@@ -383,16 +406,16 @@ const fbApp = initializeApp(firebaseConfig);
 const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
 const flags = {
-'Mexiko': '🇲🇽', 'Sydafrika': '🇿🇦', 'Sydkorea': '🇰🇷', 'Tjeckien': '🇨🇿', 'Kanada': '🇨🇦',
-'Bosnien & Herr.': '🇧🇦', 'USA': '🇺🇸', 'Paraguay': '🇵🇾', 'Qatar': '🇶🇦', 'Schweiz': '🇨🇭',
-'Brasilien': '🇧🇷', 'Marocko': '🇲🇦', 'Haiti': '🇭🇹', 'Skottland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'Australien': '🇦🇺',
-'Turkiet': '🇹🇷', 'Tyskland': '🇩🇪', 'Curaçao': '🇨🇼', 'Nederländerna': '🇳🇱', 'Japan': '🇯🇵',
-'Elfenbenskusten': '🇨🇮', 'Ecuador': '🇪🇨', 'Sverige': '🇸🇪', 'Tunisien': '🇹🇳', 'Spanien': '🇪🇸',
-'Kap Verde': '🇨🇻', 'Belgien': '🇧🇪', 'Egypten': '🇪🇬', 'Saudiarabien': '🇸🇦', 'Uruguay': '🇺🇾',
-'Iran': '🇮🇷', 'Nya Zeeland': '🇳🇿', 'Frankrike': '🇫🇷', 'Senegal': '🇸🇳', 'Irak': '🇮🇶',
-'Norge': '🇳🇴', 'Argentina': '🇦🇷', 'Algeriet': '🇩🇿', 'Österrike': '🇦🇹', 'Jordanien': '🇯🇴',
-'Portugal': '🇵🇹', 'DR Kongo': '🇨🇩', 'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'Kroatien': '🇭🇷', 'Ghana': '🇬🇭',
-'Panama': '🇵🇦', 'Uzbekistan': '🇺🇿', 'Colombia': '🇨🇴'
+'Mexiko': ' 🇲🇽 ', 'Sydafrika': ' 🇿🇦 ', 'Sydkorea': ' 🇰🇷 ', 'Tjeckien': ' 🇨🇿 ', 'Kanada': ' 🇨🇦 ',
+'Bosnien & Herr.': ' 🇧🇦 ', 'USA': ' 🇺🇸 ', 'Paraguay': ' 🇵🇾 ', 'Qatar': ' 🇶🇦 ', 'Schweiz': ' 🇨🇭 ',
+'Brasilien': ' 🇧🇷 ', 'Marocko': ' 🇲🇦 ', 'Haiti': ' 🇭🇹 ', 'Skottland': ' 🏴 󠁧󠁢󠁳󠁣󠁴󠁿 ', 'Australien': ' 🇦🇺 ',
+'Turkiet': ' 🇹🇷 ', 'Tyskland': ' 🇩🇪 ', 'Curaçao': ' 🇨🇼 ', 'Nederländerna': ' 🇳🇱 ', 'Japan': ' 🇯🇵 ',
+'Elfenbenskusten': ' 🇨🇮 ', 'Ecuador': ' 🇪🇨 ', 'Sverige': ' 🇸🇪 ', 'Tunisien': ' 🇹🇳 ', 'Spanien': ' 🇪🇸 ',
+'Kap Verde': ' 🇨🇻 ', 'Belgien': ' 🇧🇪 ', 'Egypten': ' 🇪🇬 ', 'Saudiarabien': ' 🇸🇦 ', 'Uruguay': ' 🇺🇾 ',
+'Iran': ' 🇮🇷 ', 'Nya Zeeland': ' 🇳🇿 ', 'Frankrike': ' 🇫🇷 ', 'Senegal': ' 🇸🇳 ', 'Irak': ' 🇮🇶 ',
+'Norge': ' 🇳🇴 ', 'Argentina': ' 🇦🇷 ', 'Algeriet': ' 🇩🇿 ', 'Österrike': ' 🇦🇹 ', 'Jordanien': ' 🇯🇴 ',
+'Portugal': ' 🇵🇹 ', 'DR Kongo': ' 🇨🇩 ', 'England': ' 🏴 󠁧󠁢󠁥󠁮󠁧󠁿 ', 'Kroatien': ' 🇭🇷 ', 'Ghana': ' 🇬🇭 ',
+'Panama': ' 🇵🇦 ', 'Uzbekistan': ' 🇺🇿 ', 'Colombia': ' 🇨🇴 '
 };
 const SCHEDULE = [
 {date:'Torsdag 11 juni', matches:[{h:'Mexiko', a:'Sydafrika', time:'21.00', tv:'TV4', city:'Mexico City', id:'m1'}]},
@@ -498,9 +521,9 @@ return `
 ${flags[m.h] || ''} ${m.h} – ${flags[m.a] || ''} ${m.a}
 </div>
 <div class="match-meta">
-<span class="meta-item"> 🕒  ${m.time}</span>
-<span class="meta-item"> 📺  ${m.tv}</span>
-<span class="meta-item"><span style="color:#ff4d4d"> 📍 </span> ${m.city}</span>
+<span class="meta-item">  🕒   ${m.time}</span>
+<span class="meta-item">  📺   ${m.tv}</span>
+<span class="meta-item"><span style="color:#ff4d4d">  📍  </span> ${m.city}</span>
 </div>
 </div>
 <div class="score-inputs">
@@ -530,17 +553,17 @@ return `
 <div class="match-row">
 <div class="match-info" style="display: flex; flex-direction: column; gap: 8px; flex: 1;">
 <div style="display: flex; align-items: center; gap: 8px;">
-<span style="font-size: 16px;">  🏳️  </span>
+<span style="font-size: 16px;">   🏳️   </span>
 <input type="text" value="${teamH}" placeholder="${m.h}" ${isLocked ? 'disabled' : ''} onchange="updateSlutspelTeam('${m.id}', 'teamH', this.value)" style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
 </div>
 <div style="display: flex; align-items: center; gap: 8px;">
-<span style="font-size: 16px;">  🏳️  </span>
+<span style="font-size: 16px;">   🏳️   </span>
 <input type="text" value="${teamA}" placeholder="${m.a}" ${isLocked ? 'disabled' : ''} onchange="updateSlutspelTeam('${m.id}', 'teamA', this.value)" style="background: transparent; border: none; border-bottom: 1px dashed rgba(89,213,255,0.4); color: #fff; font-family: 'Barlow'; font-size: 14px; padding: 2px 4px; width: 150px;">
 </div>
 <div class="match-meta">
-<span class="meta-item"> 🕒  ${m.time}</span>
-<span class="meta-item"> 📺  ${m.tv}</span>
-<span class="meta-item"><span style="color:#ff4d4d"> 📍 </span> ${m.city || 'TBD'}</span>
+<span class="meta-item">  🕒   ${m.time}</span>
+<span class="meta-item">  📺   ${m.tv}</span>
+<span class="meta-item"><span style="color:#ff4d4d">  📍  </span> ${m.city || 'TBD'}</span>
 </div>
 </div>
 <div class="score-inputs">
@@ -595,7 +618,6 @@ const loginTab = document.getElementById('tab-login');
 const registerTab = document.getElementById('tab-register');
 const registerFields = document.getElementById('auth-register-fields');
 const submitBtn = document.getElementById('authSubmitBtn');
-
 if (mode === 'register') {
 loginTab.classList.remove('active');
 registerTab.classList.add('active');
@@ -638,7 +660,7 @@ alert(getFriendlyErrorMessage(e));
 const firstName = document.getElementById('regFirstName').value.trim();
 const lastName = document.getElementById('regLastName').value.trim();
 const username = document.getElementById('regUsername').value.trim().toLowerCase();
-const password = document.getElementById('authPassword').value; // UPDATE: regPassword var odefinierad
+const password = document.getElementById('authPassword').value;
 if (!firstName || !lastName || !username) {
 return alert("Fyll i alla profiluppgifter.");
 }
@@ -661,7 +683,6 @@ window.doLogout = async () => { await signOut(auth); location.reload(); };
 window.updateAllScores = async () => {
 try {
 await beräknaOchSparaPoäng();
-// showToast("Poäng uppdaterade!"); // Flyttad in i beräknaOchSparaPoäng för att inte trigga vid fail
 } catch (e) {
 console.error(e);
 showToast(e.message || "Kunde inte uppdatera poäng", true);
@@ -670,11 +691,13 @@ showToast(e.message || "Kunde inte uppdatera poäng", true);
 window.saveGroupTable = async () => {
 if (!isAdmin()) return;
 try {
+// RÄTTAT: Se till att inga minnesreferenser förstörs vid sparandet
+const cleanData = JSON.parse(JSON.stringify(groupTableData));
 await setDoc(
 doc(db, 'facit', 'grupper'),
-groupTableData
+cleanData
 );
-showToast('Grupptabellen sparad!');
+showToast('Grupptabellen sparad! Den har nu sorterats för alla.');
 } catch (e) {
 console.error(e);
 showToast('Kunde inte spara grupptabellen', true);
@@ -694,13 +717,13 @@ document.getElementById('loginBtn').style.display = 'none';
 document.getElementById('logoutBtn').style.display = 'block';
 if (currentUserProfile?.username?.toLowerCase() === 'knight') {
 const adminBtn = document.createElement('button');
-adminBtn.textContent = ' 🔧  Uppdatera poäng';
+adminBtn.textContent = '  🔧   Uppdatera poäng';
 adminBtn.className = 'btn';
 adminBtn.style.marginLeft = '10px';
 adminBtn.onclick = updateAllScores;
 document.querySelector('.footer').appendChild(adminBtn);
 }
-const brytpunkt = new Date('2026-06-12T01:00:00+02:00'); 
+const brytpunkt = new Date('2026-06-12T01:00:00+02:00');
 const nu = new Date();
 if (nu < brytpunkt) {
 showPage('groups');
@@ -747,19 +770,15 @@ else if (tabId === 'final') renderGenericSlutspel(SCHEDULE_FINAL, 'schedule-fina
 }
 window.showPage = (id, btn) => {
 document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-
 const targetPage = document.getElementById('page-' + id);
 if (targetPage) targetPage.classList.add('active');
-
 document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-
 if (btn) {
 btn.classList.add('active');
 } else {
 const fallbackBtn = document.getElementById('nav-' + id);
 if (fallbackBtn) fallbackBtn.classList.add('active');
 }
-
 localStorage.setItem('activeTab', id);
 renderTabContent(id);
 if (id === 'topplista') renderTopplista();
@@ -767,10 +786,13 @@ if (id === 'grupptabell') renderGrupptabell();
 };
 window.openModal = (id) => document.getElementById(id).classList.add('open');
 window.closeModal = (id) => document.getElementById(id).classList.remove('open');
+
+// RÄTTAT: Funktion för att spara input på ett säkert sätt utan NaN. 
 window.updateGroupValue = (grupp, index, field, value) => {
 if (!groupTableData[grupp]) return;
-groupTableData[grupp][index][field] = parseInt(value) || 0;
+groupTableData[grupp][index][field] = value === '' ? 0 : Number(value);
 };
+
 window.applySavedTab = function() {
 const savedTab = localStorage.getItem('activeTab');
 const validTabs = ['groups', 'r16', 'qf', 'qf2', 'semi', 'bronze', 'final', 'topplista', 'grupptabell', 'bonus'];
@@ -787,6 +809,7 @@ loadingScreen.classList.add('hidden');
 showToast("Kunde inte ansluta till Firebase. Inaktivera eventuell AdBlocker.", true);
 }
 }, 7000);
+
 async function renderGrupptabell() {
 const grid = document.getElementById('grupptabell-grid');
 if (!grid) return;
@@ -797,8 +820,24 @@ grid.innerHTML = '<p style="color:var(--text2);">Ingen data ännu – turneringe
 return;
 }
 const data = snap.data();
-groupTableData = data;
-const grupperHTML = Object.entries(data)
+
+// RÄTTAT: Frigör kopplingen till Firestore-objektet för att förhindra oväntade låsningar
+groupTableData = JSON.parse(JSON.stringify(data));
+
+// RÄTTAT: Sortera varje grupp i minnet innan vi ritar ut den 
+// (Poäng först, sedan Målskillnad, sedan Gjorda Mål)
+for (const g in groupTableData) {
+groupTableData[g].sort((a, b) => {
+const pA = Number(a.p) || 0; const pB = Number(b.p) || 0;
+if (pB !== pA) return pB - pA;
+const msA = Number(a.ms) || 0; const msB = Number(b.ms) || 0;
+if (msB !== msA) return msB - msA;
+const gmA = Number(a.gm) || 0; const gmB = Number(b.gm) || 0;
+return gmB - gmA;
+});
+}
+
+const grupperHTML = Object.entries(groupTableData)
 .sort(([a], [b]) => a.localeCompare(b))
 .map(([grupp, lag]) => `
 <div class="group-section">
@@ -818,54 +857,24 @@ ${lag.map((l, i) => `
 <tr>
 <td style="color:var(--text2)">${i + 1}</td>
 <td>${l.lag}</td>
-<td>
-${isAdmin()
-? `<input type="number" value="${l.s}" onchange="updateGroupValue('${grupp}', ${i}, 's', this.value)">`
-: l.s}
-</td>
-<td>
-${isAdmin()
-? `<input type="number" value="${l.v}" onchange="updateGroupValue('${grupp}', ${i}, 'v', this.value)">`
-: l.v}
-</td>
-<td>
-${isAdmin()
-? `<input type="number" value="${l.o}" onchange="updateGroupValue('${grupp}', ${i}, 'o', this.value)">`
-: l.o}
-</td>
-<td>
-${isAdmin()
-? `<input type="number" value="${l.f}" onchange="updateGroupValue('${grupp}', ${i}, 'f', this.value)">`
-: l.f}
-</td>
-<td>
-${isAdmin()
-? `<input type="number" value="${l.gm}" onchange="updateGroupValue('${grupp}', ${i}, 'gm', this.value)">`
-: l.gm}
-</td>
-<td>
-${isAdmin()
-? `<input type="number" value="${l.im}" onchange="updateGroupValue('${grupp}', ${i}, 'im', this.value)">`
-: l.im}
-</td>
-<td>
-${isAdmin()
-? `<input type="number" value="${l.ms}" onchange="updateGroupValue('${grupp}', ${i}, 'ms', this.value)">`
-: l.ms}
-</td>
-<td class="pts">
-${isAdmin()
-? `<input type="number" value="${l.p}" onchange="updateGroupValue('${grupp}', ${i}, 'p', this.value)">`
-: l.p}
-</td>                </tr>`).join('')}
+<td>${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.s ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 's', this.value)">` : (l.s ?? 0)}</td>
+<td>${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.v ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 'v', this.value)">` : (l.v ?? 0)}</td>
+<td>${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.o ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 'o', this.value)">` : (l.o ?? 0)}</td>
+<td>${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.f ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 'f', this.value)">` : (l.f ?? 0)}</td>
+<td>${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.gm ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 'gm', this.value)">` : (l.gm ?? 0)}</td>
+<td>${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.im ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 'im', this.value)">` : (l.im ?? 0)}</td>
+<td>${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.ms ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 'ms', this.value)">` : (l.ms ?? 0)}</td>
+<td class="pts">${isAdmin() ? `<input type="number" class="admin-table-input" value="${l.p ?? 0}" oninput="updateGroupValue('${grupp}', ${i}, 'p', this.value)">` : (l.p ?? 0)}</td>
+</tr>`).join('')}
 </tbody>
 </table>
 </div>`).join('');
+
 grid.innerHTML = grupperHTML + (
 isAdmin()
 ? `<div style="margin-top:20px;">
 <button class="btn" onclick="saveGroupTable()">
-💾  Spara grupptabell
+💾   Spara grupptabell
 </button>
 </div>`
 : ''
@@ -879,17 +888,14 @@ if (tippH === '' || tippA === '' || tippH === null || tippA === null) return 0;
 if (facitH === null || facitA === null) return 0;
 const th = parseInt(tippH), ta = parseInt(tippA);
 const fh = parseInt(facitH), fa = parseInt(facitA);
-
-// RÄTTAT: Kollar även NaN på facit
 if (isNaN(th) || isNaN(ta) || isNaN(fh) || isNaN(fa)) return 0;
-
 if (th === fh && ta === fa) return 4;
 const tippUtfall = th > ta ? 1 : th < ta ? -1 : 0;
 const facitUtfall = fh > fa ? 1 : fh < fa ? -1 : 0;
-if (tippUtfall !== facitUtfall) return 0; 
+if (tippUtfall !== facitUtfall) return 0;
 const tippMS = th - ta;
 const facitMS = fh - fa;
-if (tippMS === facitMS && facitUtfall !== 0) return 2; 
+if (tippMS === facitMS && facitUtfall !== 0) return 2;
 return 1;
 }
 function räknaSlutspelslagPoäng(predictions, facitResultat) {
@@ -911,10 +917,7 @@ const slutspelsMatcher = [
 for (const match of slutspelsMatcher) {
 const facit = facitResultat[match.id];
 const tipp  = predictions[match.id];
-
-// RÄTTAT: Tog bort kravet på matchresultat (facit.h === null)
 if (!facit || !tipp) continue;
-
 const p = rundaPoäng[match.runda];
 if (tipp.teamH && facit.winnerH &&
 tipp.teamH.trim().toLowerCase() === facit.winnerH.trim().toLowerCase()) {
@@ -950,12 +953,9 @@ const [facitSnap, bonusFacitSnap] = await Promise.all([
 getDoc(doc(db, 'facit', 'resultat')),
 getDoc(doc(db, 'facit', 'bonus'))
 ]);
-
-// RÄTTAT: Throwa istället för en silent return
 if (!facitSnap.exists()) {
 throw new Error("Facit saknas i databasen.");
 }
-
 const facitResultat = facitSnap.data();
 const bonusFacit    = bonusFacitSnap.exists() ? bonusFacitSnap.data() : {};
 const snapshot = await getDocs(collection(db, 'tips'));
@@ -991,7 +991,7 @@ batch.push({ uid: docSnap.id, poäng: totalPoäng });
 for (const { uid, poäng } of batch) {
 await setDoc(doc(db, 'tips', uid), { poäng }, { merge: true });
 }
-console.log(' ✅  Poäng beräknade och sparade!');
+console.log('  ✅   Po ä ng ber ä knade och sparade!');
 showToast('Poäng uppdaterade!');
 }
 async function renderTopplista() {
