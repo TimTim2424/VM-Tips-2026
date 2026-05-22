@@ -1227,7 +1227,8 @@ async function renderTopplista() {
         </tbody>
       </table>`;
   } catch (e) {
-    grid.innerHTML = '<p style="color:var(--text2);"> Topplistan aktiveras efter första matchens slut.</p>';
+    grid.innerHTML = `<p style="color:red; font-weight:bold; padding:10px;">Fel vid laddning: ${e.message}</p>`;
+    console.error("Topplista-fel:", e);
   }
 }
 window.saveBonus = function(key, value) {
