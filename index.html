@@ -931,7 +931,114 @@ isAdmin()
 console.error('renderGrupptabell:', e); grid.innerHTML = '<p style="color:var(--text2);">Fel: ' + (e.message || e.code || 'okänt') + '</p>';
 }
 }
+function calculateGroupTables(facitResultat) {
 
+const tables = {};
+
+for (const grupp in GROUP_MATCHES) {
+
+    const matcher = GROUP_MATCHES[grupp];
+    const lagTabell = {};
+
+    matcher.forEach(matchId => {
+
+        const result = facitResultat[matchId];
+        if (!result) return;
+
+        const matchData = SCHEDULE
+            .flatMap(day => day.matches)
+            .find(m => m.id === matchId);
+
+        if (!matchData) return;
+
+        const home = matchData.h;
+        const away = matchData.a;
+
+        const h = Number(result.h);
+        const a = Number(result.a);
+
+        if (isNaN(h) || isNaN(a)) return;
+
+        if (!lagTabell[home]) {
+            lagTabell[home] = {
+                lag: home,
+                s: 0,
+                v: 0,
+                o: 0,
+                f: 0,
+                gm: 0,
+                im: 0,
+                ms: 0,
+                p: 0
+            };
+        }
+
+        if (!lagTabell[away]) {
+            lagTabell[away] = {
+                lag: away,
+                s: 0,
+                v: 0,
+                o: 0,
+                f: 0,
+                gm: 0,
+                im: 0,
+                ms: 0,
+                p: 0
+            };
+        }
+
+        const homeTeam = lagTabell[home];
+        const awayTeam = lagTabell[away];
+
+        homeTeam.s++;
+        awayTeam.s++;
+
+        homeTeam.gm += h;
+        homeTeam.im += a;
+
+        awayTeam.gm += a;
+        awayTeam.im += h;
+
+        homeTeam.ms = homeTeam.gm - homeTeam.im;
+        awayTeam.ms = awayTeam.gm - awayTeam.im;
+
+        if (h > a) {
+
+            homeTeam.v++;
+            awayTeam.f++;
+
+            homeTeam.p += 3;
+
+        } else if (a > h) {
+
+            awayTeam.v++;
+            homeTeam.f++;
+
+            awayTeam.p += 3;
+
+        } else {
+
+            homeTeam.o++;
+            awayTeam.o++;
+
+            homeTeam.p += 1;
+            awayTeam.p += 1;
+        }
+
+    });
+
+    tables[grupp] = Object.values(lagTabell).sort((a, b) => {
+
+        if (b.p !== a.p) return b.p - a.p;
+
+        if (b.ms !== a.ms) return b.ms - a.ms;
+
+        return b.gm - a.gm;
+    });
+}
+
+return tables;
+}
 function räknaMatchPoäng(tippH, tippA, facitH, facitA) {
 if (tippH === '' || tippA === '' || tippH === null || tippA === null) return 0;
 if (facitH === null || facitA === null) return 0;
@@ -1010,6 +1117,13 @@ throw new Error("Facit saknas i databasen.");
 }
 const facitResultat = facitSnap.data();
 const bonusFacit    = bonusFacitSnap.exists() ? bonusFacitSnap.data() : {};
+const nyaGrupptabeller = calculateGroupTables(facitResultat);
+
+await setDoc(
+    doc(db, 'facit', 'grupper'),
+    nyaGrupptabeller,
+    { merge: true }
+);    
 const snapshot = await getDocs(collection(db, 'tips'));
 const batch = [];
 snapshot.forEach(docSnap => {
