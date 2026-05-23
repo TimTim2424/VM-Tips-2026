@@ -150,7 +150,6 @@ font-size: 14px;
 background: var(--bg3);
 border-radius: 10px;
 overflow: hidden;
-table-layout: fixed;
 border: 1px solid var(--border);
 }
 .group-table thead tr {
@@ -690,8 +689,7 @@ showToast(e.message || "Kunde inte uppdatera poäng", true);
 window.saveGroupTable = async () => {
 if (!isAdmin()) return;
 try {
-// DUBBEL SÄKERHET: Vi skannar DOM direkt för att plocka upp alla fält 
-// på skärmen så att inga uppdateringar tappas bort i JavaScripts minne
+// Den nya "Skannern" - Plockar upp exakt det som står på skärmen
 const inputs = document.querySelectorAll('.admin-table-input');
 inputs.forEach(input => {
 const grupp = input.getAttribute('data-grupp');
@@ -707,7 +705,6 @@ const cleanData = JSON.parse(JSON.stringify(groupTableData));
 await setDoc(doc(db, 'facit', 'grupper'), cleanData);
 showToast('Grupptabellen sparad! Synlig för alla nu.');
 
-// Tvinga tabellen att ladda om datan från servern så vi direkt ser sorteringen
 await window.renderGrupptabell();
 } catch (e) {
 console.error(e);
@@ -828,7 +825,6 @@ showToast("Kunde inte ansluta till Firebase. Inaktivera eventuell AdBlocker.", t
 }
 }, 7000);
 
-// Expanderad till global så att moduler och event handlers alltid hittar den
 window.renderGrupptabell = async function() {
 const grid = document.getElementById('grupptabell-grid');
 if (!grid) return;
@@ -869,7 +865,8 @@ const grupperHTML = Object.entries(groupTableData)
 </thead>
 <tbody>
 ${lag.map((l, i) => {
-// Hjälpfunktion skapad för att säkerställa att variabler skickas vidare 100% säkert
+
+// Här bygger vi input-fälten med dolda "data-attribut" så skannern alltid vet vart siffran ska
 const makeInput = (field, val) => `<input type="number" class="admin-table-input" data-grupp="${grupp}" data-index="${i}" data-field="${field}" value="${val}" onchange="window.updateGroupValue('${grupp}', ${i}, '${field}', this.value)">`;
 
 const vS = l.s !== undefined && l.s !== '' ? Number(l.s) : 0;
@@ -899,12 +896,11 @@ return `
 </table>
 </div>`).join('');
 
-// Knappen som sparar
 grid.innerHTML = grupperHTML + (
 isAdmin()
 ? `<div style="margin-top:20px;">
 <button class="btn" onclick="window.saveGroupTable()">
-💾    Spara grupptabell
+💾   Spara grupptabell
 </button>
 </div>`
 : ''
@@ -1025,7 +1021,7 @@ batch.push({ uid: docSnap.id, poäng: totalPoäng });
 for (const { uid, poäng } of batch) {
 await setDoc(doc(db, 'tips', uid), { poäng }, { merge: true });
 }
-console.log('   ✅    Po  ä  ng ber  ä  knade och sparade!');
+console.log('   ✅    Poäng beräknade och sparade!');
 showToast('Poäng uppdaterade!');
 }
 
