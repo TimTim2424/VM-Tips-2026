@@ -710,7 +710,7 @@ if (grupp && index !== null && field && groupTableData[grupp]) {
 });
 
 const cleanData = JSON.parse(JSON.stringify(groupTableData));
-await setDoc(doc(db, 'facit', 'grupper'), cleanData);
+await setDoc(doc(db, 'facit', 'grupper'), cleanData, { merge: true });
 showToast('Grupptabellen sparad! Synlig för alla nu.');
 
 await window.renderGrupptabell();
