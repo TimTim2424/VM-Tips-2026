@@ -912,8 +912,7 @@ for (const grupp in GROUP_MATCHES) {
     const matcher = GROUP_MATCHES[grupp];
     const lagTabell = {};
 
-    // STEG 1: skapa alla lag i gruppen
-
+    // SKAPA ALLA LAG FÖRST
     matcher.forEach(matchId => {
 
         const matchData = SCHEDULE
@@ -952,11 +951,9 @@ for (const grupp in GROUP_MATCHES) {
                 p: 0
             };
         }
-
     });
 
-    // STEG 2: räkna resultaten
-
+    // RÄKNA RESULTAT EFTERÅT
     matcher.forEach(matchId => {
 
         const result = facitResultat[matchId];
@@ -968,6 +965,9 @@ for (const grupp in GROUP_MATCHES) {
 
         if (!matchData) return;
 
+        const home = matchData.h;
+        const away = matchData.a;
+
         if (result.h === null || result.a === null) return;
 
         const h = Number(result.h);
@@ -975,8 +975,8 @@ for (const grupp in GROUP_MATCHES) {
 
         if (isNaN(h) || isNaN(a)) return;
 
-        const homeTeam = lagTabell[matchData.h];
-        const awayTeam = lagTabell[matchData.a];
+        const homeTeam = lagTabell[home];
+        const awayTeam = lagTabell[away];
 
         homeTeam.s++;
         awayTeam.s++;
@@ -1012,8 +1012,17 @@ for (const grupp in GROUP_MATCHES) {
             homeTeam.p += 1;
             awayTeam.p += 1;
         }
-
     });
+
+    tables[grupp] = Object.values(lagTabell).sort((a, b) => {
+
+        if (b.p !== a.p) return b.p - a.p;
+
+        if (b.ms !== a.ms) return b.ms - a.ms;
+
+        return b.gm - a.gm;
+    });
+}
 
     tables[grupp] = Object.values(lagTabell).sort((a, b) => {
 
