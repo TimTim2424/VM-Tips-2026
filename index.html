@@ -905,7 +905,6 @@ console.error('renderGrupptabell:', e); grid.innerHTML = '<p style="color:var(--
 }
 }
 function calculateGroupTables(facitResultat) {
-
 const tables = {};
 
 for (const grupp in GROUP_MATCHES) {
@@ -913,10 +912,8 @@ for (const grupp in GROUP_MATCHES) {
     const matcher = GROUP_MATCHES[grupp];
     const lagTabell = {};
 
+    // 1. Skapa alla lag i gruppen
     matcher.forEach(matchId => {
-
-        const result = facitResultat[matchId];
-        if (!result) return;
 
         const matchData = SCHEDULE
             .flatMap(day => day.matches)
@@ -926,13 +923,6 @@ for (const grupp in GROUP_MATCHES) {
 
         const home = matchData.h;
         const away = matchData.a;
-
-        if (result.h === null || result.a === null) return;
-
-const h = Number(result.h);
-const a = Number(result.a);
-
-if (isNaN(h) || isNaN(a)) return;
 
         if (!lagTabell[home]) {
             lagTabell[home] = {
@@ -961,6 +951,29 @@ if (isNaN(h) || isNaN(a)) return;
                 p: 0
             };
         }
+    });
+
+    // 2. Räkna resultaten
+    matcher.forEach(matchId => {
+
+        const result = facitResultat[matchId];
+        if (!result) return;
+
+        const matchData = SCHEDULE
+            .flatMap(day => day.matches)
+            .find(m => m.id === matchId);
+
+        if (!matchData) return;
+
+        const home = matchData.h;
+        const away = matchData.a;
+
+        if (result.h === null || result.a === null) return;
+
+        const h = Number(result.h);
+        const a = Number(result.a);
+
+        if (isNaN(h) || isNaN(a)) return;
 
         const homeTeam = lagTabell[home];
         const awayTeam = lagTabell[away];
@@ -999,7 +1012,6 @@ if (isNaN(h) || isNaN(a)) return;
             homeTeam.p += 1;
             awayTeam.p += 1;
         }
-
     });
 
     tables[grupp] = Object.values(lagTabell).sort((a, b) => {
