@@ -162,11 +162,19 @@ letter-spacing: 0.05em;
 padding: 8px 6px;
 text-align: center;
 }
+.group-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
 .group-table th:nth-child(2),
 .group-table td:nth-child(2) {
-text-align: left;
-padding-left: 10px;
-min-width: 110px;
+    text-align: left;
+    padding-left: 8px;
+    width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .group-table tbody tr {
 border-top: 1px solid var(--border);
@@ -496,7 +504,7 @@ const SCHEDULE_FINAL = [
 let predictions = {};
 let groupTableData = {};
 function isAdmin() {
-return currentUserProfile?.username?.toLowerCase() === 'knight';
+  return auth.currentUser?.uid === '5xsDWYW9x9h9ih3sH08FGKT3baw2';
 }
 let currentAuthMode = 'login';
 let currentUserProfile = null;
