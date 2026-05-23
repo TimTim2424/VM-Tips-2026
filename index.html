@@ -503,6 +503,21 @@ const SCHEDULE_FINAL = [
 ];
 let predictions = {};
 let groupTableData = {};
+groupTableData = {
+A: [
+{lag:'Mexiko', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},
+{lag:'Sydafrika', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},
+{lag:'Sydkorea', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},
+{lag:'Tjeckien', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}
+],
+B: [
+{lag:'Kanada', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},
+{lag:'Bosnien & Herr.', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},
+{lag:'Qatar', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},
+{lag:'Schweiz', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}
+],
+// osv för alla grupper C–L
+};    
 const GROUP_MATCHES = {
 A: ['m1','m2','m25','m28','m53','m54'],
 B: ['m3','m8','m26','m27','m49','m50'],
@@ -836,9 +851,11 @@ return gmB - gmA;
 });
 }
 
-const grupperHTML = Object.entries(groupTableData)
+const grupperHTML = Object.entries(GROUP_MATCHES)
 .sort(([a], [b]) => a.localeCompare(b))
-.map(([grupp, lag]) => `
+.map(([grupp]) => {
+const lag = groupTableData[grupp] || [];
+return `
 <div class="group-section">
 <div class="group-label">Grupp ${grupp}</div>
 <table class="group-table">
@@ -879,7 +896,8 @@ return `
 }).join('')}
 </tbody>
 </table>
-</div>`).join('');
+</div>`;
+}).join('');
 
 grid.innerHTML = grupperHTML;
 } catch (e) {
