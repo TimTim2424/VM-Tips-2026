@@ -413,13 +413,13 @@ const db = getFirestore(fbApp);
 const flags = {
 'Mexiko': '  🇲🇽  ', 'Sydafrika': '  🇿🇦  ', 'Sydkorea': '  🇰🇷  ', 'Tjeckien': '  🇨🇿  ', 'Kanada': '  🇨🇦  ',
 'Bosnien & Herr.': '  🇧🇦  ', 'USA': '  🇺🇸  ', 'Paraguay': '  🇵🇾  ', 'Qatar': '  🇶🇦  ', 'Schweiz': '  🇨🇭  ',
-'Brasilien': '  🇧🇷  ', 'Marocko': '  🇲🇦  ', 'Haiti': '  🇭🇹  ', 'Skottland': '  🏴   󠁧󠁢󠁳󠁣󠁴󠁿  ', 'Australien': '  🇦🇺  ',
+'Brasilien': '  🇧🇷  ', 'Marocko': '  🇲🇦  ', 'Haiti': '  🇭🇹  ', 'Skottland': '  🏴   󠁧󠁢󠁳󠁣󠁴U+E007F  ', 'Australien': '  🇦🇺  ',
 'Turkiet': '  🇹🇷  ', 'Tyskland': '  🇩🇪  ', 'Curaçao': '  🇨🇼  ', 'Nederländerna': '  🇳🇱  ', 'Japan': '  🇯🇵  ',
 'Elfenbenskusten': '  🇨🇮  ', 'Ecuador': '  🇪🇨  ', 'Sverige': '  🇸🇪  ', 'Tunisien': '  🇹🇳  ', 'Spanien': '  🇪🇸  ',
 'Kap Verde': '  🇨🇻  ', 'Belgien': '  🇧🇪  ', 'Egypten': '  🇪🇬  ', 'Saudiarabien': '  🇸🇦  ', 'Uruguay': '  🇺🇾  ',
 'Iran': '  🇮🇷  ', 'Nya Zeeland': '  🇳🇿  ', 'Frankrike': '  🇫🇷  ', 'Senegal': '  🇸🇳  ', 'Irak': '  🇮🇶  ',
 'Norge': '  🇳🇴  ', 'Argentina': '  🇦🇷  ', 'Algeriet': '  🇩🇿  ', 'Österrike': '  🇦🇹  ', 'Jordanien': '  🇯🇴  ',
-'Portugal': '  🇵🇹  ', 'DR Kongo': '  🇨🇩  ', 'England': '  🏴   󠁧󠁢󠁥󠁮󠁧󠁿  ', 'Kroatien': '  🇭🇷  ', 'Ghana': '  🇬🇭  ',
+'Portugal': '  🇵🇹  ', 'DR Kongo': '  🇨🇩  ', 'England': '  🏴   󠁧󠁢󠁥󠁮󠁧U+E007F  ', 'Kroatien': '  🇭🇷  ', 'Ghana': '  🇬🇭  ',
 'Panama': '  🇵🇦  ', 'Uzbekistan': '  🇺🇿  ', 'Colombia': '  🇨🇴  '
 };
 const SCHEDULE = [
@@ -1025,27 +1025,6 @@ for (const grupp in GROUP_MATCHES) {
         return b.gm - a.gm;
     });
 }
-
-    tables[grupp] = Object.values(lagTabell).sort((a, b) => {
-
-        if (b.p !== a.p) return b.p - a.p;
-
-        if (b.ms !== a.ms) return b.ms - a.ms;
-
-        return b.gm - a.gm;
-    });
-}
-
-    tables[grupp] = Object.values(lagTabell).sort((a, b) => {
-
-        if (b.p !== a.p) return b.p - a.p;
-
-        if (b.ms !== a.ms) return b.ms - a.ms;
-
-        return b.gm - a.gm;
-    });
-}
-
 return tables;
 }
 function räknaMatchPoäng(tippH, tippA, facitH, facitA) {
