@@ -504,33 +504,32 @@ const SCHEDULE_FINAL = [
 let predictions = {};
 let groupTableData = {};
 groupTableData = {
-A: [
-{lag:'Mexiko', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},
-{lag:'Sydafrika', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},
-{lag:'Sydkorea', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},
-{lag:'Tjeckien', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}
-],
-B: [
-{lag:'Kanada', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},
-{lag:'Bosnien & Herr.', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},
-{lag:'Qatar', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},
-{lag:'Schweiz', s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}
-],
-// osv för alla grupper C–L
-};    
+A: [{lag:'Mexiko',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Sydkorea',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Sydafrika',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Tjeckien',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}],
+B: [{lag:'Kanada',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Qatar',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Schweiz',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Bosnien & Herr.',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}],
+C: [{lag:'Brasilien',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Marocko',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Haiti',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Skottland',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}],
+D: [{lag:'USA',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Paraguay',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Australien',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Turkiet',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}],
+E: [{lag:'Tyskland',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Curaçao',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Elfenbenskusten',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Ecuador',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}],
+F: [{lag:'Nederländerna',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Japan',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Tunisien',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Sverige',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}],
+G: [{lag:'Belgien',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Iran',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Nya Zeeland',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Egypten',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}],
+H: [{lag:'Spanien',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Saudiarabien',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Uruguay',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Kap Verde',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}],
+I: [{lag:'Frankrike',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Senegal',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Norge',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Irak',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}],
+J: [{lag:'Argentina',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Algeriet',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Österrike',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Jordanien',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}],
+K: [{lag:'Portugal',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Uzbekistan',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Colombia',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'DR Kongo',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}],
+L: [{lag:'England',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Ghana',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Kroatien',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Panama',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}],
+};
 const GROUP_MATCHES = {
 A: ['m1','m2','m25','m28','m53','m54'],
-B: ['m3','m8','m26','m27','m49','m50'],
-C: ['m5','m7','m30','m31','m51','m52'],
-D: ['m4','m6','m29','m32','m59','m60'],
-E: ['m9','m10','m33','m34','m55','m56'],
-F: ['m11','m12','m35','m36','m57','m58'],
-G: ['m13','m15','m37','m39','m63','m64'],
-H: ['m14','m16','m38','m40','m65','m66'],
-I: ['m17','m18','m41','m43','m61','m62'],
-J: ['m19','m20','m42','m44','m71','m72'],
-K: ['m21','m22','m45','m46','m67','m68'],
-L: ['m23','m24','m47','m48','m69','m70']
+B: ['m3','m5','m26','m27','m49','m50'],
+C: ['m6','m7','m30','m31','m51','m52'],
+D: ['m4','m8','m29','m32','m59','m60'],
+E: ['m9','m11','m34','m35','m55','m56'],
+F: ['m10','m12','m33','m36','m57','m58'],
+G: ['m14','m16','m38','m40','m65','m66'],
+H: ['m13','m15','m37','m39','m63','m64'],
+I: ['m17','m18','m42','m43','m61','m62'],
+J: ['m19','m20','m41','m44','m71','m72'],
+K: ['m21','m24','m45','m48','m69','m70'],
+L: ['m22','m23','m46','m47','m67','m68']
 };
 function isAdmin() {
   return auth.currentUser?.uid === '5xsDWYW9x9h9ih3sH08FGKT3baw2';
