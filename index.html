@@ -707,33 +707,6 @@ console.error(e);
 showToast(e.message || "Kunde inte uppdatera poäng", true);
 }
 };
-
-window.saveGroupTable = async () => {
-if (!isAdmin()) return;
-try {
-// Den nya "Skannern" - Plockar upp exakt det som står på skärmen
-const inputs = document.querySelectorAll('.admin-table-input');
-inputs.forEach(input => {
-const grupp = input.getAttribute('data-grupp');
-const index = input.getAttribute('data-index');
-const field = input.getAttribute('data-field');
-if (grupp && index !== null && field && groupTableData[grupp]) {
-    const val = input.value;
-    groupTableData[grupp][Number(index)][field] = val === '' ? 0 : Number(val);
-}
-});
-
-const cleanData = JSON.parse(JSON.stringify(groupTableData));
-await setDoc(doc(db, 'facit', 'grupper'), cleanData, { merge: true });
-showToast('Grupptabellen sparad! Synlig för alla nu.');
-
-await window.renderGrupptabell();
-} catch (e) {
-console.error(e);
-showToast('Fel: ' + (e.message || e.code || String(e)), true);
-}
-};
-
 onAuthStateChanged(auth, async (user) => {
 if(user) {
 const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -823,13 +796,6 @@ if (id === 'grupptabell') window.renderGrupptabell();
 
 window.openModal = (id) => document.getElementById(id).classList.add('open');
 window.closeModal = (id) => document.getElementById(id).classList.remove('open');
-
-window.updateGroupValue = (grupp, index, field, value) => {
-if (!groupTableData || !groupTableData[grupp]) return;
-const parsed = parseInt(value, 10);
-groupTableData[grupp][Number(index)][field] = isNaN(parsed) ? 0 : parsed;
-};
-
 window.applySavedTab = function() {
 const savedTab = localStorage.getItem('activeTab');
 const validTabs = ['groups', 'r16', 'qf', 'qf2', 'semi', 'bronze', 'final', 'topplista', 'grupptabell', 'bonus'];
@@ -888,9 +854,6 @@ const grupperHTML = Object.entries(groupTableData)
 <tbody>
 ${lag.map((l, i) => {
 
-// Här bygger vi input-fälten med dolda "data-attribut" så skannern alltid vet vart siffran ska
-const makeInput = (field, val) => `<input type="number" class="admin-table-input" data-grupp="${grupp}" data-index="${i}" data-field="${field}" value="${val}" onchange="window.updateGroupValue('${grupp}', ${i}, '${field}', this.value)">`;
-
 const vS = l.s !== undefined && l.s !== '' ? Number(l.s) : 0;
 const vV = l.v !== undefined && l.v !== '' ? Number(l.v) : 0;
 const vO = l.o !== undefined && l.o !== '' ? Number(l.o) : 0;
@@ -904,29 +867,21 @@ return `
 <tr>
 <td style="color:var(--text2)">${i + 1}</td>
 <td>${l.lag}</td>
-<td>${isAdmin() ? makeInput('s', vS) : vS}</td>
-<td>${isAdmin() ? makeInput('v', vV) : vV}</td>
-<td>${isAdmin() ? makeInput('o', vO) : vO}</td>
-<td>${isAdmin() ? makeInput('f', vF) : vF}</td>
-<td>${isAdmin() ? makeInput('gm', vGM) : vGM}</td>
-<td>${isAdmin() ? makeInput('im', vIM) : vIM}</td>
-<td>${isAdmin() ? makeInput('ms', vMS) : vMS}</td>
-<td class="pts">${isAdmin() ? makeInput('p', vP) : vP}</td>
+<td>${vS}</td>
+<td>${vV}</td>
+<td>${vO}</td>
+<td>${vF}</td>
+<td>${vGM}</td>
+<td>${vIM}</td>
+<td>${vMS}</td>
+<td class="pts">${vP}</td>
 </tr>`
 }).join('')}
 </tbody>
 </table>
 </div>`).join('');
 
-grid.innerHTML = grupperHTML + (
-isAdmin()
-? `<div style="margin-top:20px;">
-<button class="btn" onclick="window.saveGroupTable()">
-💾   Spara grupptabell
-</button>
-</div>`
-: ''
-);
+grid.innerHTML = grupperHTML;
 } catch (e) {
 console.error('renderGrupptabell:', e); grid.innerHTML = '<p style="color:var(--text2);">Fel: ' + (e.message || e.code || 'okänt') + '</p>';
 }
@@ -954,10 +909,12 @@ for (const grupp in GROUP_MATCHES) {
         const home = matchData.h;
         const away = matchData.a;
 
-        const h = Number(result.h);
-        const a = Number(result.a);
+        if (result.h === null || result.a === null) return;
 
-        if (isNaN(h) || isNaN(a)) return;
+const h = Number(result.h);
+const a = Number(result.a);
+
+if (isNaN(h) || isNaN(a)) return;
 
         if (!lagTabell[home]) {
             lagTabell[home] = {
