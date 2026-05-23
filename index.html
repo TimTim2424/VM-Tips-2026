@@ -732,7 +732,7 @@ document.getElementById('userBadge').textContent = user.email;
 document.getElementById('userBadge').style.display = 'block';
 document.getElementById('loginBtn').style.display = 'none';
 document.getElementById('logoutBtn').style.display = 'block';
-if (currentUserProfile?.username?.toLowerCase() === 'knight') {
+if (isAdmin()) {
 const adminBtn = document.createElement('button');
 adminBtn.textContent = '   🔧    Uppdatera poäng';
 adminBtn.className = 'btn';
