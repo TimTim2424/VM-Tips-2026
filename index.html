@@ -912,7 +912,7 @@ for (const grupp in GROUP_MATCHES) {
     const matcher = GROUP_MATCHES[grupp];
     const lagTabell = {};
 
-    // SKAPA ALLA LAG FÖRST
+    // Skapa alla lag först
     matcher.forEach(matchId => {
 
         const matchData = SCHEDULE
@@ -951,9 +951,10 @@ for (const grupp in GROUP_MATCHES) {
                 p: 0
             };
         }
+
     });
 
-    // RÄKNA RESULTAT EFTERÅT
+    // Räkna resultat
     matcher.forEach(matchId => {
 
         const result = facitResultat[matchId];
@@ -1012,6 +1013,7 @@ for (const grupp in GROUP_MATCHES) {
             homeTeam.p += 1;
             awayTeam.p += 1;
         }
+
     });
 
     tables[grupp] = Object.values(lagTabell).sort((a, b) => {
