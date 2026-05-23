@@ -906,7 +906,7 @@ isAdmin()
 : ''
 );
 } catch (e) {
-console.error('renderGrupptabell:', e); grid.innerHTML = `<p style="color:var(--text2);">Fel: ${{e.message || e.code || 'okänt'}}</p>`;
+console.error('renderGrupptabell:', e); grid.innerHTML = '<p style="color:var(--text2);">Fel: ' + (e.message || e.code || 'okänt') + '</p>';
 }
 }
 
