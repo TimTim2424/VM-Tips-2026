@@ -707,7 +707,7 @@ const cleanData = JSON.parse(JSON.stringify(groupTableData));
 await setDoc(doc(db, 'facit', 'grupper'), cleanData);
 showToast('Grupptabellen sparad! Synlig för alla nu.');
 
-// onSnapshot-lyssnaren uppdaterar tabellen automatiskt när admin sparar.
+// onSnapshot-lyssnaren uppdaterar tabellen automatiskt för alla.
 } catch (e) {
 console.error(e);
 showToast('Kunde inte spara grupptabellen', true);
@@ -833,7 +833,7 @@ window.renderGrupptabell = function() {
 const grid = document.getElementById('grupptabell-grid');
 if (!grid) return;
 if (grupptabellUnsubscribe) { grupptabellUnsubscribe(); grupptabellUnsubscribe = null; }grupptabellUnsubscribe = onSnapshot(doc(db, 'facit', 'grupper'), (snap) => {
-// (snap is passed directly by onSnapshot)
+// snap leveras direkt av onSnapshot-callbacken ovan
 if (!snap.exists()) {
 grid.innerHTML = '<p style="color:var(--text2);">Ingen data ännu – turneringen har inte börjat.</p>';
 return;
@@ -912,7 +912,7 @@ isAdmin()
 }, (e) => {
 grid.innerHTML = '<p style="color:var(--text2);">Kunde inte ladda grupptabellen.</p>';
 });
- 
+}
 
 function räknaMatchPoäng(tippH, tippA, facitH, facitA) {
 if (tippH === '' || tippA === '' || tippH === null || tippA === null) return 0;
