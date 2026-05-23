@@ -391,7 +391,7 @@ onchange="saveBonus('total_mal', this.value)">
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig = {
 apiKey: "AIzaSyCEDnmGznmY2rMYPlzBNXStjkCGOAXxYh4",
 authDomain: "vm-tips-2026-fbbd3.firebaseapp.com",
@@ -707,7 +707,8 @@ const cleanData = JSON.parse(JSON.stringify(groupTableData));
 await setDoc(doc(db, 'facit', 'grupper'), cleanData);
 showToast('Grupptabellen sparad! Synlig för alla nu.');
 
-// onSnapshot-lyssnaren uppdaterar tabellen automatiskt för alla.
+// Tvinga tabellen att ladda om datan från servern så vi direkt ser sorteringen
+await window.renderGrupptabell();
 } catch (e) {
 console.error(e);
 showToast('Kunde inte spara grupptabellen', true);
@@ -796,7 +797,7 @@ const fallbackBtn = document.getElementById('nav-' + id);
 if (fallbackBtn) fallbackBtn.classList.add('active');
 }
 localStorage.setItem('activeTab', id);
-if (id !== 'grupptabell' && grupptabellUnsubscribe) { grupptabellUnsubscribe(); grupptabellUnsubscribe = null; }renderTabContent(id);
+renderTabContent(id);
 if (id === 'topplista') renderTopplista();
 if (id === 'grupptabell') window.renderGrupptabell();
 };
@@ -828,12 +829,11 @@ showToast("Kunde inte ansluta till Firebase. Inaktivera eventuell AdBlocker.", t
 }, 7000);
 
 // Expanderad till global så att moduler och event handlers alltid hittar den
-let grupptabellUnsubscribe = null;
-window.renderGrupptabell = function() {
+window.renderGrupptabell = async function() {
 const grid = document.getElementById('grupptabell-grid');
 if (!grid) return;
-if (grupptabellUnsubscribe) { grupptabellUnsubscribe(); grupptabellUnsubscribe = null; }grupptabellUnsubscribe = onSnapshot(doc(db, 'facit', 'grupper'), (snap) => {
-// snap leveras direkt av onSnapshot-callbacken ovan
+try {
+const snap = await getDoc(doc(db, 'facit', 'grupper'));
 if (!snap.exists()) {
 grid.innerHTML = '<p style="color:var(--text2);">Ingen data ännu – turneringen har inte börjat.</p>';
 return;
@@ -909,9 +909,9 @@ isAdmin()
 </div>`
 : ''
 );
-}, (e) => {
+} catch (e) {
 grid.innerHTML = '<p style="color:var(--text2);">Kunde inte ladda grupptabellen.</p>';
-});
+}
 }
 
 function räknaMatchPoäng(tippH, tippA, facitH, facitA) {
