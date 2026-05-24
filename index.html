@@ -753,6 +753,17 @@ adminBtn.className = 'btn';
 adminBtn.style.marginLeft = '10px';
 adminBtn.onclick = updateAllScores;
 document.querySelector('.footer').appendChild(adminBtn);
+const pdfBtn = document.createElement('button');
+
+pdfBtn.textContent = ' 📄 Exportera PDF';
+
+pdfBtn.className = 'btn';
+
+pdfBtn.style.marginLeft = '10px';
+
+pdfBtn.onclick = exportTipsPDF;
+
+document.querySelector('.footer').appendChild(pdfBtn);
 }
 const brytpunkt = new Date('2026-06-12T01:00:00+02:00');
 const nu = new Date();
@@ -1248,7 +1259,9 @@ if (el && bonus[key] !== undefined) el.value = bonus[key];
 });
 window.bonusData = bonus;
 }
-    
+async function exportTipsPDF() {
+...
+}    
 </script>
 </body>
 </html>
