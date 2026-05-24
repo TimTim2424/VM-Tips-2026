@@ -515,6 +515,8 @@ const SCHEDULE_FINAL = [
 ];
 let predictions = {};
 let groupTableData = {};
+let gruppTabellListener = null;
+let topplistaListener = null;
 groupTableData = {
 A: [{lag:'Mexiko',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Sydkorea',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Sydafrika',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Tjeckien',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}],
 B: [{lag:'Kanada',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Qatar',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Schweiz',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0},{lag:'Bosnien & Herr.',s:0,v:0,o:0,f:0,gm:0,im:0,ms:0,p:0}],
@@ -881,7 +883,16 @@ window.renderGrupptabell = function() {
 const grid = document.getElementById('grupptabell-grid');
 if (!grid) return;
 
-onSnapshot(doc(db, 'facit', 'grupper'), (snap) => {
+// stäng gammal listener
+if (gruppTabellListener) {
+  gruppTabellListener();
+}
+
+gruppTabellListener = onSnapshot(
+  doc(db, 'facit', 'grupper'),
+
+  (snap) => {
+  grid.innerHTML = '';  
 if (!snap.exists()) {
   grid.innerHTML = '<p style="color:var(--text2);">Ingen data ännu – turneringen har inte börjat.</p>';
   return;
@@ -1207,11 +1218,21 @@ showToast('Poäng uppdaterade!');
 }
 
 function renderTopplista() {
+
 const grid = document.getElementById('topplista-grid');
 
 if (!grid) return;
 
-onSnapshot(collection(db, 'tips'), (snapshot) => {
+// stäng gammal listener
+if (topplistaListener) {
+  topplistaListener();
+}
+
+topplistaListener = onSnapshot(
+
+  collection(db, 'tips'),
+
+  (snapshot) => {
 
 const rows = [];
 
