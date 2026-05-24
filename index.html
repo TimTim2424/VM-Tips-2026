@@ -841,17 +841,16 @@ showToast("Kunde inte ansluta till Firebase. Inaktivera eventuell AdBlocker.", t
 }, 7000);
 
 window.renderGrupptabell = function() {
+
 const grid = document.getElementById('grupptabell-grid');
 if (!grid) return;
-try {
-onSnapshot(doc(db, 'facit', 'grupper'), (snap) => {
 
+onSnapshot(doc(db, 'facit', 'grupper'), (snap) => {
 if (!snap.exists()) {
   grid.innerHTML = '<p style="color:var(--text2);">Ingen data ännu – turneringen har inte börjat.</p>';
   return;
 }
 
-const data = snap.data();
 const data = snap.data();
 groupTableData = {}; for (const _g in data) {   const _raw = data[_g];   groupTableData[_g] = Array.isArray(_raw)     ? _raw.map(x => Object.assign({}, x))     : Object.keys(_raw).sort((a,b) => Number(a)-Number(b)).map(k => Object.assign({}, _raw[k])); }
 
