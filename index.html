@@ -731,13 +731,15 @@ const password = document.getElementById('authPassword').value;
 if (!firstName || !lastName || !username) {
 return alert("Fyll i alla profiluppgifter.");
 }
-if (!/^[a-z0-9_]+$/.test(username)) {
-    return alert(
-        "Användarnamnet får bara innehålla små bokstäver, siffror och underscore (_)."
-    );
-}  
+const safeUsername = username
+.toLowerCase()
+.replaceAll('å', 'a')
+.replaceAll('ä', 'a')
+.replaceAll('ö', 'o')
+.replace(/\s+/g, '')
+.replace(/[^a-z0-9_-]/g, '');
 try {
-const email = `${username}@vmtips.com`;
+const email = `${safeUsername}@vmtips.com`;
 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 await setDoc(doc(db, "users", userCredential.user.uid), {
 firstName,
