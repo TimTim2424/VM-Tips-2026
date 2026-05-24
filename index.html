@@ -622,41 +622,61 @@ return `
 }).join('')}
 `).join('');
 }
-window.updatePred = (id, side, val) => {
+window.updatePred = async (id, side, val) => {
+
 if (!auth.currentUser) {
 showToast("Du måste logga in för att tippa!", true);
 openModal('authModal');
 return;
 }
-if(!predictions[id]) predictions[id] = {h:'', a:''};
-predictions[id][side] = val;
-updateStats();
-};
-window.updateSlutspelTeam = (id, side, val) => {
-if (!auth.currentUser) {
-showToast("Du måste logga in för att tippa!", true);
-openModal('authModal');
-return;
+
+if(!predictions[id]) {
+predictions[id] = {h:'', a:''};
 }
-if(!predictions[id]) predictions[id] = {h:'', a:'', teamH:'', teamA:''};
+
 predictions[id][side] = val;
+
 updateStats();
-};
-window.saveTips = async () => {
-if(!auth.currentUser) return showToast("Logga in först", true);
-const deadline = new Date('2026-06-11T21:00:00');
-if (new Date() > deadline) {
-return showToast("Tipsen är låsta! Turneringen har redan startat.", true);
-}
+
+
+// ADMIN = spara som facit
+if (isAdmin()) {
+
 try {
-await setDoc(doc(db, "tips", auth.currentUser.uid), {
-predictions,
-username: currentUserProfile?.username || 'Okänd användare'
-}, {merge: true});
-showToast("Sparat!");
-} catch(e) {
-showToast("Kunde inte spara: " + e.message, true);
+
+const facitRef = doc(db, 'facit', 'resultat');
+
+const facitSnap = await getDoc(facitRef);
+
+const facitData =
+facitSnap.exists()
+? facitSnap.data()
+: {};
+
+if (!facitData[id]) {
+facitData[id] = {h:null, a:null};
 }
+
+facitData[id][side] =
+val === ''
+? null
+: Number(val);
+
+await setDoc(facitRef, facitData);
+
+} catch(e) {
+
+console.error(e);
+
+showToast(
+"Kunde inte spara facit",
+true
+);
+
+}
+
+}
+
 };
 window.switchAuthTab = (mode) => {
 currentAuthMode = mode;
