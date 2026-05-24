@@ -1177,6 +1177,9 @@ showToast('Poäng uppdaterade!');
 }
 
 function renderTopplista() {
+const grid = document.getElementById('topplista-grid');
+
+if (!grid) return;
 
 onSnapshot(collection(db, 'tips'), (snapshot) => {
 
@@ -1192,8 +1195,6 @@ poäng: data.poäng ?? 0
 });
 
 });
-
-...
 rows.sort((a, b) => b.poäng - a.poäng);
 grid.innerHTML = `
 <table style="width:100%; border-collapse:collapse; font-family:'Barlow Condensed',sans-serif;">
