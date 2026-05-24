@@ -710,8 +710,18 @@ default: return 'Ett fel uppstod: ' + error.message;
 }
 }
 window.submitAuth = async () => {
-const loginUsername = document.getElementById('authUsername').value.trim().toLowerCase();
-const email = `${loginUsername}@vmtips.com`;
+const loginUsername =
+document.getElementById('authUsername').value.trim();
+
+const safeLoginUsername = loginUsername
+.toLowerCase()
+.replaceAll('å', 'a')
+.replaceAll('ä', 'a')
+.replaceAll('ö', 'o')
+.replace(/\s+/g, '')
+.replace(/[^a-z0-9_-]/g, '');
+
+const email = `${safeLoginUsername}@vmtips.com`;
 const password = document.getElementById('authPassword').value;
 if (!loginUsername || !password) {
 return alert("Fyll i användarnamn och lösenord.");
