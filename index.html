@@ -731,6 +731,11 @@ const password = document.getElementById('authPassword').value;
 if (!firstName || !lastName || !username) {
 return alert("Fyll i alla profiluppgifter.");
 }
+if (!/^[a-z0-9_]+$/.test(username)) {
+    return alert(
+        "Användarnamnet får bara innehålla små bokstäver, siffror och underscore (_)."
+    );
+}  
 try {
 const email = `${username}@vmtips.com`;
 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
