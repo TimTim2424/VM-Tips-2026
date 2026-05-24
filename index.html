@@ -1260,8 +1260,122 @@ if (el && bonus[key] !== undefined) el.value = bonus[key];
 window.bonusData = bonus;
 }
 async function exportTipsPDF() {
-...
-}    
+
+const snapshot = await getDocs(collection(db, 'tips'));
+
+let html = `
+<html>
+<head>
+<title>Alla tips</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+padding:20px;
+}
+
+h1{
+margin-bottom:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-bottom:30px;
+}
+
+th, td{
+border:1px solid #000;
+padding:6px;
+font-size:12px;
+text-align:center;
+}
+
+th{
+background:#eee;
+}
+
+.user-block{
+margin-bottom:40px;
+page-break-inside:avoid;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Alla inkomna tips</h1>
+`;
+
+snapshot.forEach(docSnap => {
+
+const data = docSnap.data();
+
+const namn =
+data.username ||
+data.firstName ||
+'Okänd';
+
+const predictions =
+data.predictions || {};
+
+html += `
+<div class="user-block">
+
+<h2>${namn}</h2>
+
+<table>
+
+<tr>
+<th>Match</th>
+<th>Tips</th>
+</tr>
+`;
+
+for(let i = 1; i <= 72; i++){
+
+const id = `m${i}`;
+
+const tipp = predictions[id];
+
+html += `
+<tr>
+<td>${id}</td>
+<td>
+${tipp
+? `${tipp.h} - ${tipp.a}`
+: '-'}
+</td>
+</tr>
+`;
+}
+
+html += `
+</table>
+
+</div>
+`;
+
+});
+
+html += `
+</body>
+</html>
+`;
+
+const win = window.open('', '_blank');
+
+win.document.write(html);
+
+win.document.close();
+
+win.focus();
+
+win.print();
+
+}  
 </script>
 </body>
 </html>
