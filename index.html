@@ -769,8 +769,8 @@ applySavedTab();
 document.getElementById('loading').classList.add('hidden');
 });
 
-async function loadUserTips(user) {
-const d = await getDoc(doc(db, "tips", user.uid));
+function loadUserTips(user) {
+onSnapshot(doc(db, "tips", user.uid), (d) => {
 if(d.exists()) {
 predictions = d.data().predictions || {};
 loadBonus(d.data());
@@ -778,6 +778,12 @@ loadBonus(d.data());
 const activeTab = localStorage.getItem('activeTab') || 'groups';
 renderTabContent(activeTab);
 updateStats();
+
+}, (e) => {
+
+console.error('loadUserTips:', e);
+
+});
 }
 
 function updateStats() {
@@ -1174,16 +1180,24 @@ async function renderTopplista() {
 // getDocs + collection importeras statiskt ovan
 const grid = document.getElementById('topplista-grid');
 if (!grid) return;
-try {
-const snapshot = await getDocs(collection(db, 'tips'));
+function renderTopplista() {
+
+onSnapshot(collection(db, 'tips'), (snapshot) => {
+
 const rows = [];
+
 snapshot.forEach(docSnap => {
+
 const data = docSnap.data();
+
 rows.push({
 namn: data.username || data.firstName || 'Okänd',
 poäng: data.poäng ?? 0
 });
+
 });
+
+...
 rows.sort((a, b) => b.poäng - a.poäng);
 grid.innerHTML = `
 <table style="width:100%; border-collapse:collapse; font-family:'Barlow Condensed',sans-serif;">
@@ -1202,10 +1216,18 @@ ${rows.map((r, i) => `
 <td style="padding:8px 4px; text-align:right; color:var(--gold);">${r.poäng}</td>
 </tr>`).join('')}
 </tbody>
-</table>`;
-} catch (e) {
-grid.innerHTML = '<p style="color:var(--text2);"> Topplistan aktiveras efter första matchens slut.</p>';
-}
+</table>
+`;
+
+}, (e) => {
+
+console.error('renderTopplista:', e);
+
+grid.innerHTML =
+'<p style="color:var(--text2);">Topplistan kunde inte laddas.</p>';
+
+});
+
 }
 
 window.saveBonus = function(key, value) {
