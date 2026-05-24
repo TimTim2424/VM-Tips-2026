@@ -1176,10 +1176,6 @@ console.log('   ✅    Poäng beräknade och sparade!');
 showToast('Poäng uppdaterade!');
 }
 
-async function renderTopplista() {
-// getDocs + collection importeras statiskt ovan
-const grid = document.getElementById('topplista-grid');
-if (!grid) return;
 function renderTopplista() {
 
 onSnapshot(collection(db, 'tips'), (snapshot) => {
