@@ -1133,9 +1133,9 @@ poäng += p;
 const finalFacit  = facitResultat['final_1'];
 const bronzeFacit = facitResultat['bronze_1'];
 const winnerTipp  = predictions['winner']?.teamH?.trim().toLowerCase();
-if (finalFacit?.vmVinnare && winnerTipp === finalFacit.vmVinnare.trim().toLowerCase())  poäng += 16;
-if (finalFacit?.silver    && winnerTipp === finalFacit.silver.trim().toLowerCase())     poäng += 10;
-if (bronzeFacit?.brons    && winnerTipp === bronzeFacit.brons.trim().toLowerCase())     poäng += 6;
+if (finalFacit?.vmVinnare && winnerTipp === finalFacit.vmVinnare.trim().toLowerCase())  poäng += 10;
+if (finalFacit?.silver    && winnerTipp === finalFacit.silver.trim().toLowerCase())     poäng += 7;
+if (bronzeFacit?.brons    && winnerTipp === bronzeFacit.brons.trim().toLowerCase())     poäng += 4;
 return poäng;
 }
 
