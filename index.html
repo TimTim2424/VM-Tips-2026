@@ -1532,8 +1532,6 @@ window.saveTips = async () => {
 
 onAuthStateChanged(auth, async (user) => {
 
-onAuthStateChanged(auth, async (user) => {
-
 if(user) {
 
 const userDoc = await getDoc(doc(db, "users", user.uid));
