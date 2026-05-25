@@ -837,21 +837,37 @@ const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
 
 const flagCodes = {
+
 'Mexiko': 'mx', 'Sydafrika': 'za', 'Sydkorea': 'kr', 'Tjeckien': 'cz', 'Kanada': 'ca',
+
 'Bosnien & Herr.': 'ba', 'USA': 'us', 'Paraguay': 'py', 'Qatar': 'qa', 'Schweiz': 'ch',
+
 'Brasilien': 'br', 'Marocko': 'ma', 'Haiti': 'ht', 'Skottland': 'gb-sct', 'Australien': 'au',
+
 'Turkiet': 'tr', 'Tyskland': 'de', 'Curaçao': 'cw', 'Nederländerna': 'nl', 'Japan': 'jp',
+
 'Elfenbenskusten': 'ci', 'Ecuador': 'ec', 'Sverige': 'se', 'Tunisien': 'tn', 'Spanien': 'es',
+
 'Kap Verde': 'cv', 'Belgien': 'be', 'Egypten': 'eg', 'Saudiarabien': 'sa', 'Uruguay': 'uy',
+
 'Iran': 'ir', 'Nya Zeeland': 'nz', 'Frankrike': 'fr', 'Senegal': 'sn', 'Irak': 'iq',
+
 'Norge': 'no', 'Argentina': 'ar', 'Algeriet': 'dz', 'Österrike': 'at', 'Jordanien': 'jo',
+
 'Portugal': 'pt', 'DR Kongo': 'cd', 'England': 'gb-eng', 'Kroatien': 'hr', 'Ghana': 'gh',
+
 'Panama': 'pa', 'Uzbekistan': 'uz', 'Colombia': 'co'
+
 };
+
 const flagImg = (name) => {
+
   const code = flagCodes[name];
+
   if (!code) return '';
-  return `<img src="https://flagcdn.com/20x15/${code}.png" width="20" height="15" alt="${name}" style="vertical-align:middle;margin-right:4px;border-radius:2px;">`;
+
+  return `<img src="https://flagcdn.com/w40/${code}.png" width="20" height="15" alt="${name}" style="vertical-align:middle;margin-right:4px;border-radius:2px;">`;
+
 };
 
 const SCHEDULE = [
