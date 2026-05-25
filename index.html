@@ -1496,20 +1496,41 @@ alert(getFriendlyErrorMessage(e));
 window.doLogout = async () => { await signOut(auth); location.reload(); };
 
 window.updateAllScores = async () => {
-
-try {
-
-await beräknaOchSparaPoäng();
-
-} catch (e) {
-
-console.error(e);
-
-showToast(e.message || "Kunde inte uppdatera poäng", true);
-
-}
-
+  try {
+    await beräknaOchSparaPoäng();
+  } catch (e) {
+    console.error(e);
+    showToast(e.message || "Kunde inte uppdatera poäng", true);
+  }
 };
+
+// Klistra in här ↓↓↓
+window.saveTips = async () => {
+  if (!auth.currentUser) {
+    showToast("Du måste logga in för att spara!", true);
+    return openModal('authModal');
+  }
+
+  const deadline = new Date('2026-06-11T21:00:00+02:00');
+  if (new Date() > deadline) return showToast("Tipsen är låsta!", true);
+
+  try {
+    await setDoc(doc(db, 'tips', auth.currentUser.uid), {
+      predictions,
+      bonus: window.bonusData || {},
+      username: currentUserProfile?.username || auth.currentUser.email,
+      firstName: currentUserProfile?.firstName || '',
+      lastName: currentUserProfile?.lastName || ''
+    }, { merge: true });
+
+    showToast("Dina tips är sparade!");
+  } catch(e) {
+    console.error(e);
+    showToast("Kunde inte spara tips", true);
+  }
+};
+
+onAuthStateChanged(auth, async (user) => {
 
 onAuthStateChanged(auth, async (user) => {
 
