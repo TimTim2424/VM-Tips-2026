@@ -2339,6 +2339,8 @@ topplistaListener = onSnapshot(
 const rows = [];
 
 snapshot.forEach(docSnap => {
+  // Hoppa över admin
+if (docSnap.id === 'sQH9PnqxO3aVsArNKVs7BJiCwwH3') return;
 
 const data = docSnap.data();
 
