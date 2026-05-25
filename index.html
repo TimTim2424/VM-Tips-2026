@@ -120,10 +120,8 @@ min-height: calc(100vh - 260px);
 
 .match-info { flex: 1; min-width: 0; }
 
-.match-teams { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 4px; overflow: hidden; }
-.team-name { display: flex; align-items: center; gap: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1; }
-.team-name img { flex-shrink: 0; }
-.team-sep { flex-shrink: 0; padding: 0 2px; }
+.match-teams { font-size: 14px; font-weight: 600; }
+.match-teams img { vertical-align: middle; margin-right: 3px; border-radius: 2px; }
 
 .match-meta { font-size: 11px; color: var(--text2); margin-top: 4px; display: flex; flex-wrap: wrap; gap: 8px; }
 
@@ -483,6 +481,12 @@ margin: 0;
 
 }
 
+
+@media (max-width: 480px) {
+  .match-row { flex-wrap: wrap; }
+  .match-info { width: 100%; }
+  .score-inputs { margin-left: auto; margin-top: 6px; }
+}
 </style>
 
 </head>
@@ -1135,7 +1139,7 @@ return `
 
 <div class="match-teams">
 
-<span class="team-name">${flagImg(m.h)} ${m.h}</span><span class="team-sep">–</span><span class="team-name" style="justify-content:flex-end">${flagImg(m.a)} ${m.a}</span>
+${flagImg(m.h)} ${m.h} – ${flagImg(m.a)} ${m.a}
 
 </div>
 
