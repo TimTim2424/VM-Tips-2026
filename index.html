@@ -2129,7 +2129,9 @@ const fh = parseInt(facitH), fa = parseInt(facitA);
 
 if (isNaN(th) || isNaN(ta) || isNaN(fh) || isNaN(fa)) return 0;
 
-if (th === fh && ta === fa) return 4;
+if (th === fh && ta === fa) {
+    return (fh === fa) ? 2 : 4;
+}
 
 const tippUtfall = th > ta ? 1 : th < ta ? -1 : 0;
 
