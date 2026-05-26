@@ -2120,28 +2120,28 @@ return tables;
 function räknaMatchPoäng(tippH, tippA, facitH, facitA) {
   if (tippH === '' || tippA === '' || tippH === null || tippA === null) return 0;
   if (facitH === null || facitA === null) return 0;
-
+  
   const th = parseInt(tippH), ta = parseInt(tippA);
   const fh = parseInt(facitH), fa = parseInt(facitA);
-
+  
   if (isNaN(th) || isNaN(ta) || isNaN(fh) || isNaN(fa)) return 0;
-
+  
   // Klassisk 1-2-4: Helt rätt resultat ger alltid 4 poäng, oavsett om det är kryss eller inte
   if (th === fh && ta === fa) return 4;
-
+  
   const tippUtfall = th > ta ? 1 : th < ta ? -1 : 0;
   const facitUtfall = fh > fa ? 1 : fh < fa ? -1 : 0;
-
+  
   if (tippUtfall !== facitUtfall) return 0;
-
+  
   const tippMS = th - ta;
   const facitMS = fh - fa;
-
+  
   if (tippMS === facitMS && facitUtfall !== 0) return 2;
-
+  
   return 1;
 }
-  // --------------------------
+
   
   const tippUtfall = th > ta ? 1 : th < ta ? -1 : 0;
   const facitUtfall = fh > fa ? 1 : fh < fa ? -1 : 0;
