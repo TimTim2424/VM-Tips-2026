@@ -1108,6 +1108,38 @@ function isAdmin() {
 let currentAuthMode = 'login';
 
 let currentUserProfile = null;
+// --- AUTO-SPARA (debounced) ---
+let autoSaveTimer = null;
+function autoSave() {
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(async () => {
+    if (!auth.currentUser) return;
+    const deadline = new Date('2026-06-11T21:00:00+02:00');
+    if (new Date() > deadline) return;
+    try {
+      await setDoc(doc(db, 'tips', auth.currentUser.uid), {
+        predictions,
+        bonus: window.bonusData || {},
+        username: currentUserProfile?.username || auth.currentUser.email,
+        firstName: currentUserProfile?.firstName || '',
+        lastName: currentUserProfile?.lastName || ''
+      }, { merge: true });
+    } catch(e) {
+      console.error('autoSave:', e);
+    }
+  }, 800); // väntar 800ms efter senaste knapptryckning
+}
+
+window.updateSlutspelTeam = (id, side, val) => {
+  if (!auth.currentUser) {
+    showToast("Du måste logga in för att tippa!", true);
+    openModal('authModal');
+    return;
+  }
+  if (!predictions[id]) predictions[id] = {};
+  predictions[id][side] = val;
+  autoSave();
+};
 
 function renderGroups() {
 
@@ -1276,7 +1308,10 @@ predictions[id] = {h:'', a:''};
 predictions[id][side] = val;
 
 updateStats();
-
+// Lägg till dessa rader precis EFTER updateStats()-anropet, INNAN if (isAdmin()) {
+if (!isAdmin()) {
+  autoSave();
+}
 // ADMIN = spara som facit
 
 if (isAdmin()) {
