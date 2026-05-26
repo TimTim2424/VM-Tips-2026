@@ -2359,13 +2359,34 @@ const slutspelsIds = [
 
 for (const id of slutspelsIds) {
 
-const tipp  = predictions[id];
+    const tipp  = predictions[id];
+    const facit = facitResultat[id];
 
-const facit = facitResultat[id];
+    if (!tipp || !facit) continue;
 
-if (!tipp || !facit) continue;
+    // Man måste ha rätt lag för att få resultatpoäng
+    const rättLag =
+        tipp.teamH &&
+        tipp.teamA &&
+        facit.winnerH &&
+        facit.winnerA &&
 
-totalPoäng += räknaMatchPoäng(tipp.h, tipp.a, facit.h, facit.a);
+        tipp.teamH.trim().toLowerCase() ===
+        facit.winnerH.trim().toLowerCase() &&
+
+        tipp.teamA.trim().toLowerCase() ===
+        facit.winnerA.trim().toLowerCase();
+
+    if (rättLag) {
+
+        totalPoäng += räknaMatchPoäng(
+            tipp.h,
+            tipp.a,
+            facit.h,
+            facit.a
+        );
+
+    }
 
 }
 
