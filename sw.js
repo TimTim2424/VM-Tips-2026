@@ -22,7 +22,8 @@ self.addEventListener('install', (event) => {
 });
 
 // Aktivera och rensa gamla cacher
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', (event)
+ => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
