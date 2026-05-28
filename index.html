@@ -3,10 +3,15 @@
 <html lang="sv">
 
 <head>
+
 <!-- PWA -->
+
 <link rel="manifest" href="manifest.json">
+
 <meta name="apple-mobile-web-app-capable" content="yes">
+
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <meta name="apple-mobile-web-app-title" content="VM-Tips 2026">
 
 <meta charset="UTF-8">
@@ -126,6 +131,7 @@ min-height: calc(100vh - 260px);
 .match-info { flex: 1; min-width: 0; }
 
 .match-teams { font-size: 14px; font-weight: 600; }
+
 .match-teams img { vertical-align: middle; margin-right: 3px; border-radius: 2px; }
 
 .match-meta { font-size: 11px; color: var(--text2); margin-top: 4px; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -486,12 +492,16 @@ margin: 0;
 
 }
 
-
 @media (max-width: 480px) {
+
   .match-row { flex-wrap: wrap; }
+
   .match-info { width: 100%; }
+
   .score-inputs { margin-left: auto; margin-top: 6px; }
+
 }
+
 </style>
 
 </head>
@@ -1113,37 +1123,67 @@ function isAdmin() {
 let currentAuthMode = 'login';
 
 let currentUserProfile = null;
+
 // --- AUTO-SPARA (debounced) ---
+
 let autoSaveTimer = null;
+
 function autoSave() {
+
   clearTimeout(autoSaveTimer);
+
   autoSaveTimer = setTimeout(async () => {
+
     if (!auth.currentUser) return;
+
     const deadline = new Date('2026-06-11T21:00:00+02:00');
+
     if (new Date() > deadline) return;
+
     try {
+
       await setDoc(doc(db, 'tips', auth.currentUser.uid), {
+
         predictions,
+
         bonus: window.bonusData || {},
+
         username: currentUserProfile?.username || auth.currentUser.email,
+
         firstName: currentUserProfile?.firstName || '',
+
         lastName: currentUserProfile?.lastName || ''
+
       }, { merge: true });
+
     } catch(e) {
+
       console.error('autoSave:', e);
+
     }
+
   }, 800); // väntar 800ms efter senaste knapptryckning
+
 }
 
 window.updateSlutspelTeam = (id, side, val) => {
+
   if (!auth.currentUser) {
+
     showToast("Du måste logga in för att tippa!", true);
+
     openModal('authModal');
+
     return;
+
   }
+
   if (!predictions[id]) predictions[id] = {};
+
   predictions[id][side] = val;
+
   autoSave();
+
 };
 
 function renderGroups() {
@@ -1313,10 +1353,15 @@ predictions[id] = {h:'', a:''};
 predictions[id][side] = val;
 
 updateStats();
+
 // Lägg till dessa rader precis EFTER updateStats()-anropet, INNAN if (isAdmin()) {
+
 if (!isAdmin()) {
+
   autoSave();
+
 }
+
 // ADMIN = spara som facit
 
 if (isAdmin()) {
@@ -1536,38 +1581,63 @@ alert(getFriendlyErrorMessage(e));
 window.doLogout = async () => { await signOut(auth); location.reload(); };
 
 window.updateAllScores = async () => {
+
   try {
+
     await beräknaOchSparaPoäng();
+
   } catch (e) {
+
     console.error(e);
+
     showToast(e.message || "Kunde inte uppdatera poäng", true);
+
   }
+
 };
 
 // Klistra in här ↓↓↓
+
 window.saveTips = async () => {
+
   if (!auth.currentUser) {
+
     showToast("Du måste logga in för att spara!", true);
+
     return openModal('authModal');
+
   }
 
   const deadline = new Date('2026-06-11T21:00:00+02:00');
+
   if (new Date() > deadline) return showToast("Tipsen är låsta!", true);
 
   try {
+
     await setDoc(doc(db, 'tips', auth.currentUser.uid), {
+
       predictions,
+
       bonus: window.bonusData || {},
+
       username: currentUserProfile?.username || auth.currentUser.email,
+
       firstName: currentUserProfile?.firstName || '',
+
       lastName: currentUserProfile?.lastName || ''
+
     }, { merge: true });
 
     showToast("Dina tips är sparade!");
+
   } catch(e) {
+
     console.error(e);
+
     showToast("Kunde inte spara tips", true);
+
   }
+
 };
 
 onAuthStateChanged(auth, async (user) => {
@@ -2123,27 +2193,49 @@ return tables;
 }
 
 function räknaMatchPoäng(tippH, tippA, facitH, facitA) {
+
   if (tippH === '' || tippA === '' || tippH === null || tippA === null) return 0;
+
   if (facitH === null || facitA === null) return 0;
+
   
+
   const th = parseInt(tippH), ta = parseInt(tippA);
+
   const fh = parseInt(facitH), fa = parseInt(facitA);
+
   
+
   if (isNaN(th) || isNaN(ta) || isNaN(fh) || isNaN(fa)) return 0;
+
   
+
   // Klassisk 1-2-4: Helt rätt resultat ger alltid 4 poäng, oavsett om det är kryss eller inte
+
   if (th === fh && ta === fa) return 4;
+
   
+
   const tippUtfall = th > ta ? 1 : th < ta ? -1 : 0;
+
   const facitUtfall = fh > fa ? 1 : fh < fa ? -1 : 0;
+
   
+
   if (tippUtfall !== facitUtfall) return 0;
+
   
+
   const tippMS = th - ta;
+
   const facitMS = fh - fa;
+
   
+
   if (tippMS === facitMS && facitUtfall !== 0) return 2;
+
   
+
   return 1;
 
 }
@@ -2267,45 +2359,77 @@ throw new Error("Facit saknas i databasen.");
 const facitResultat = facitSnap.data();
 
 const bonusFacit    = bonusFacitSnap.exists() ? bonusFacitSnap.data() : {};
+
 // Ladda adminens inmatade lagnamn för slutspelsmatcher
+
 const ADMIN_UID = 'sQH9PnqxO3aVsArNKVs7BJiCwwH3';
+
 const adminSnap = await getDoc(doc(db, 'tips', ADMIN_UID));
+
 const adminPred = adminSnap.exists() ? (adminSnap.data().predictions || {}) : {};
 
 // Sätt winnerH/winnerA på varje slutspelsmatch baserat på adminens lagnamn
+
 const slutspelIds = [
+
   ...Array.from({length:16}, (_,i) => `r16_${i+1}`),
+
   ...Array.from({length:8},  (_,i) => `qf_${i+1}`),
+
   ...Array.from({length:4},  (_,i) => `qf2_${i+1}`),
+
   'semi_1', 'semi_2', 'bronze_1', 'final_1'
+
 ];
 
 for (const id of slutspelIds) {
+
   const a = adminPred[id];
+
   if (!a) continue;
+
   if (!facitResultat[id]) facitResultat[id] = {};
+
   facitResultat[id].winnerH = a.teamH?.trim() || '';
+
   facitResultat[id].winnerA = a.teamA?.trim() || '';
+
 }
 
 // VM-vinnare och silver: beräknas från finalens resultat + lagnamn
+
 const ff = facitResultat['final_1'];
+
 if (ff && ff.h !== null && ff.a !== null) {
+
   const fh = Number(ff.h), fa = Number(ff.a);
+
   if (!isNaN(fh) && !isNaN(fa)) {
+
     ff.vmVinnare = fh > fa ? ff.winnerH : ff.winnerA;
+
     ff.silver    = fh > fa ? ff.winnerA : ff.winnerH;
+
   }
+
 }
 
 // Bronsmedaljör: vinnaren av bronsmatch
+
 const bf = facitResultat['bronze_1'];
+
 if (bf && bf.h !== null && bf.a !== null) {
+
   const bh = Number(bf.h), ba = Number(bf.a);
+
   if (!isNaN(bh) && !isNaN(ba)) {
+
     bf.brons = bh > ba ? bf.winnerH : bf.winnerA;
+
   }
+
 }
+
 const nyaGrupptabeller = calculateGroupTables(facitResultat);
 
 await setDoc(
@@ -2361,30 +2485,43 @@ const slutspelsIds = [
 for (const id of slutspelsIds) {
 
     const tipp  = predictions[id];
+
     const facit = facitResultat[id];
 
     if (!tipp || !facit) continue;
 
     // Man måste ha rätt lag för att få resultatpoäng
+
     const rättLag =
+
         tipp.teamH &&
+
         tipp.teamA &&
+
         facit.winnerH &&
+
         facit.winnerA &&
 
         tipp.teamH.trim().toLowerCase() ===
+
         facit.winnerH.trim().toLowerCase() &&
 
         tipp.teamA.trim().toLowerCase() ===
+
         facit.winnerA.trim().toLowerCase();
 
     if (rättLag) {
 
         totalPoäng += räknaMatchPoäng(
+
             tipp.h,
+
             tipp.a,
+
             facit.h,
+
             facit.a
+
         );
 
     }
@@ -2436,8 +2573,11 @@ const rows = [];
 snapshot.forEach(docSnap => {
 
 const data = docSnap.data();
+
 if (docSnap.id === 'sQH9PnqxO3aVsArNKVs7BJiCwwH3') {
+
 return;
+
 }
 
 rows.push({
@@ -2525,9 +2665,13 @@ window.bonusData[key] = value;
 try {
 
 await setDoc(
+
 doc(db, 'tips', auth.currentUser.uid),
+
 { bonus: window.bonusData },
+
 { merge: true }
+
 );
 
 console.log('Bonus sparad');
@@ -2537,8 +2681,11 @@ console.log('Bonus sparad');
 console.error('saveBonus:', e);
 
 alert(
+
 'Bonus kunde inte sparas:\n' +
+
 (e.message || e.code)
+
 );
 
 }
@@ -2723,10 +2870,18 @@ win.print();
 
  }
 
- <script>
-if ('serviceWorker' in navigator) {
-navigator.serviceWorker.register('/sw.js');
-  }
 </script>
+
+<script>
+
+if ('serviceWorker' in navigator) {
+
+navigator.serviceWorker.register('/sw.js');
+
+  }
+
+</script>
+
 </body>
+
 </html>
