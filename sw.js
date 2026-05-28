@@ -2,10 +2,10 @@ const CACHE_NAME = 'vmtips-2026-v1';
 
 // Filer att cacha för offline-stöd
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/bakgrund.png',
-  '/pokal.png',
+  '/VM-Tips-2026/',
+  '/VM-Tips-2026/index.html',
+  '/VM-Tips-2026/bakgrund.png',
+  '/VM-Tips-2026/pokal.png',
   'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap'
 ];
 
