@@ -1524,7 +1524,7 @@ const firstName = document.getElementById('regFirstName').value.trim();
 
 const lastName = document.getElementById('regLastName').value.trim();
 
-const username = document.getElementById('regUsername').value.trim().toLowerCase();
+const username = document.getElementById('regUsername').value.trim(); const username = displayUsername.toLowerCase();
 
 const password = document.getElementById('authPassword').value;
 
@@ -1561,6 +1561,7 @@ firstName,
 lastName,
 
 username
+displayUsername
 
 });
 
@@ -1650,7 +1651,7 @@ if (userDoc.exists()) {
 
 currentUserProfile = userDoc.data();
 
-document.getElementById('userBadge').textContent = currentUserProfile.username;
+document.getElementById('userBadge').textContent = currentUserProfile.displayUsername || currentUserProfile.username;
 
 } else {
 
@@ -2582,7 +2583,7 @@ return;
 
 rows.push({
 
-namn: data.username || data.firstName || 'Okänd',
+namn: data.displayUsername || data.username || data.firstName || 'Okänd',
 
 poäng: data.poäng ?? 0
 
