@@ -1138,7 +1138,7 @@ function autoSave() {
 
     const deadline = new Date('2026-06-11T21:00:00+02:00');
 
-    if (new Date() > deadline) return;
+    if (new Date() > deadline && !isAdmin()) return;
 
     try {
 
@@ -1194,7 +1194,7 @@ if(!container) return;
 
 const deadline = new Date('2026-06-11T21:00:00');
 
-const isLocked = new Date() > deadline;
+const isLocked = new Date() > deadline && !isAdmin();
 
 container.innerHTML = SCHEDULE.map(day => `
 
@@ -1260,7 +1260,7 @@ if (!container) return;
 
 const deadline = new Date('2026-06-11T21:00:00');
 
-const isLocked = new Date() > deadline;
+const isLocked = new Date() > deadline && !isAdmin();
 
 container.innerHTML = scheduleData.map(day => `
 
@@ -1611,7 +1611,7 @@ window.saveTips = async () => {
 
   const deadline = new Date('2026-06-11T21:00:00+02:00');
 
-  if (new Date() > deadline) return showToast("Tipsen är låsta!", true);
+if (!isAdmin() && new Date() > deadline) return showToast("Tipsen är låsta!", true);
 
   try {
 
@@ -2657,7 +2657,7 @@ return;
 
 const deadline = new Date('2026-06-11T21:00:00+02:00');
 
-if (new Date() > deadline) return showToast("Tipsen är låsta!", true);
+if (!isAdmin() && new Date() > deadline) return showToast("Tipsen är låsta!", true);
 
 if (!window.bonusData) window.bonusData = {};
 
